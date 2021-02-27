@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/guide.css">
+  <script src="../../js/common.js"></script>
+</head>
+<body>
+  <!-- ### 헤더 ### -->
+  <header id="header">
+    
+  </header>
+
+  <!-- ### 가이드 메인 ### -->
+  <main class="container">
+    <section class="guide">
+      <h2 class="title">탭<span>([data-tag-group])</span></h2>
+      <div class="area-btn" data-tab-group="tabgroup1">
+        <a href="#none" class="btn-type1 active" data-tabtit="tabcon1">탭1</a>
+        <a href="#none" class="btn-type1" data-tabtit="tabcon2">탭2</a>
+      </div>
+      <div id="tabcon1" class="ui-tabcon active" data-tabcon="tabgroup1">
+        ㅁㄴㅇㄹ
+      </div>
+      <div id="tabcon2" class="ui-tabcon active" data-tabcon="tabgroup1">
+        qwer
+      </div>
+
+      <div class="area-btn" data-tab-group="tabgroup2">
+        <a href="#none" class="active" data-tabtit="tabcon3">탭1</a>
+        <a href="#none" data-tabtit="tabcon4">탭2</a>
+      </div>
+      <div id="tabcon3" class="ui-tabcon active" data-tabcon="tabgroup2">
+        ㅁㄴㅇㄹ
+      </div>
+      <div id="tabcon4" class="ui-tabcon" data-tabcon="tabgroup2">
+        qwer
+      </div>
+    </section>
+    <!-- // -->
+    <section class="guide">
+      <h2 class="title">라디오 탭</h2>
+      <div class="label-btn1" data-tab-group="radiogroup1">
+        <input type="radio" name="form_radio7" data-tabtit="radiotab1" checked>
+        <span>탭1</span>
+        <input type="radio" name="form_radio7" data-tabtit="radiotab2">
+        <span>탭2</span>
+      </div>
+      <div id="radiotab1" class="ui-tabcon active" data-tabcon="radiogroup1">
+        ㅁㄴㅇㄹ
+      </div>
+      <div id="radiotab2" class="ui-tabcon" data-tabcon="radiogroup1">
+        qwer
+      </div>
+
+      <div class="label-btn1" data-tab-group="radiogroup2">
+        <input type="radio" name="form_radio8" data-tabtit="radiotab3" checked>
+        <span>탭1</span>
+        <input type="radio" name="form_radio8" data-tabtit="radiotab4">
+        <span>탭2</span>
+      </div>
+      <div id="radiotab3" class="ui-tabcon active" data-tabcon="radiogroup2">
+        ㅁㄴㅇㄹ
+      </div>
+      <div id="radiotab4" class="ui-tabcon" data-tabcon="radiogroup2">
+        qwer
+      </div>
+    </section>
+  </main>
+</body>
+</html>

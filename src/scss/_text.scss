@@ -1,0 +1,48 @@
+.tit-main {
+  &1 {
+    position: relative;
+    font-size: 48px;
+    margin-bottom: 24px;
+    text-align: center;
+
+    &:before {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      font-size: 70px;
+      color: rgba(255, 255, 255, 0.15);
+      z-index: -1;
+      font-weight: 900;
+
+      @media screen and (max-width: 640px) {
+        content: "";
+      }
+    }
+  }
+}
+
+.tit-sub {
+
+  &1 {
+    font-size: 20px;
+    color: $text-type1;
+    margin-bottom: 16px;
+  }
+
+  &2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+}
+
+.txt-p {
+  color: $text-default;
+  margin-bottom: 16px;
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
+}

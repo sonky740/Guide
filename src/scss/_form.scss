@@ -1,0 +1,289 @@
+// 라디오
+.label-btn1 {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
+
+  >* {
+    flex: 1;
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+
+    +span {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 15px;
+      line-height: 17px;
+      height: 48px;
+      color: #6d747a;
+      transition: all 0.3s ease;
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        transition: all 0.3s ease;
+      }
+
+      &:after {
+        right: -2px;
+        top: 50%;
+        width: 1px;
+        height: 10px;
+        margin: -5px 0 0;
+        background: #ced4da;
+        z-index: -2;
+      }
+    }
+
+    &:checked {
+      +span {
+        color: #175fec;
+
+        &:after {
+          display: none;
+        }
+      }
+    }
+
+    &:disabled {
+      +span {
+        color: #8f959c;
+      }
+    }
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid #ced4da;
+    background: #f8f9fa;
+    z-index: -2;
+  }
+
+  &:before,
+  >label>span {
+    border-radius: 8px;
+  }
+
+  >label {
+    position: relative;
+
+    &:last-child {
+      span {
+        &:after {
+          display: none;
+        }
+      }
+    }
+
+    // <-- 기본형
+    >input {
+      &:checked {
+        +span {
+          background: #fff;
+          border-color: #175fec;
+        }
+      }
+    }
+
+    >span {
+      border: 1px solid transparent;
+    }
+
+    // 기본형 -->
+  }
+
+  >span {
+    &:last-of-type {
+      &:after {
+        display: none;
+      }
+
+      // <-- 슬라이드형
+      &:before {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        border: 1px solid #175fec;
+        border-radius: 8px;
+        z-index: -1;
+      }
+    }
+
+    &:nth-of-type(1) {
+      @for $i from 2 to 5 {
+        &:nth-last-of-type(#{$i}) {
+          @for $ii from 2 to 5 {
+            @if $ii<=$i {
+              ~input:nth-of-type(#{$ii}) {
+                left: #{100 + 100 / $i * ($ii - $i - 1%)};
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // 슬라이드형 -->
+  }
+
+  // <-- 슬라이드형
+  >input {
+    bottom: 0;
+    z-index: 2;
+    cursor: pointer;
+
+    +span {
+      float: left;
+    }
+
+    &:not(:checked) {
+      ~input:not(:checked)~span:last-of-type:before {
+        display: none;
+      }
+    }
+
+    &:checked {
+      ~span:last-of-type:before {
+        display: block !important;
+      }
+
+      @for $i from 1 to 4 {
+        &:nth-of-type(#{$i}) {
+          @for $ii from 1 to 4 {
+            @if $i+$ii<=4 {
+              ~span:nth-of-type(#{$i + $ii}):before {
+                margin-left: -#{$ii+'00%'};
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 슬라이드형 -->
+}
+
+// 체크박스
+.label-check1 {
+  display: inline-block;
+
+  &.block {
+    display: block;
+  }
+
+  &.simple {
+    >label {
+      width: 28px;
+      color: transparent;
+      overflow: hidden;
+
+      span {
+        padding: 4px;
+        
+        &::selection {
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  >label {
+    display: inline-block;
+    position: relative;
+    line-height: 18px;
+
+    span {
+      display: inline-block;
+      position: relative;
+      padding: 4px 4px 4px 28px;
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        top: 4px;
+        left: 4px;
+      }
+
+      &:before {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ffe344;
+        border-radius: 4px;
+      }
+    }
+
+    input[type="checkbox"]:checked {
+      +span {
+        &:before {
+          background: #ffe344;
+        }
+
+        &:after {
+          top: 9px;
+          left: 9px;
+          width: 11px;
+          height: 6px;
+          border-left: 2px solid #fff;
+          border-bottom: 2px solid #fff;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+
+    input[type="radio"] {
+      +span {
+        &:before {
+          border-radius: 50%;
+        }
+      }
+
+      &:checked {
+        +span {
+          &:before {
+            background: #ffe344;
+            border-radius: 50%;
+          }
+
+          &:after {
+            top: 10px;
+            left: 10px;
+            background: #fff;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+          }
+        }
+      }
+    }
+  }
+}

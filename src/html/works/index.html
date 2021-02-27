@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROJECT</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/library/prism.css">
+  <script src="../../js/common.js"></script>
+  <script src="../../js/library/prism.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RPP17EPFCX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RPP17EPFCX');
+  </script>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header">
+      <div>
+        <h1>
+          <a href="/html/">Sonky</a>
+        </h1>
+      </div>
+    </header>
+
+    <!-- ### 컨텐츠 ### -->
+    <main class="container center">
+      <!-- // -->
+      <section class="section-type1" data-url="type1">
+        <h2 class="tit-sub1">넥센(現키움) 히어로즈 사이트 시스템 유지보수</h2>
+        <p class="txt-p">
+          당시 사내 인프라 업무를 하면서 처음으로 퍼블리싱 운영 업무를 맡게 된 사이트 입니다.<br>
+          퍼블리싱 업무 말고도 DB, JAVA, Linux 뒷단 개발 및 서버도 조금씩 다뤘던 프로젝트입니다.
+        </p>
+        <div class="box-type2">
+          <figure>
+            <a href="../../img/data/heroes/heores1.png" target="_blank">
+              <img src="../../img/data/heroes/heores1.png" alt="넥센히어로즈 시절 이미지">
+            </a>
+            <figcaption>넥센히어로즈 시절</figcaption>
+          </figure>
+          <figure>
+            <a href="../../img/data/heroes/heroes2.png" target="_blank">
+              <img src="../../img/data/heroes/heroes2.png" alt="넥센히어로즈 시절 이미지">
+            </a>
+            <figcaption>2018년 리뉴얼 후 키움히어로즈 시절</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section-type1" data-url="type2">
+        <h2 class="tit-sub1">효성그룹 및 계열사 홈페이지 리뉴얼</h2>
+        <p class="txt-p">
+          효성그룹 사이트 리뉴얼 및 계열사 4개 홈페이지를 구축한 프로젝트입니다.<br>
+          크로스 브라우징 및 웹 접근성을 취득한 사이트입니다.
+        </p>
+        <div>
+          <figure>
+            <a href="../../img/data/hyosung/hyosung1.png" target="_blank">
+              <img src="../../img/data/hyosung/hyosung1.png" alt="효성중공업">
+            </a>
+            <figcaption>당시 구축했던 효성그룹 및 하위 사이트 4개중 중공업부문</figcaption>
+          </figure>
+          <figure>
+            <a href="../../img/data/hyosung/hyosung2.png" target="_blank">
+              <img src="../../img/data/hyosung/hyosung2.png" alt="효성중공업 협력업체 동반성장">
+            </a>
+            <figcaption>효성중공업 협력업체 동반성장 사이트</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section-type1" data-url="type3">
+        <h2 class="tit-sub1">KB국민은행 개인 인터넷뱅킹 리뉴얼</h2>
+        <p class="txt-p">
+          국민은행 인터넷뱅킹 리뉴얼 및 웹 접근성 취득, <a
+            href="http://www.i-award.or.kr/Web/Assess/FinalCandidateView.aspx?REG_SEQNO=9262" target="_blank">웹 어워드
+            대상</a>을 받은 프로젝트입니다.
+        </p>
+        <div>
+          <figure>
+            <a href="../../img/data/kbbanking/kb_banking.jpg">
+              <img src="../../img/data/kbbanking/kb_banking.jpg" alt="KB국민은행 개인 인터넷뱅킹 메인">
+            </a>
+            <figcaption>KB국민은행 개인 인터넷뱅킹 메인</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section-type1" data-url="type4">
+        <h2 class="tit-sub1">포스코 차세대 MES 3.0 시스템 UI 개선</h2>
+        <p class="txt-p">
+          포스코 MES 시스템을 React로 재구축한 프로젝트입니다.<br>
+          UI는 <a href="https://react.semantic-ui.com/" target="_blank">Semantic-UI-React</a>를 기반으로 하였습니다.
+        </p>
+        <div>
+          <figure>
+            <a href="../../img/data/posco/posco1.png" target="_blank">
+              <img src="../../img/data/posco/posco1.png" alt="">
+            </a>
+            <figcaption>
+              ag-grid 와 rechart를 활용한 페이지<br>
+              <a href="https://codepen.io/Sonky/project/editor/ZKezNM">https://codepen.io/Sonky/project/editor/ZKezNM</a>
+            </figcaption>
+          </figure>
+          <!-- index.jsx -->
+          <div class="code">
+            <strong>index.jsx</strong>
+            <pre>
+              <code class="language-jsx">
+import React, { Component } from 'react';
+import { ContentLayout, Segment } from '@mes/mes-ui-react';
+import SearchView from './SearchView';
+import ButtonView1 from './ButtonView1';
+import TableView from './TableView';
+import ButtonView2 from './ButtonView2';
+import ChartView from './ChartView';
+
+class Index extends Component {
+  render() {
+    return (
+      &lt;ContentLayout&gt;
+        &lt;ContentLayout.Header title="폭예측 Simulator" /&gt;
+
+        &lt;SearchView /&gt;
+        
+        &lt;Segment&gt;
+          &lt;ButtonView1 /&gt;
+          &lt;TableView /&gt;
+        &lt;/Segment&gt;
+
+        &lt;Segment&gt;
+          &lt;ButtonView2 /&gt;
+          &lt;ChartView /&gt;
+        &lt;/Segment&gt;
+      &lt;/ContentLayout&gt;
+    );
+  }
+}
+
+export default Index;
+                
+              </code>
+            </pre>
+          </div>
+          <!-- datagrid.jsx -->
+          <div class="code">
+            <strong>datagrid.jsx</strong>
+            <pre>
+              <code class="language-jsx">
+import React, { Component } from 'react';
+import { DataGrid } from '@mes/mes-ui-react';
+
+class TableView extends Component {
+  state = {
+    columnDefs: [
+      {
+        colId: 'col1',
+        field: 'col1',
+        headerName: '구분',
+        headerCheckboxSelection: false,
+        headerCheckboxSelectionFilteredOnly: true,
+        checkboxSelection: true,
+      },
+      { colId: 'col2', field: 'col2', headerName: 'SEQ' },
+      { colId: 'col3', field: 'col3', headerName: '재료번호' },
+      {
+        colId: 'group1',
+        headerName: '주문 Size',
+        groupId: 'group1',
+        children: [
+          { colId: 'col4', field: 'col4', headerName: '두께' },
+          { colId: 'col5', field: 'col5', headerName: '폭' },
+        ],
+      },
+      {
+        colId: 'group2',
+        headerName: '소재 Size',
+        groupId: 'group2',
+        children: [
+          { colId: 'col6', field: 'col6', headerName: '두께' },
+          { colId: 'col7', field: 'col7', headerName: '폭' },
+        ],
+      },
+      { colId: 'col8', field: 'col8', headerName: '중량' },
+      { colId: 'col9', field: 'col9', headerName: 'S/T' },
+      { colId: 'col10', field: 'col10', headerName: '품명' },
+      { colId: 'col11', field: 'col11', headerName: '용도' },
+      { colId: 'col12', field: 'col12', headerName: '재질' },
+      { colId: 'col13', field: 'col13', headerName: '출강목표' },
+      { colId: 'col14', field: 'col14', headerName: '폭 예측값' },
+    ],
+    rowData: [
+      {
+        col1: '',
+        col2: '1',
+        col3: 'CBH2751',
+        col4: '0.930',
+        col5: '1155.0',
+        col6: '0.930',
+        col7: '1155.0',
+        col8: '12,300',
+        col9: 'M',
+        col10: 'FZG',
+        col11: 'SE4U',
+        col12: 'ZTTCLCSUAA',
+        col13: 'WU3040YDTI1',
+        col14: '1,153.5',
+      },
+    ],
+    rowSelection: 'multiple',
+  };
+
+  onRowSelected = event =&gt; {
+    console.log('onRowSelected : ', event);
+  };
+
+  onCellValueChanged = params =&gt; {
+    console.log('onCellValueChanged : ', params);
+  };
+
+  onGridReady = params =&gt; {
+    this.grid = {
+      api: params.api,
+      columnApi: params.columnApi,
+    };
+  };
+
+  render() {
+    const { columnDefs, rowData, rowSelection } = this.state;
+
+    return (
+      &lt;DataGrid
+        columnDefs={columnDefs}
+        rowData={rowData}
+        onGridReady={this.onGridReady}
+        rowSelection={rowSelection}
+        onRowSelected={this.onRowSelected}
+        onCellValueChanged={this.onCellValueChanged}
+        maxHeight={300}
+      /&gt;
+    );
+  }
+}
+
+export default TableView;
+              </code>
+            </pre>
+          </div>
+          <!-- chart.jsx -->
+          <div class="code">
+            <strong>chart.jsx</strong>
+            <pre>
+              <code class="language-jsx">
+import React, { PureComponent } from 'react';
+import { Chart } from '@mes/mes-ui-react';
+
+class ChartView extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      chartData: [
+        { name: 'CBH2551 [1153]', 폭: 1155 },
+        { name: 'CBH2552 [1152]', 폭: 1155 },
+        { name: 'CBH2553 [1150]', 폭: 1100 },
+        { name: 'CBH2554 [1149]', 폭: 1100 },
+        { name: 'CBH2555 [1152]', 폭: 1155 },
+      ],
+    };
+  }
+
+  render() {
+    return &lt;Chart.Bar data={this.state.chartData} /&gt;;
+  }
+}
+
+export default ChartView;
+              </code>
+            </pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-type1" data-url="type5">
+        <h2 class="tit-sub1">KB국민은행 차세대 통합인증서 플랫폼 구축</h2>
+        <p class="txt-p">관리자 통합인증 부분을 독립사이트로 구축</p>
+        <div>
+          <figure>
+            <a href="../../img/data/kbcert/kbcert1.png">
+             <img src="../../img/data/kbcert/kbcert1.png" alt="통합인증 메인">
+            </a>
+            <figcaption>KB 통합인증 메인</figcaption>
+          </figure>
+          <figure>
+            <a href="../../img/data/kbcert/kbcert2.png">
+             <img src="../../img/data/kbcert/kbcert2.png" alt="통합인증 요소">
+            </a>
+            <figcaption>KB 통합인증 중 하나</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section-type1" data-url="type6">
+        <h2 class="tit-sub1">고객언어솔루션</h2>
+        <p class="txt-p">
+          자사 자체 언어교정 솔루션으로 PC버전만 제작한 프로젝트입니다.<br>
+          
+        </p>
+        <div>
+          <figure>
+            <a href="../../img/data/jamo/jamo1.png" target="_blank">
+             <img src="../../img/data/jamo/jamo1.png" alt="자모 메인">
+            </a>
+            <figcaption>메인 페이지</figcaption>
+          </figure>
+          <figure>
+            <a href="../../img/data/jamo/jamo2.png" target="_blank">
+             <img src="../../img/data/jamo/jamo2.png" alt="자모 네비게이션">
+            </a>
+            <figcaption>네비게이션을 열었을 때</figcaption>
+          </figure>
+          <figure>
+            <a href="../../img/data/jamo/jamo3.png" target="_blank">
+             <img src="../../img/data/jamo/jamo3.png" alt="자모 콘텐츠 교정">
+            </a>
+            <figcaption>콘텐츠 교정 페이지</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section-type1" data-url="type7">
+        <h2 class="tit-sub1">우리은행 WON기업뱅킹 앱 구축</h2>
+        <p class="txt-p">우리은행 WON기업뱅킹앱 구축 프로젝트 진행 중</p>
+        <div>
+          <figure>
+            <!-- <a href="">
+             <img src="" alt="">
+            </a> -->
+            <figcaption>이미지 공수 중</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section-type1" data-url="type8">
+        <h2 class="tit-sub1">KB국민은행 오픈뱅킹 고도화</h2>
+        <p class="txt-p">프로젝트 진행 중</p>
+        <div>
+          <figure>
+            <!-- <a href="">
+             <img src="" alt="">
+            </a> -->
+            <figcaption></figcaption>
+          </figure>
+        </div>
+      </section>
+      <!-- // -->
+    </main>
+    <!-- ### // ### -->
+  </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+@import 'fonts';
+@import 'reset';
+@import 'color';
+@import 'layouts';
+@import 'form';
+@import 'button';
+@import 'text';
+@import 'items';
+
+.ui-tabcon {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+figure {
+
+  img {
+    max-width: 400px;
+
+    @media screen and (max-width: 620px) {
+      max-width: 100%;
+    }
+  }
+
+  >a {
+    cursor: zoom-in;
+  }
+
+  +figure {
+    margin-top: 16px;
+  }
+}

@@ -1,0 +1,100 @@
+.wrapper {
+  min-width: 375px;
+
+  .header {
+    max-width: 1200px;
+    margin: auto;
+    margin-bottom: 24px;
+
+    >div {
+      display: flex;
+      padding: 8px 24px;
+      font-size: 24px;
+      justify-content: space-between;
+
+      @media screen and (max-width: 1120px) {
+        width: 100%;
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+    padding: 0 24px 24px;
+
+    .guide-nav {
+      flex: none;
+      width: 220px;
+      margin-right: 16px;
+
+      >strong {
+        display: block;
+        font-size: 24px;
+        text-align: center;
+      }
+
+      >ul {
+        margin-top: 16px;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+
+        li {
+
+          a {
+            display: block;
+            line-height: 30px;
+            font-size: 16px;
+            padding-left: 16px;
+            transition: all 0.3s;
+
+            &:before {
+              content: "";
+              display: inline-block;
+              margin: 9px 8px 0 -8px;
+              width: 2px;
+              height: 12px;
+              background: transparent;
+              vertical-align: middle;
+              transition: all 0.3s;
+            }
+
+            &.active,
+            &:hover,
+            &:focus {
+              color: $text-type1;
+
+              &:before {
+                margin-top: 0;
+                height: 16px;
+                background: $text-type1;
+              }
+            }
+          }
+
+          +li {
+            margin-top: 8px;
+          }
+        }
+      }
+    }
+
+    &.center {
+      text-align: center;
+    }
+
+    >section {
+      flex: 1;
+      +section {
+        margin-top: 24px;
+      }
+    }
+  
+    @media screen and (max-width: 1120px) {
+      .guide-nav {
+        display: none;
+      }
+    }
+  }
+}
+

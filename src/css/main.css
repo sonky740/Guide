@@ -1,0 +1,12 @@
+.container {
+  margin: auto;
+  width: 1200px;
+  padding: 0 24px;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    width: 100%;
+  }
+}
+/*# sourceMappingURL=main.css.map */
