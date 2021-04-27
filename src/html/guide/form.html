@@ -5,174 +5,181 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Form</title>
   <link rel="stylesheet" href="../../css/common.css">
-  <link rel="stylesheet" href="../../css/guide.css">
+  <link rel="stylesheet" href="../../css/library/prism.css">
   <script src="../../js/common.js"></script>
+  <script src="../../js/library/prism.js"></script>
 </head>
 <body>
-  <!-- ### 헤더 ### -->
-  <header id="header">
-    
-  </header>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
 
-  <!-- ### 가이드 메인 ### -->
-  <main class="container">
-    <section class="guide">
-      <h2 class="title">라디오 v1</h2>
-
-      <div class="label-btn1">
-        <label>
-          <input type="radio" name="form_radio1" checked>
-          <span>테스트</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio1">
-          <span>테스트</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio1">
-          <span>테스트</span>
-        </label>
-      </div>
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section1">
+        <section class="guide">
+          <h2 class="title">라디오 v1</h2>
     
-      <div class="label-btn1">
-        <input type="radio" name="form_radio2" title="선택" checked>
-        <span aria-hidden="true">선택</span>
-        <input type="radio" name="form_radio2" title="선택">
-        <span aria-hidden="true">선택</span>
-      </div>
-  
-      <div class="label-btn1">
-        <input type="radio" name="form_radio3" title="선택" checked>
-        <span aria-hidden="true">선택</span>
-        <input type="radio" name="form_radio3" title="선택">
-        <span aria-hidden="true">선택</span>
-        <input type="radio" name="form_radio3" title="선택">
-        <span aria-hidden="true">선택</span>
-      </div>
-  
-      <div class="label-btn1">
-        <input type="radio" name="form_radio4" title="선택" checked>
-        <span aria-hidden="true">선택</span>
-        <input type="radio" name="form_radio4" title="선택">
-        <span aria-hidden="true">선택</span>
-        <input type="radio" name="form_radio4" title="선택">
-        <span aria-hidden="true">선택</span>
-        <input type="radio" name="form_radio4" title="선택">
-        <span aria-hidden="true">선택</span>
-      </div>
-    </section>
-    <!-- // -->
-    <section class="guide">
-      <h2 class="title">체크박스/라디오</h2>
-      <div class="label-check1 block">
-        <label>
-          <input type="checkbox" name="form_check1" data-checkbox="form_check1" checked>
-          <span>전체</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check1">
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check1">
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check1">
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check1">
-          <span>체크</span>
-        </label>
-      </div>
-      <div class="label-check1 block">
-        <label>
-          <input type="checkbox" name="form_check2" data-checkbox="form_check2">
-          <span>전체</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check2">
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check2">
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check2">
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check2">
-          <span>체크</span>
-        </label>
-      </div>
-      <div class="label-check1 block">
-        <label>
-          <input type="radio" name="form_radio5" checked>
-          <span>라디오</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio5">
-          <span>라디오</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio5">
-          <span>라디오</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio5">
-          <span>라디오</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio5">
-          <span>라디오</span>
-        </label>
-      </div>
-      <div class="label-check1 simple">
-        <label>
-          <input type="checkbox" name="form_check3" data-checkbox="form_check3">
-          <span>전체</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check3" checked>
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check3" checked>
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check3" checked>
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="checkbox" name="form_check3" checked>
-          <span>체크</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio6" checked>
-          <span>라디오</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio6">
-          <span>라디오</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio6">
-          <span>라디오</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio6">
-          <span>라디오</span>
-        </label>
-        <label>
-          <input type="radio" name="form_radio6">
-          <span>라디오</span>
-        </label>
-      </div>
-    </section>
-  </main>
+          <div class="label-btn1">
+            <label>
+              <input type="radio" name="form_radio1" checked>
+              <span>테스트</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio1">
+              <span>테스트</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio1">
+              <span>테스트</span>
+            </label>
+          </div>
+        
+          <div class="label-btn1">
+            <input type="radio" name="form_radio2" title="선택" checked>
+            <span aria-hidden="true">선택</span>
+            <input type="radio" name="form_radio2" title="선택">
+            <span aria-hidden="true">선택</span>
+          </div>
+      
+          <div class="label-btn1">
+            <input type="radio" name="form_radio3" title="선택" checked>
+            <span aria-hidden="true">선택</span>
+            <input type="radio" name="form_radio3" title="선택">
+            <span aria-hidden="true">선택</span>
+            <input type="radio" name="form_radio3" title="선택">
+            <span aria-hidden="true">선택</span>
+          </div>
+      
+          <div class="label-btn1">
+            <input type="radio" name="form_radio4" title="선택" checked>
+            <span aria-hidden="true">선택</span>
+            <input type="radio" name="form_radio4" title="선택">
+            <span aria-hidden="true">선택</span>
+            <input type="radio" name="form_radio4" title="선택">
+            <span aria-hidden="true">선택</span>
+            <input type="radio" name="form_radio4" title="선택">
+            <span aria-hidden="true">선택</span>
+          </div>
+        </section>
+        <!-- // -->
+        <section class="guide">
+          <h2 class="title">체크박스/라디오</h2>
+          <div class="label-check1 block">
+            <label>
+              <input type="checkbox" name="form_check1" data-checkbox="form_check1" checked>
+              <span>전체</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check1">
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check1">
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check1">
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check1">
+              <span>체크</span>
+            </label>
+          </div>
+          <div class="label-check1 block">
+            <label>
+              <input type="checkbox" name="form_check2" data-checkbox="form_check2">
+              <span>전체</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check2">
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check2">
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check2">
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check2">
+              <span>체크</span>
+            </label>
+          </div>
+          <div class="label-check1 block">
+            <label>
+              <input type="radio" name="form_radio5" checked>
+              <span>라디오</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio5">
+              <span>라디오</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio5">
+              <span>라디오</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio5">
+              <span>라디오</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio5">
+              <span>라디오</span>
+            </label>
+          </div>
+          <div class="label-check1 simple">
+            <label>
+              <input type="checkbox" name="form_check3" data-checkbox="form_check3">
+              <span>전체</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check3" checked>
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check3" checked>
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check3" checked>
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="checkbox" name="form_check3" checked>
+              <span>체크</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio6" checked>
+              <span>라디오</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio6">
+              <span>라디오</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio6">
+              <span>라디오</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio6">
+              <span>라디오</span>
+            </label>
+            <label>
+              <input type="radio" name="form_radio6">
+              <span>라디오</span>
+            </label>
+          </div>
+        </section>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
 </body>
 </html>

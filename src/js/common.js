@@ -20,6 +20,7 @@ function layout() {
   $lnb += '<ul>'
   $lnb += '<li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
   $lnb += '<li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
+  $lnb += '<li><a href="/Guide/src/html/guide/form.html">form</a></li>'
   $lnb += '</ul>'
   $lnbParent.innerHTML = $lnb;
   
