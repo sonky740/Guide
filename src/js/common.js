@@ -18,8 +18,8 @@ function layout() {
   var $lnbParent = document.querySelector('.guide-nav');
   var $lnb = '<strong>Guide</strong>'
   $lnb += '<ul>'
-  $lnb += '<li><a href="/Guide/html/guide/context-menu.html">context-menu</a></li>'
-  $lnb += '<li><a href="/Guide/html/guide/pagination.html">pagination</a></li>'
+  $lnb += '<li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
+  $lnb += '<li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
   $lnb += '</ul>'
   $lnbParent.innerHTML = $lnb;
   
@@ -36,7 +36,7 @@ function layout() {
   var $headerParent = document.querySelector('.header');
   var $header = '<div>'
   $header += '<h1>'
-  $header += '<a href="/Guide/html/" title="홈페이지로">Sonky</a>'
+  $header += '<a href="/Guide/src/html/" title="홈으로">Sonky</a>'
   $header += '</h1>'
   $header += '</div>'
   $headerParent.innerHTML = $header;
