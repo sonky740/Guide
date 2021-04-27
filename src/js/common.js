@@ -18,8 +18,8 @@ function layout() {
   var $lnbParent = document.querySelector('.guide-nav');
   var $lnb = '<strong>Guide</strong>'
   $lnb += '<ul>'
-  $lnb += '<li><a href="/src/html/guide/context-menu.html">context-menu</a></li>'
-  $lnb += '<li><a href="/src/html/guide/pagination.html">pagination</a></li>'
+  $lnb += '<li><a href="./guide/context-menu.html">context-menu</a></li>'
+  $lnb += '<li><a href="./guide/pagination.html">pagination</a></li>'
   $lnb += '</ul>'
   $lnbParent.innerHTML = $lnb;
   
