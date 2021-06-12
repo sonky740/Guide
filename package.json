@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "live-server": "live-server --port=5500",
-    "build": "babel src/js -w -d public/js"
+    "build": "babel src/js -w -d public/js",
+    "css": "node-sass --watch --source-map true --source-map-contents true src/scss --output src/css"
   },
   "author": "",
   "license": "ISC",
