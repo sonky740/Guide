@@ -223,18 +223,20 @@ var UI_Control = {
             })
           } else {
             // 전체 닫기
-            $body.forEach(function ($bodyAll) {
-              if ($bodyAll.getAttribute('data-accr') === 'show') {
-                $bodyAll.querySelector('.blind').innerText = "펼치기";
-                $bodyAll.setAttribute('data-accr', 'hiding');
-              }
-              $bodyAll.querySelector('[data-accr-target]').removeAttribute('style');
-              $bodyAll.addEventListener('transitionend', function (e) {
-                if (e.target !== $trigger) {
-                  $bodyAll.setAttribute('data-accr', '');
+            if ($accrEl.getAttribute('data-accr-mode') !== 'each') {
+              $body.forEach(function ($bodyAll) {
+                if ($bodyAll.getAttribute('data-accr') === 'show') {
+                  $bodyAll.querySelector('.blind').innerText = "펼치기";
+                  $bodyAll.setAttribute('data-accr', 'hiding');
                 }
-              })
-            })
+                $bodyAll.querySelector('[data-accr-target]').removeAttribute('style');
+                $bodyAll.addEventListener('transitionend', function (e) {
+                  if (e.target !== $trigger) {
+                    $bodyAll.setAttribute('data-accr', '');
+                  }
+                });
+              });
+            }
             // 선택한 영역 열기
             $trigger_ir.innerText = "접기";
             $bodyEl.setAttribute('data-accr', 'showing');

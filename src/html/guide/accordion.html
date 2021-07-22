@@ -21,7 +21,7 @@
       <section class="main-section1">
         <h2 class="tit-main1" data-text="accordion">accordion</h2>
 
-        <ul class="list_type1" data-toggle="accr">
+        <ul data-toggle="accr">
           <!-- data-accr: 아코디언 하나 -->
           <li class="accr" data-accr>
             <div class="accr_title">
@@ -49,23 +49,6 @@
               </ul>
             </div>
           </li>
-          <!-- // -->
-          <li class="accr" data-accr>
-            <div class="accr_title">
-              아코디언 타이틀
-              <button type="button" data-accr-trigger><span class="blind">접기</span></button>
-            </div>
-            <div class="accr_content" data-accr-target>
-              <ul class="accr_content_body">
-                <li><a href="#none">내용</a></li>
-                <li><a href="#none">내용</a></li>
-                <li><a href="#none">내용</a></li>
-                <li><a href="#none">내용</a></li>
-                <li><a href="#none">내용</a></li>
-                <li><a href="#none">내용</a></li>
-              </ul>
-            </div>
-          </li>
           <li class="accr" data-accr>
             <div class="accr_title">
               아코디언 타이틀
@@ -114,13 +97,34 @@
               </ul>
             </div>
           </li>
+        </ul>
+
+        <p class="codepen" data-height="300" data-default-tab="html,result" data-slug-hash="qBmPjyg" data-user="Sonky" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+          <span>See the Pen <a href="https://codepen.io/Sonky/pen/qBmPjyg">
+          accordion</a> by Sonky (<a href="https://codepen.io/Sonky">@Sonky</a>)
+          on <a href="https://codepen.io">CodePen</a>.</span>
+        </p>
+        <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+        <ul data-toggle="accr" data-accr-mode="each">
+          <!-- data-accr: 아코디언 하나 -->
           <li class="accr" data-accr>
             <div class="accr_title">
               아코디언 타이틀
+              <!-- data-accr-trigger: 클릭 트리거 -->
               <button type="button" data-accr-trigger><span class="blind">펼치기</span></button>
             </div>
+            <!-- data-accr-target: 보여지는 요소 -->
             <div class="accr_content" data-accr-target>
               <ul class="accr_content_body">
+                <li><a href="#none">내용</a></li>
+                <li><a href="#none">내용</a></li>
+                <li><a href="#none">내용</a></li>
+                <li><a href="#none">내용</a></li>
+                <li><a href="#none">내용</a></li>
+                <li><a href="#none">내용</a></li>
+                <li><a href="#none">내용</a></li>
+                <li><a href="#none">내용</a></li>
                 <li><a href="#none">내용</a></li>
                 <li><a href="#none">내용</a></li>
                 <li><a href="#none">내용</a></li>

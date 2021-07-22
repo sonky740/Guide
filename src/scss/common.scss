@@ -7,7 +7,9 @@
 @import 'text';
 @import 'items';
 
-@import 'guide/index';
+// 가이드
+@import 'accordion';
+@import 'contextMenu';
 
 .blind {
   position: absolute;
@@ -44,4 +46,9 @@ figure {
   +figure {
     margin-top: 16px;
   }
+}
+
+// codepen
+.cp_embed_wrapper {
+  margin: 24px 0;
 }
