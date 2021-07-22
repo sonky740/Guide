@@ -7,7 +7,17 @@
 @import 'text';
 @import 'items';
 
-@import 'guide/contextMenu';
+@import 'guide/index';
+
+.blind {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 .ui-tabcon {
   display: none;

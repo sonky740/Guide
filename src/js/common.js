@@ -1,10 +1,15 @@
 window.addEventListener('DOMContentLoaded', function () {
+  // IE forEach 대응
+  if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+  }
+
   UI_Control.layout();
   UI_Control.url();
   UI_Control.checkAll();
   UI_Control.tab();
   UI_Control.contextMenu();
-  UI_Control.scrollMagic();
+  UI_Control.accr();
 })
 
 var UI_Control = {
@@ -19,10 +24,10 @@ var UI_Control = {
     var $lnbParent = document.querySelector('.guide-nav');
     var $lnb = '<strong>Guide</strong>'
     $lnb += '<ul>'
-    $lnb += '<li><a href="/src/html/guide/accordion.html">accordion</a></li>'
-    $lnb += '<li><a href="/src/html/guide/context-menu.html">context-menu</a></li>'
-    $lnb += '<li><a href="/src/html/guide/pagination.html">pagination</a></li>'
-    $lnb += '<li><a href="/src/html/guide/form.html">form</a></li>'
+    $lnb += '<li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
+    $lnb += '<li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
+    $lnb += '<li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
+    $lnb += '<li><a href="/Guide/src/html/guide/form.html">form</a></li>'
     $lnb += '</ul>'
     $lnbParent.innerHTML = $lnb;
 
@@ -153,11 +158,6 @@ var UI_Control = {
   contextMenu: function () {
     const items = document.querySelectorAll('[data-context] > a');
 
-    // IE forEach 대응
-    if (window.NodeList && !NodeList.prototype.forEach) {
-      NodeList.prototype.forEach = Array.prototype.forEach;
-    }
-
     document.body.addEventListener('click', function (e) {
       const targetClassList = e.target;
       if (targetClassList.classList.contains('context')) return;
@@ -183,28 +183,90 @@ var UI_Control = {
   },
 
   /**
-   * 스크롤 애니메이션
+   * 아코디언
    */
-  scrollMagic: function () {
-    var scrollTrigger = document.querySelectorAll('[data-scroll]');
+  accr: function () {
+    var $accr = document.querySelectorAll('[data-toggle="accr"]');
 
-    if (scrollTrigger.length > 0) {
-      var controller = new ScrollMagic.Controller();
-      for (var i = 0; i < scrollTrigger.length; i++) {
+    Array.prototype.forEach.call($accr, function ($accrEl) {
+      var $body = $accrEl.querySelectorAll('[data-accr]');
 
-        // fade-out
-        if (scrollTrigger[i].dataset.scroll === 'fade-out') {
-          var Type1 = new ScrollMagic.Scene({
-              triggerElement: scrollTrigger[i],
-              triggerHook: 0.8
-            })
-            .setClassToggle(scrollTrigger[i], 'active')
-            .addTo(controller)
-          // .addIndicators({name: i+1, colorStart: 'red', colorTrigger: 'blue'});
+      Array.prototype.forEach.call($body, function ($bodyEl) {
+        var $trigger = $bodyEl.querySelector('[data-accr-trigger]');
+        var $triggerAll = $accrEl.querySelectorAll('[data-accr-trigger]'); // 이벤트 진행 중에 트리거의 이벤트를 없애기 위함.
+        var $trigger_ir = $trigger.querySelector('.blind');
+        var $target = $bodyEl.querySelector('[data-accr-target]');
+        var $target_body = $target.querySelector('[data-accr-target] .accr_content_body');
+
+        // init
+        if ($bodyEl.getAttribute('data-accr') === 'show') {
+          $trigger_ir.innerText = "접기";
+          $target.style.height = $target_body.clientHeight + 'px';
+        } else {
+          $trigger_ir.innerText = "펼치기";
         }
 
-        // another
-      }
-    }
+        // 클릭 이벤트
+        $trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // 선택한게 열려있으면 닫기
+          if ($bodyEl.getAttribute('data-accr') === 'show') {
+            $trigger_ir.innerText = "펼치기";
+            $bodyEl.setAttribute('data-accr', 'hiding');
+            $target.removeAttribute('style');
+
+            $bodyEl.addEventListener('transitionend', function (e) {
+              if (e.target !== $trigger) {
+                this.setAttribute('data-accr', '');
+              }
+            })
+          } else {
+            // 전체 닫기
+            $body.forEach(function ($bodyAll) {
+              if ($bodyAll.getAttribute('data-accr') === 'show') {
+                $bodyAll.querySelector('.blind').innerText = "펼치기";
+                $bodyAll.setAttribute('data-accr', 'hiding');
+              }
+              $bodyAll.querySelector('[data-accr-target]').removeAttribute('style');
+              $bodyAll.addEventListener('transitionend', function (e) {
+                if (e.target !== $trigger) {
+                  $bodyAll.setAttribute('data-accr', '');
+                }
+              })
+            })
+            // 선택한 영역 열기
+            $trigger_ir.innerText = "접기";
+            $bodyEl.setAttribute('data-accr', 'showing');
+            $target.style.height = $target_body.clientHeight + 'px';
+
+            // 클릭 이벤트를 없애기 위함.
+            var stopFunc = function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              return false;
+            };
+
+            // 이벤트 실행 중에 trigger 클릭 이벤트 삭제
+            $triggerAll.forEach(function ($trAll) {
+              ['click', 'touchend'].forEach(function (events) {
+                $trAll.addEventListener(events, stopFunc, true);
+              })
+            })
+            $bodyEl.addEventListener('transitionend', function () {
+              this.setAttribute('data-accr', 'show');
+
+              // 이벤트 종료 후 trigger 클릭 이벤트 재할당
+              $triggerAll.forEach(function ($trAll) {
+                ['click', 'touchend'].forEach(function (events) {
+                  $trAll.removeEventListener(events, stopFunc, true);
+                })
+              })
+            })
+          }
+        })
+      })
+    })
   }
 }
