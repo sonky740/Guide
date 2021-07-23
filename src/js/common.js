@@ -44,7 +44,7 @@ var UI_Control = {
     var $headerParent = document.querySelector('.header');
     var $header = '<div>'
     $header += '<h1>'
-    $header += '<a href="/src/html/" title="홈으로">Sonky</a>'
+    $header += '<a href="/Guide/src/html/" title="홈으로">Sonky</a>'
     $header += '</h1>'
     $header += '</div>'
     $headerParent.innerHTML = $header;
