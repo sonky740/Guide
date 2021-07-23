@@ -156,10 +156,10 @@ var UI_Control = {
    * contextMenu
    */
   contextMenu: function () {
-    const items = document.querySelectorAll('[data-context] > a');
+    var items = document.querySelectorAll('[data-context] > button');
 
     document.body.addEventListener('click', function (e) {
-      const targetClassList = e.target;
+      var targetClassList = e.target;
       if (targetClassList.classList.contains('context')) return;
 
       // 개별토글

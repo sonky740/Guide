@@ -828,25 +828,12 @@ span.btn-type1:hover {
 .context-menu-item + .context-menu-item {
   margin-top: 16px;
 }
+.context-menu-item button {
+  color: #fff;
+  text-align: left;
+}
 .context-menu-item:first-child {
   border-top: 0;
-}
-.context-menu-item:after {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  border: 1px solid #000;
-  padding: 2px;
-  font-size: 9px;
-  background-color: #fff;
-}
-.context-menu-item:hover:after {
-  content: "open";
-  color: #000;
-}
-.context-menu-item.open:after {
-  content: "close";
-  color: #000;
 }
 .context-menu-item.open .context {
   display: block;
