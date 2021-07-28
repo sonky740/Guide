@@ -24,6 +24,7 @@ var UI_Control = {
     let $lnb = '<strong>Guide</strong>'
     $lnb += '<ul>'
     $lnb += '<li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
+    $lnb += '<li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
     $lnb += '<li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
     $lnb += '<li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
     $lnb += '<li><a href="/Guide/src/html/guide/form.html">form</a></li>'
@@ -176,7 +177,7 @@ var UI_Control = {
         const $triggerAll = $accrEl.querySelectorAll('[data-accr-trigger]'); // 이벤트 진행 중에 트리거의 이벤트를 없애기 위함.
         const $trigger_ir = $trigger.querySelector('.blind');
         const $target = $bodyEl.querySelector('[data-accr-target]');
-        const $target_body = $target.querySelector('[data-accr-target] .accr_content_body');
+        const $target_body = $target.querySelector('[data-accr-target]>.accr-content-body');
 
         // init
         if ($bodyEl.getAttribute('data-accr') === 'show') {

@@ -1,9 +1,9 @@
 .accr {
 
-  &_title {
+  &-title {
     position: relative;
 
-    [data-accr-trigger] {
+    >[data-accr-trigger] {
       position: absolute;
       top: 0;
       left: 0;
@@ -31,7 +31,7 @@
     }
   }
 
-  &_content {
+  &-content {
     position: relative;
     height: 0;
   }
@@ -39,7 +39,7 @@
   &[data-accr=""] {
     position: relative;
 
-    .accr_content {
+    >.accr-content {
       display: none;
       height: 0;
     }
@@ -48,21 +48,21 @@
   &[data-accr="showing"],
   &[data-accr="hiding"],
   &[data-accr="show"] {
-    & {
-      border-color: #222;
-    }
+    border-color: #222;
   }
 
   &[data-accr="showing"],
   &[data-accr="show"] {
 
-    [data-accr-trigger] {
-      &:before {
-        transform: translateY(-50%) rotate(-45deg);
-      }
-
-      &:after {
-        transform: translateY(-50%) rotate(225deg);
+    >.accr-title {
+      [data-accr-trigger] {
+        &:before {
+          transform: translateY(-50%) rotate(-45deg);
+        }
+  
+        &:after {
+          transform: translateY(-50%) rotate(225deg);
+        }
       }
     }
   }
@@ -71,20 +71,20 @@
   &[data-accr="hiding"] {
     overflow: hidden;
 
-    .accr_content {
+    >.accr-content {
       transition: height .3s;
       z-index: 1;
     }
   }
 
   &[data-accr="hiding"] {
-    .accr_content {
+    >.accr-content {
       height: 0;
     }
   }
 
   &[data-accr="show"] {
-    .accr_content {
+    >.accr-content {
       display: block;
       height: auto;
       z-index: 1;
