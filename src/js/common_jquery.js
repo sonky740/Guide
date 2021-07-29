@@ -39,19 +39,30 @@ UI.tab = {
 };
 
 // accordion
-UI.accr = {
+UI.accor = {
     init: function () {
+        this.createSelector();
+
+        // 펼쳐져 있을 경우
+        $('[data-accor-item]').each(function () {
+            const initTarget = $(this).find('>[data-accor-target]');
+
+            if ($(this).hasClass('on')) {
+                $(this).find('>.accordion-title .blind').text('접기');
+                initTarget.addClass('shown');
+                // initTarget.css('height', initTarget.children().outerHeight());
+            }
+        })
+
         this.click();
     },
     createSelector: function () {
         this.$accor = UI.$body.find('[data-accor]');
         this.$accorItem = this.$accor.find('>[data-accor-item]');
         this.$accorTrigger = this.$accorItem.find('>.accordion-title>[data-accor-trigger]');
-        this.$accorContent = this.$accorItem.find('>[data-accor-target]');
+        this.$accorTarget = this.$accorItem.find('>[data-accor-target]');
     },
     click: function () {
-        this.createSelector();
-
         this.$accorTrigger.on('click.accor', function () {
             const item = $(this).closest('.accordion-item');
             const target = item.find('>[data-accor-target]');
@@ -78,6 +89,7 @@ UI.accr = {
 
             // 각각 활성화
             if (item.hasClass('on')) {
+                target.css('height', target.children().outerHeight());
                 target.removeClass('shown');
                 target.addClass('hiding');
                 target.css('height', 0);
@@ -123,5 +135,5 @@ $(function () {
     UI.$window = $(window);
     UI.$body = $("body");
     if (UI.hasJqueryObject(UI.$body.find(".tab-wrap"))) UI.tab.init();
-    if (UI.hasJqueryObject(UI.$body.find('[data-accor]'))) UI.accr.init();
+    if (UI.hasJqueryObject(UI.$body.find('[data-accor]'))) UI.accor.init();
 });

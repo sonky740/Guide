@@ -851,22 +851,21 @@ span.btn-type1:hover {
   -webkit-transform: translateY(-50%) rotate(135deg);
           transform: translateY(-50%) rotate(135deg);
 }
-.accordion-content {
+.accordion [data-accor-target] {
   display: none;
-  height: 0;
   -webkit-transition: height 0.3s;
   transition: height 0.3s;
 }
-.accordion-content.showing, .accordion-content.hiding {
+.accordion [data-accor-target].showing, .accordion [data-accor-target].hiding {
   display: block;
+  height: 0;
   overflow: hidden;
 }
-.accordion-content.shown {
+.accordion [data-accor-target].shown {
   display: block;
-  height: auto;
 }
 .accordion-body {
-  padding: 1rem 0;
+  padding: 1rem;
 }
 .accordion-item.on > .accordion-title > [data-accor-trigger]:before {
   -webkit-transform: translateY(-50%) rotate(-45deg);
@@ -876,7 +875,7 @@ span.btn-type1:hover {
   -webkit-transform: translateY(-50%) rotate(225deg);
           transform: translateY(-50%) rotate(225deg);
 }
-.accordion-item.on > .accordion-content {
+.accordion-item.on > [data-accor-target] {
   display: block;
 }
 
