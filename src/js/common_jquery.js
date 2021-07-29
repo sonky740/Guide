@@ -79,7 +79,6 @@ UI.accor = {
 
                 target.off('transitionend').on('transitionend', function () {
                     $(this).removeClass('hiding');
-                    $(this).removeClass('shown');
                     $(this).addClass('hidden');
                     $(this).removeAttr('style');
 
@@ -104,7 +103,6 @@ UI.accor = {
 
                             targetAll.off('transitionend').on('transitionend', function () {
                                 $(this).removeClass('hiding');
-                                $(this).removeClass('shown');
                                 $(this).addClass('hidden');
                                 $(this).removeAttr('style');
 
@@ -124,7 +122,6 @@ UI.accor = {
 
                 target.off('transitionend').on('transitionend', function () {
                     $(this).removeClass('showing');
-                    $(this).removeClass('hidden');
                     $(this).addClass('shown');
                     $(this).removeAttr('style');
 
@@ -133,6 +130,14 @@ UI.accor = {
             }
 
             item.toggleClass('on');
+
+            // 이벤트 도중 클릭 이벤트 취소
+            UI.accor.$accorTrigger.off('click', UI.accor.click());
+            target.on('transitionend', function () {
+                UI.accor.$accorTrigger.on('click', UI.accor.click());
+
+                target.off('transitionstart').off('transitionend');
+            })
         });
     }
 };
