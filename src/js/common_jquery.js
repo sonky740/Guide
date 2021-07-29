@@ -50,7 +50,6 @@ UI.accor = {
             if ($(this).hasClass('on')) {
                 $(this).find('>.accordion-title .blind').text('접기');
                 initTarget.addClass('shown');
-                // initTarget.css('height', initTarget.children().outerHeight());
             }
         })
 
@@ -67,26 +66,6 @@ UI.accor = {
             const item = $(this).closest('.accordion-item');
             const target = item.find('>[data-accor-target]');
 
-            // 하나만 활성화일 때
-            if ($(this).closest('[data-accor]').data('accor') === "only" && item.siblings().hasClass('on')) {
-                item.siblings().removeClass('on');
-                item.siblings().find('>[data-accor-target]').removeClass('shown');
-                item.siblings().find('>[data-accor-target]').addClass('hiding');
-                item.siblings().find('>[data-accor-target]').css('height', 0);
-
-                item.siblings().find('>[data-accor-target]').off('transitionstart').on('transitionstart', function () {
-                    $(this).trigger('accr.hiding');
-                })
-
-                item.siblings().find('>[data-accor-target]').off('transitionend').on('transitionend', function () {
-                    $(this).removeClass('hiding');
-                    $(this).removeClass('shown');
-                    $(this).addClass('hidden');
-
-                    $(this).trigger('accr.hidden');
-                })
-            }
-
             // 각각 활성화
             if (item.hasClass('on')) {
                 target.css('height', target.children().outerHeight());
@@ -102,11 +81,39 @@ UI.accor = {
                     $(this).removeClass('hiding');
                     $(this).removeClass('shown');
                     $(this).addClass('hidden');
-                    // $(this).attr('style', '');
+                    $(this).removeAttr('style');
 
                     $(this).trigger('accr.hidden');
                 })
             } else {
+                // 하나만 활성화일 때
+                if ($(this).closest('[data-accor]').data('accor') === "only") {
+                    item.siblings().each(function () {
+                        const targetAll = $(this).find('>[data-accor-target]');
+
+                        if (targetAll.hasClass('shown')) {
+                            $(this).removeClass('on');
+                            targetAll.css('height', targetAll.children().outerHeight());
+                            targetAll.removeClass('shown');
+                            targetAll.addClass('hiding');
+                            targetAll.css('height', 0);
+
+                            targetAll.off('transitionstart').on('transitionstart', function () {
+                                $(this).trigger('accr.hiding');
+                            })
+
+                            targetAll.off('transitionend').on('transitionend', function () {
+                                $(this).removeClass('hiding');
+                                $(this).removeClass('shown');
+                                $(this).addClass('hidden');
+                                $(this).removeAttr('style');
+
+                                $(this).trigger('accr.hidden');
+                            })
+                        }
+                    })
+                }
+
                 target.removeClass('hidden');
                 target.addClass('showing');
                 target.css('height', target.children().outerHeight());
@@ -119,7 +126,7 @@ UI.accor = {
                     $(this).removeClass('showing');
                     $(this).removeClass('hidden');
                     $(this).addClass('shown');
-                    // $(this).attr('style', '');
+                    $(this).removeAttr('style');
 
                     $(this).trigger('accr.shown');
                 })
