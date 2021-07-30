@@ -45,7 +45,7 @@ UI.accor = {
 
         $('[data-accor-item]').each(function () {
             const initTarget = $(this).find('>[data-accor-target]');
-            
+
             // 펼쳐져 있을 경우
             if ($(this).hasClass('on')) {
                 $(this).find('>.accordion-title .blind').text('접기');
@@ -72,7 +72,7 @@ UI.accor = {
             if (item.hasClass('on')) {
                 target.removeClass('shown');
                 // 애니메이션 없을 시
-                if($(this).closest('[data-accor-animation="false"]').length) {
+                if ($(this).closest('[data-accor-animation="false"]').length) {
                     target.addClass('hidden');
                     item.removeClass('on');
                     target.trigger('accor.hidden');
@@ -103,7 +103,7 @@ UI.accor = {
                         if (targetAll.hasClass('shown')) {
                             $(this).removeClass('on');
                             // 애니메이션 없을 시
-                            if($(this).closest('[data-accor-animation="false"]').length) {
+                            if ($(this).closest('[data-accor-animation="false"]').length) {
                                 targetAll.removeClass('shown');
                                 targetAll.addClass('hidden');
                                 targetAll.trigger('accor.hidden');
@@ -132,7 +132,7 @@ UI.accor = {
 
                 target.removeClass('hidden');
                 // 애니메이션 없을 시 
-                if($(this).closest('[data-accor-animation="false"]').length) {
+                if ($(this).closest('[data-accor-animation="false"]').length) {
                     target.addClass('shown');
                     item.addClass('on');
                     target.trigger('accor.shown');
