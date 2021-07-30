@@ -43,13 +43,15 @@ UI.accor = {
     init: function () {
         this.createSelector();
 
-        // 펼쳐져 있을 경우
         $('[data-accor-item]').each(function () {
             const initTarget = $(this).find('>[data-accor-target]');
-
+            
+            // 펼쳐져 있을 경우
             if ($(this).hasClass('on')) {
                 $(this).find('>.accordion-title .blind').text('접기');
                 initTarget.addClass('shown');
+            } else {
+                initTarget.addClass('hidden');
             }
         })
 
@@ -68,13 +70,21 @@ UI.accor = {
 
             // 각각 활성화
             if (item.hasClass('on')) {
-                target.css('height', target.children().outerHeight());
                 target.removeClass('shown');
+                // 애니메이션 없을 시
+                if($(this).closest('[data-accor-animation="false"]').length) {
+                    target.addClass('hidden');
+                    item.removeClass('on');
+                    target.trigger('accor.hidden');
+                    return false;
+                }
+                // // 애니메이션 없을 시
+                target.css('height', target.children().outerHeight());
                 target.addClass('hiding');
                 target.css('height', 0);
 
                 target.off('transitionstart').on('transitionstart', function () {
-                    $(this).trigger('accr.hiding')
+                    $(this).trigger('accor.hiding')
                 })
 
                 target.off('transitionend').on('transitionend', function () {
@@ -82,7 +92,7 @@ UI.accor = {
                     $(this).addClass('hidden');
                     $(this).removeAttr('style');
 
-                    $(this).trigger('accr.hidden');
+                    $(this).trigger('accor.hidden');
                 })
             } else {
                 // 하나만 활성화일 때
@@ -92,13 +102,21 @@ UI.accor = {
 
                         if (targetAll.hasClass('shown')) {
                             $(this).removeClass('on');
+                            // 애니메이션 없을 시
+                            if($(this).closest('[data-accor-animation="false"]').length) {
+                                targetAll.removeClass('shown');
+                                targetAll.addClass('hidden');
+                                targetAll.trigger('accor.hidden');
+                                return false;
+                            }
+                            // // 애니메이션 없을 시
                             targetAll.css('height', targetAll.children().outerHeight());
                             targetAll.removeClass('shown');
                             targetAll.addClass('hiding');
                             targetAll.css('height', 0);
 
                             targetAll.off('transitionstart').on('transitionstart', function () {
-                                $(this).trigger('accr.hiding');
+                                $(this).trigger('accor.hiding');
                             })
 
                             targetAll.off('transitionend').on('transitionend', function () {
@@ -106,18 +124,26 @@ UI.accor = {
                                 $(this).addClass('hidden');
                                 $(this).removeAttr('style');
 
-                                $(this).trigger('accr.hidden');
+                                $(this).trigger('accor.hidden');
                             })
                         }
                     })
                 }
 
                 target.removeClass('hidden');
+                // 애니메이션 없을 시 
+                if($(this).closest('[data-accor-animation="false"]').length) {
+                    target.addClass('shown');
+                    item.addClass('on');
+                    target.trigger('accor.shown');
+                    return false;
+                }
+                // // 애니메이션 없을 시
                 target.addClass('showing');
                 target.css('height', target.children().outerHeight());
 
                 target.off('transitionstart').on('transitionstart', function () {
-                    $(this).trigger('accr.showing')
+                    $(this).trigger('accor.showing')
                 })
 
                 target.off('transitionend').on('transitionend', function () {
@@ -125,7 +151,7 @@ UI.accor = {
                     $(this).addClass('shown');
                     $(this).removeAttr('style');
 
-                    $(this).trigger('accr.shown');
+                    $(this).trigger('accor.shown');
                 })
             }
 

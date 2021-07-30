@@ -36,18 +36,22 @@
   }
 
   [data-accor-target] {
-    display: none; 
-    transition: height .3s;
+    display: none;
     
     &.showing,
     &.hiding {
       display: block;
       height: 0;
       overflow: hidden;
+      transition: height .3s;
     }
 
     &.shown {
       display: block;
+    }
+
+    &.hidden {
+      display: none;
     }
   }
 
