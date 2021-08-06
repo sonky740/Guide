@@ -61,7 +61,6 @@ UI.accor = {
         this.$accor = UI.$body.find('[data-accor]');
         this.$accorItem = this.$accor.find('>[data-accor-item]');
         this.$accorTrigger = this.$accorItem.find('>.accordion-title>[data-accor-trigger]');
-        this.$accorTarget = this.$accorItem.find('>[data-accor-target]');
     },
     click: function () {
         this.$accorTrigger.on('click.accor', function () {
@@ -71,14 +70,14 @@ UI.accor = {
             // 각각 활성화
             if (item.hasClass('on')) {
                 target.removeClass('shown');
-                // 애니메이션 없을 시
+                /* 애니메이션 없을 시 */
                 if ($(this).closest('[data-accor-animation="false"]').length) {
                     target.addClass('hidden');
                     item.removeClass('on');
                     target.trigger('accor.hidden');
                     return false;
                 }
-                // // 애니메이션 없을 시
+                /* // 애니메이션 없을 시 */
                 target.css('height', target.children().outerHeight());
                 target.addClass('hiding');
                 target.css('height', 0);
@@ -102,14 +101,14 @@ UI.accor = {
 
                         if (targetAll.hasClass('shown')) {
                             $(this).removeClass('on');
-                            // 애니메이션 없을 시
+                            /* 애니메이션 없을 시 */
                             if ($(this).closest('[data-accor-animation="false"]').length) {
                                 targetAll.removeClass('shown');
                                 targetAll.addClass('hidden');
                                 targetAll.trigger('accor.hidden');
                                 return false;
                             }
-                            // // 애니메이션 없을 시
+                            /* // 애니메이션 없을 시 */
                             targetAll.css('height', targetAll.children().outerHeight());
                             targetAll.removeClass('shown');
                             targetAll.addClass('hiding');
@@ -131,14 +130,14 @@ UI.accor = {
                 }
 
                 target.removeClass('hidden');
-                // 애니메이션 없을 시 
+                /* 애니메이션 없을 시 */
                 if ($(this).closest('[data-accor-animation="false"]').length) {
                     target.addClass('shown');
                     item.addClass('on');
                     target.trigger('accor.shown');
                     return false;
                 }
-                // // 애니메이션 없을 시
+                /* // 애니메이션 없을 시 */
                 target.addClass('showing');
                 target.css('height', target.children().outerHeight());
 
@@ -157,7 +156,7 @@ UI.accor = {
 
             item.toggleClass('on');
 
-            // 이벤트 도중 클릭 이벤트 취소
+            // 이벤트 중에 클릭 이벤트 취소
             UI.accor.$accorTrigger.off('click', UI.accor.click());
             target.on('transitionend', function () {
                 UI.accor.$accorTrigger.on('click', UI.accor.click());
@@ -168,10 +167,87 @@ UI.accor = {
     }
 };
 
+UI.tooltip = {
+    init: function () {
+        this.createSelector();
+        this.click();
+        // this.hover();
+    },
+    createSelector: function () {
+        this.$tooltip = UI.$body.find('[data-tooltip]');
+        this.$tooltipTrigger = this.$tooltip.find('[data-tooltip-trigger]');
+        this.$tooltipTarget = this.$tooltip.find('[data-tooltip-target]');
+    },
+    click: function () {
+        UI.$body.off('click').on('click', function (e) {
+            e.stopPropagation();
+
+            const current = $(e.target);
+            const current_tooltip = $(e.target).closest('[data-tooltip]');
+            const current_target = $(e.target).siblings('[data-tooltip-target]');
+
+            UI.tooltip.$tooltip.each(function () {
+                if ($(this).is('.backdrop')) {
+                    $(this).removeClass('on');
+                }
+            })
+
+            // 트리거 클릭했을 때
+            if (current.is('[data-tooltip-trigger]')) {
+                // 보일 때
+                if (!current_target.hasClass('shown')) {
+                    current_target.removeClass('hidden');
+                    current_target.addClass('showing');
+                    setTimeout(function () {
+                        current_target.css('opacity', 1);
+                    }, 10)
+
+                    UI.tooltip.$tooltipTarget.off('transitionend').on('transitionend', function () {
+                        $(this).removeClass('showing');
+                        $(this).addClass('shown');
+                        $(this).removeAttr('style');
+                    })
+                } else {
+                    // 가려질 때
+                    current_target.removeClass('shown');
+                    current_target.addClass('hiding');
+                    setTimeout(function () {
+                        current_target.css('opacity', 0);
+                    }, 10)
+
+                    UI.tooltip.$tooltipTarget.off('transitionend').on('transitionend', function () {
+                        $(this).removeClass('hiding');
+                        $(this).addClass('hidden');
+                        $(this).removeAttr('style');
+                    })
+                }
+
+                // current_tooltip.toggleClass('on');
+
+                UI.tooltip.$tooltipTrigger.off('click', UI.tooltip.click());
+                UI.tooltip.$tooltipTarget.on('transitionend', function () {
+                    UI.tooltip.$tooltipTrigger.on('click', UI.tooltip.click());
+
+                    UI.tooltip.$tooltipTarget.off('transitionstart').off('transitionend');
+                })
+            }
+        })
+    },
+    hover: function () {
+        this.$tooltipTrigger.on('mouseover', function () {
+            console.log('b')
+        })
+        this.$tooltipTrigger.on('mouseout', function () {
+            console.log('c')
+        })
+    }
+}
+
 
 $(function () {
     UI.$window = $(window);
     UI.$body = $("body");
     if (UI.hasJqueryObject(UI.$body.find(".tab-wrap"))) UI.tab.init();
     if (UI.hasJqueryObject(UI.$body.find('[data-accor]'))) UI.accor.init();
+    if (UI.hasJqueryObject(UI.$body.find('[data-tooltip-trigger]'))) UI.tooltip.init();
 });

@@ -1,0 +1,35 @@
+.tooltip {
+  position: relative;
+
+  [data-tooltip-trigger] {
+    color: #aaa;
+  }
+
+  &-content {
+    display: none;
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    padding: 0.4rem;
+    background: #aaa;
+    opacity: 0;
+    z-index: 10;
+
+    &.showing,
+    &.hiding {
+      display: block;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    &.shown {
+      display: block;
+      opacity: 1;
+    }
+
+    &.hidden {
+      display: none;
+      opacity: 0;
+    }
+  }
+}

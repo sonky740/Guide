@@ -25,6 +25,7 @@ var UI_Control = {
     $lnb += '<ul>'
     $lnb += '<li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
     $lnb += '<li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
+    $lnb += '<li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
     $lnb += '<li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
     $lnb += '<li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
     $lnb += '<li><a href="/Guide/src/html/guide/form.html">form</a></li>'

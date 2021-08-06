@@ -627,10 +627,10 @@ span.btn-type1:hover {
   text-decoration: underline;
 }
 
-.main-section1 .guide-intro {
+.main-section .guide-intro {
   text-align: center;
 }
-.main-section1 .guide-intro p {
+.main-section .guide-intro p {
   font-size: 24px;
   color: #ffbd39;
 }
@@ -705,23 +705,6 @@ span.btn-type1:hover {
   margin: 16px 0 0 0;
 }
 
-[data-tooltip] > div {
-  position: absolute;
-  display: none;
-  left: 0;
-  bottom: 48px;
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #646464;
-  border-radius: 8px;
-  background: #000;
-  word-break: break-all;
-}
-[data-tooltip].active > div {
-  display: block;
-  z-index: 10;
-}
-
 .code {
   max-width: calc(100vw - 48px);
   margin-top: 24px;
@@ -774,7 +757,7 @@ span.btn-type1:hover {
   transition: transform 0.3s, -webkit-transform 0.3s;
 }
 .accr-title > [data-accr-trigger]:after {
-  right: 24px;
+  right: 25px;
   -webkit-transform: translateY(-50%) rotate(135deg);
           transform: translateY(-50%) rotate(135deg);
 }
@@ -821,6 +804,7 @@ span.btn-type1:hover {
   margin-top: 1rem;
 }
 .accordion-title {
+  display: block;
   position: relative;
 }
 .accordion-button {
@@ -880,6 +864,37 @@ span.btn-type1:hover {
 }
 .accordion-item.on > [data-accor-target] {
   display: block;
+}
+
+.tooltip {
+  position: relative;
+}
+.tooltip [data-tooltip-trigger] {
+  color: #aaa;
+}
+.tooltip-content {
+  display: none;
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  padding: 0.4rem;
+  background: #aaa;
+  opacity: 0;
+  z-index: 10;
+}
+.tooltip-content.showing, .tooltip-content.hiding {
+  display: block;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.tooltip-content.shown {
+  display: block;
+  opacity: 1;
+}
+.tooltip-content.hidden {
+  display: none;
+  opacity: 0;
 }
 
 .context-menu {

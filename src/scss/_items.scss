@@ -1,4 +1,4 @@
-.main-section1 {
+.main-section {
   .guide-intro {
     text-align: center;
     
@@ -78,32 +78,6 @@
 
     +article {
       margin: 16px 0 0 0;
-    }
-  }
-}
-
-// 툴팁
-[data-tooltip] {
-  // position: relative;
-
-  >div {
-    position: absolute;
-    display: none;
-    left: 0;
-    bottom: 48px;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid $line1;
-    border-radius: 8px;
-    background: #000;
-    word-break: break-all;
-  }
-  
-  &.active {
-    
-    >div {
-      display: block;
-      z-index: 10;
     }
   }
 }
