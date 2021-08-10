@@ -50,6 +50,23 @@
     gtag('js', new Date());
 
     gtag('config', 'G-RPP17EPFCX');
+
+    const target = $('[data-tooltip-target]');
+    target.on('tooltip.showing', function (e) {
+      console.log(e.target, 'showing');
+    })
+
+    target.on('tooltip.shown', function (e) {
+      console.log(e.target, 'shown');
+    })
+
+    target.on('tooltip.hiding', function (e) {
+      console.log(e.target, 'hiding');
+    })
+
+    target.on('tooltip.hidden', function (e) {
+      console.log(e.target, 'hidden');
+    })
   </script>
 </body>
 

@@ -51,6 +51,7 @@ UI.accor = {
                 $(this).find('>.accordion-title .blind').text('접기');
                 initTarget.addClass('shown');
             } else {
+                $(this).find('>.accordion-title .blind').text('펼치기');
                 initTarget.addClass('hidden');
             }
         })
@@ -157,9 +158,9 @@ UI.accor = {
             item.toggleClass('on');
 
             // 이벤트 중에 클릭 이벤트 취소
-            UI.accor.$accorTrigger.off('click', UI.accor.click());
+            UI.accor.$accorTrigger.off('click.accor', UI.accor.click());
             target.on('transitionend', function () {
-                UI.accor.$accorTrigger.on('click', UI.accor.click());
+                UI.accor.$accorTrigger.on('click.accor', UI.accor.click());
 
                 target.off('transitionstart').off('transitionend');
             })
@@ -179,58 +180,63 @@ UI.tooltip = {
         this.$tooltipTarget = this.$tooltip.find('[data-tooltip-target]');
     },
     click: function () {
-        UI.$body.off('click').on('click', function (e) {
-            e.stopPropagation();
-
-            const current = $(e.target);
+        this.$tooltipTrigger.off('click.tooltip').on('click.tooltip', function (e) {
             const current_tooltip = $(e.target).closest('[data-tooltip]');
             const current_target = $(e.target).siblings('[data-tooltip-target]');
 
-            UI.tooltip.$tooltip.each(function () {
-                if ($(this).is('.backdrop')) {
+            // show
+            if (!current_target.hasClass('shown')) {
+                current_target.removeClass('hidden');
+                current_target.addClass('showing');
+                setTimeout(function () {
+                    current_target.addClass('fade');
+                }, 1)
+
+                current_target.off('transitionstart').on('transitionstart', function () {
+                    $(this).trigger('tooltip.showing');
+                })
+
+                current_target.off('transitionend').on('transitionend', function () {
+                    $(this).removeClass('showing');
+                    $(this).addClass('shown');
+                    $(this).removeAttr('style');
+
+                    $(this).trigger('tooltip.shown');
+                });
+            } else {
+                // hide
+                current_target.removeClass('shown');
+                current_target.removeClass('fade');
+                current_target.addClass('hiding');
+
+                current_target.off('transitionstart').on('transitionstart', function () {
+                    $(this).trigger('tooltip.hiding');
+                })
+
+                current_target.off('transitionend').on('transitionend', function () {
+                    $(this).removeClass('hiding');
+                    $(this).addClass('hidden');
+                    $(this).removeAttr('style');
+
+                    $(this).trigger('tooltip.hidden');
+                })
+            }
+
+            current_tooltip.toggleClass('on');
+
+            UI.tooltip.$tooltipTrigger.off('click.tooltip', UI.tooltip.click());
+            UI.tooltip.$tooltipTarget.on('transitionend', function () {
+                UI.tooltip.$tooltipTrigger.on('click.tooltip', UI.tooltip.click());
+
+                UI.tooltip.$tooltipTarget.off('transitionstart').off('transitionend');
+            })
+        });
+        UI.$body.off('click.tooltip').on('click.tooltip', function(e) {
+            UI.tooltip.$tooltip.each(function() {
+                if($(this).is('.backdrop') && $(e.target) !== $('.backdrop [data-tooltip-trigger]')) {
                     $(this).removeClass('on');
                 }
             })
-
-            // 트리거 클릭했을 때
-            if (current.is('[data-tooltip-trigger]')) {
-                // 보일 때
-                if (!current_target.hasClass('shown')) {
-                    current_target.removeClass('hidden');
-                    current_target.addClass('showing');
-                    setTimeout(function () {
-                        current_target.css('opacity', 1);
-                    }, 10)
-
-                    UI.tooltip.$tooltipTarget.off('transitionend').on('transitionend', function () {
-                        $(this).removeClass('showing');
-                        $(this).addClass('shown');
-                        $(this).removeAttr('style');
-                    })
-                } else {
-                    // 가려질 때
-                    current_target.removeClass('shown');
-                    current_target.addClass('hiding');
-                    setTimeout(function () {
-                        current_target.css('opacity', 0);
-                    }, 10)
-
-                    UI.tooltip.$tooltipTarget.off('transitionend').on('transitionend', function () {
-                        $(this).removeClass('hiding');
-                        $(this).addClass('hidden');
-                        $(this).removeAttr('style');
-                    })
-                }
-
-                // current_tooltip.toggleClass('on');
-
-                UI.tooltip.$tooltipTrigger.off('click', UI.tooltip.click());
-                UI.tooltip.$tooltipTarget.on('transitionend', function () {
-                    UI.tooltip.$tooltipTrigger.on('click', UI.tooltip.click());
-
-                    UI.tooltip.$tooltipTarget.off('transitionstart').off('transitionend');
-                })
-            }
         })
     },
     hover: function () {

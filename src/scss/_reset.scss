@@ -33,7 +33,7 @@ i, em, address {font-style:normal;}
 input, select, textarea {border-radius:0;box-shadow:none;background:transparent;}
 input, select {-webkit-appearance:none;-moz-appearance:none;appearance:none;}
 label, button {cursor:pointer;}
-button {cursor:pointer;padding:0;background:none;border:0 none;/*outline:0;*/}
+button {cursor:pointer;padding:0;background:none;border:0 none;}
 select::-ms-expand {display:none;}
 textarea {resize:vertical;}
 input[type="text"]::-ms-clear {display:none;}

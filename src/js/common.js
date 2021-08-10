@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', function () {
   UI_Control.accr();
 })
 
-var UI_Control = {
+const UI_Control = {
   /**
    * layout
    */
