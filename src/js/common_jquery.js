@@ -186,29 +186,14 @@ UI.tooltip = {
     },
     click: function () {
         UI.$body.on('click.tooltip', function (e) {
+            e.stopPropagation();
+
             const current = $(e.target);
             const current_tooltip = current.closest('[data-tooltip]');
             const current_target = current_tooltip.find('[data-tooltip-target]');
 
             if (current.is(UI.tooltip.$tooltipTrigger)) {
-                if (!current_target.hasClass('shown')) {
-                    current_target.removeClass('hidden');
-                    current_target.addClass('showing');
-                    setTimeout(function () {
-                        current_target.addClass('fade');
-                    }, 10)
-
-                    current_target.off('transitionstart').on('transitionstart', function () {
-                        $(this).trigger('tooltip.showing');
-                    })
-
-                    current_target.off('transitionend').on('transitionend', function () {
-                        $(this).removeClass('showing');
-                        $(this).addClass('shown');
-
-                        $(this).trigger('tooltip.shown');
-                    });
-                } else {
+                if (current_target.hasClass('shown')) {
                     // hide
                     current_target.removeClass('fade');
                     current_target.removeClass('shown');
@@ -224,35 +209,51 @@ UI.tooltip = {
 
                         $(this).trigger('tooltip.hidden');
                     })
+                } else {
+                    // show
+                    current_target.removeClass('hiding');
+                    current_target.removeClass('hidden');
+                    current_target.addClass('showing');
+                    setTimeout(function () {
+                        current_target.addClass('fade');
+                    }, 10)
+                    current_target.off('transitionstart').on('transitionstart', function () {
+                        $(this).trigger('tooltip.showing');
+                    })
+
+                    current_target.off('transitionend').on('transitionend', function () {
+                        $(this).removeClass('showing');
+                        $(this).addClass('shown');
+
+                        $(this).trigger('tooltip.shown');
+                    });
                 }
-            } else {
-                UI.tooltip.$tooltip.each(function () {
-                    if ($(this).is('.backdrop')) {
-                        $(this).find('[data-tooltip-target]').removeClass('fade');
+            } else if (!current.is(UI.tooltip.$tooltipTarget)) {
+                UI.tooltip.backdrop();
+            }
+        })
+    },
+    backdrop: function () {
+        UI.tooltip.$tooltip.each(function () {
+            if ($(this).is('.backdrop')) {
+                const b_target = $(this).find('[data-tooltip-target]');
+                b_target.removeClass('showing');
+                b_target.removeClass('fade');
 
-                        $(this).find('[data-tooltip-target]').off('transitionstart').on('transitionstart', function () {
-                            $(this).removeClass('shown');
-                            $(this).addClass('hiding');
+                b_target.off('transitionstart').on('transitionstart', function () {
+                    $(this).removeClass('shown');
+                    $(this).addClass('hiding');
 
-                            $(this).trigger('tooltip.hiding');
-                        })
+                    $(this).trigger('tooltip.hiding');
+                })
 
-                        $(this).find('[data-tooltip-target]').off('transitionend').on('transitionend', function () {
-                            $(this).removeClass('hiding');
-                            $(this).addClass('hidden');
+                b_target.off('transitionend').on('transitionend', function () {
+                    $(this).removeClass('hiding');
+                    $(this).addClass('hidden');
 
-                            $(this).trigger('tooltip.hidden');
-                        })
-                    }
+                    $(this).trigger('tooltip.hidden');
                 })
             }
-
-            UI.tooltip.$tooltipTrigger.off('click.tooltip', UI.tooltip.click());
-            UI.tooltip.$tooltipTarget.on('transitionend', function () {
-                UI.tooltip.$tooltipTrigger.on('click.tooltip', UI.tooltip.click());
-
-                UI.tooltip.$tooltipTarget.off('transitionstart').off('transitionend');
-            })
         })
     },
     // click: function () {
