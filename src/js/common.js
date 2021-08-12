@@ -1,21 +1,7 @@
-window.addEventListener('DOMContentLoaded', function () {
-  // IE forEach 대응
-  if (window.NodeList && !NodeList.prototype.forEach) {
-    NodeList.prototype.forEach = Array.prototype.forEach;
-  }
+const UI_Control = {};
 
-  UI_Control.layout();
-  UI_Control.checkAll();
-  UI_Control.tab();
-  UI_Control.contextMenu();
-  UI_Control.accr();
-})
-
-const UI_Control = {
-  /**
-   * layout
-   */
-  layout: function () {
+UI_Control.layout = {
+  init: function () {
     const $url = window.location.href.split('/');
     const $urlLast = $url[$url.length - 1];
 
@@ -49,12 +35,11 @@ const UI_Control = {
     $header += '</h1>'
     $header += '</div>'
     $headerParent.innerHTML = $header;
-  },
+  }
+}
 
-  /**
-   * 체크박스
-   */
-  checkAll: function () {
+UI_Control.checkAll = {
+  init: function () {
     const $check = document.querySelectorAll('input[data-checkbox]');
     [].forEach.call($check, function (el) {
       const $elem = '[name=' + el.getAttribute('data-checkbox') + ']:not([data-checkbox])';
@@ -92,52 +77,11 @@ const UI_Control = {
         }
       })
     })
-  },
+  }
+}
 
-  /**
-   * 탭
-   */
-  tab: function () {
-    const $tab = document.querySelectorAll('[data-tab-group]');
-    [].forEach.call($tab, function (el) {
-      const $group = el.getAttribute('data-tab-group');
-      const $trigger = el.querySelectorAll('[data-tabtit]');
-      const $bullet = document.querySelectorAll('[data-tabcon]');
-
-      [].forEach.call($trigger, function (el2) {
-        const $title = el2.getAttribute('data-tabtit')
-        el2.addEventListener('click', function (e) {
-          // a태그 일 경우
-          if (el2.getAttribute('href')) {
-            e.preventDefault();
-
-            [].forEach.call($trigger, function (el2all) {
-              el2all.classList.remove('active');
-            })
-            this.classList.add('active');
-          }
-
-          [].forEach.call($bullet, function (el3) {
-            const $content = el3.getAttribute('data-tabcon');
-            const $content2 = el3.getAttribute('id');
-
-            if ($group === $content) {
-              if ($title === $content2) {
-                el3.classList.add('active');
-              } else {
-                el3.classList.remove('active');
-              }
-            }
-          })
-        })
-      });
-    })
-  },
-
-  /**
-   * contextMenu
-   */
-  contextMenu: function () {
+UI_Control.contextMenu = {
+  init: function () {
     const items = document.querySelectorAll('[data-context] > button');
 
     document.body.addEventListener('click', function (e) {
@@ -162,12 +106,11 @@ const UI_Control = {
         elem.parentNode.classList.remove('open');
       });
     });
-  },
+  }
+}
 
-  /**
-   * 아코디언
-   */
-  accr: function () {
+UI_Control.accor = {
+  init: function () {
     const $accr = document.querySelectorAll('[data-toggle="accr"]');
 
     Array.prototype.forEach.call($accr, function ($accrEl) {
@@ -254,3 +197,15 @@ const UI_Control = {
     })
   }
 }
+
+window.addEventListener('DOMContentLoaded', function () {
+  // IE forEach 대응
+  if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+  }
+
+  if (document.querySelectorAll('.guide-nav').length) UI_Control.layout.init();
+  if (document.querySelectorAll('input[data-checkbox]').length) UI_Control.checkAll.init();
+  if (document.querySelectorAll('[data-context]').length) UI_Control.contextMenu.init();
+  if (document.querySelectorAll('[data-accor]').length) UI_Control.accor.init();
+})
