@@ -20,7 +20,7 @@ UI_Control.layout = {
 
     // lnb === url ? active : null
     const $lnbTrigger = document.querySelectorAll('.guide-nav ul li a');
-    [].forEach.call($lnbTrigger, function (el) {
+    Array.prototype.forEach.call($lnbTrigger, function (el) {
       const $target = el.getAttribute('href').split('/');
       const $targetLast = $target[$target.length - 1];
 
@@ -41,11 +41,11 @@ UI_Control.layout = {
 UI_Control.checkAll = {
   init: function () {
     const $check = document.querySelectorAll('input[data-checkbox]');
-    [].forEach.call($check, function (el) {
+    Array.prototype.forEach.call($check, function (el) {
       const $elem = '[name=' + el.getAttribute('data-checkbox') + ']:not([data-checkbox])';
       const $bullet = document.querySelectorAll($elem);
 
-      [].forEach.call($bullet, function (al) {
+      Array.prototype.forEach.call($bullet, function (al) {
         // 전체 클릭, 해제
         el.addEventListener('click', function () {
           if (el.checked === true) {
@@ -89,7 +89,7 @@ UI_Control.contextMenu = {
       if (targetClassList.classList.contains('context')) return;
 
       // 개별토글
-      [].forEach.call(items, function (el) {
+      Array.prototype.forEach.call(items, function (el) {
         if (targetClassList === el) {
           e.preventDefault();
           targetClassList.parentNode.classList.toggle('open');
@@ -109,103 +109,152 @@ UI_Control.contextMenu = {
   }
 }
 
-UI_Control.accor = {
+UI_Control.accr = {
   init: function () {
-    const $accr = document.querySelectorAll('[data-toggle="accr"]');
+    this.constructor();
 
-    Array.prototype.forEach.call($accr, function ($accrEl) {
-      const $body = $accrEl.querySelectorAll('[data-accr]');
+    this.$accrTrigger.forEach(function (trigger) {
+      const accr = trigger.closest('[data-accr]');
+      const item = trigger.closest('[data-accr-item]');
+      const target = item.querySelector('[data-accr-target]');
+      const targetAll = accr.querySelectorAll('[data-accr-target]');
+      const content = target.querySelector('.accordion-body');
 
-      Array.prototype.forEach.call($body, function ($bodyEl) {
-        const $trigger = $bodyEl.querySelector('[data-accr-trigger]');
-        const $triggerAll = $accrEl.querySelectorAll('[data-accr-trigger]'); // 이벤트 진행 중에 트리거의 이벤트를 없애기 위함.
-        const $trigger_ir = $trigger.querySelector('.blind');
-        const $target = $bodyEl.querySelector('[data-accr-target]');
-        const $target_body = $target.querySelector('[data-accr-target]>.accr-content-body');
+      if (!item.classList.contains('on')) {
+        target.classList.add('hidden');
+      }
 
-        // init
-        if ($bodyEl.getAttribute('data-accr') === 'show') {
-          $trigger_ir.innerText = "접기";
-          $target.style.height = $target_body.clientHeight + 'px';
-        } else {
-          $trigger_ir.innerText = "펼치기";
-        }
+      UI_Control.accr.click(trigger, accr, item, target, targetAll, content);
 
-        // 클릭 이벤트
-        $trigger.addEventListener('click', function (e) {
-          e.preventDefault();
-
-          // 선택한게 열려있으면 닫기
-          if ($bodyEl.getAttribute('data-accr') === 'show') {
-            $trigger_ir.innerText = "펼치기";
-            $bodyEl.setAttribute('data-accr', 'hiding');
-            $target.removeAttribute('style');
-
-            $bodyEl.addEventListener('transitionend', function (e) {
-              if (e.target !== $trigger) {
-                this.setAttribute('data-accr', '');
-              }
-            })
-          } else {
-            // 전체 닫기
-            if ($accrEl.getAttribute('data-accr-mode') !== 'each') {
-              $body.forEach(function ($bodyAll) {
-                if ($bodyAll.getAttribute('data-accr') === 'show') {
-                  $bodyAll.querySelector('.blind').innerText = "펼치기";
-                  $bodyAll.setAttribute('data-accr', 'hiding');
-                }
-                $bodyAll.querySelector('[data-accr-target]').removeAttribute('style');
-                $bodyAll.addEventListener('transitionend', function (e) {
-                  if (e.target !== $trigger) {
-                    $bodyAll.setAttribute('data-accr', '');
-                  }
-                });
-              });
-            }
-            // 선택한 영역 열기
-            $trigger_ir.innerText = "접기";
-            $bodyEl.setAttribute('data-accr', 'showing');
-            $target.style.height = $target_body.clientHeight + 'px';
-
-            // 클릭 이벤트를 없애기 위함.
-            const stopFunc = function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              e.stopImmediatePropagation();
-              return false;
-            };
-
-            // 이벤트 실행 중에 trigger 클릭 이벤트 삭제
-            $triggerAll.forEach(function ($trAll) {
-              ['click', 'touchend'].forEach(function (events) {
-                $trAll.addEventListener(events, stopFunc, true);
-              })
-            })
-            $bodyEl.addEventListener('transitionend', function () {
-              this.setAttribute('data-accr', 'show');
-
-              // 이벤트 종료 후 trigger 클릭 이벤트 재할당
-              $triggerAll.forEach(function ($trAll) {
-                ['click', 'touchend'].forEach(function (events) {
-                  $trAll.removeEventListener(events, stopFunc, true);
-                })
-              })
-            })
-          }
-        })
+      // 트랜지션 후 클릭 이벤트 복구
+      target.addEventListener('transitionend', function () {
+        trigger.addEventListener('click', UI_Control.accr.click(trigger, accr, item, target, targetAll, content))
       })
+    })
+  },
+  constructor: function () {
+    this.$accr = document.querySelectorAll('[data-accr]');
+    this.$accrTrigger = document.querySelectorAll('[data-accr-trigger]');
+  },
+  click: function (trigger, accr, item, target, targetAll, content) {
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // show
+      if (target.classList.contains('hidden')) {
+        // 그 중 하나만 열릴 때 [data-accr="only"]
+        if (accr.getAttribute('data-accr') === 'only') {
+          targetAll.forEach(function (ta) {
+            if (ta.classList.contains('shown')) {
+              ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
+              ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
+              ta.classList.remove('shown');
+              ta.classList.add('hiding');
+              ta.removeAttribute('style');
+
+              ta.closest('[data-accr-item]').classList.remove('on')
+
+              ta.addEventListener('transitionend', function() {
+                this.classList.remove('hiding');
+                this.classList.add('hidden');
+              })
+            }
+          })
+        }
+        target.classList.remove('hidden');
+        target.classList.add('showing');
+        target.style.height = content.clientHeight + 'px';
+      } else {
+        // hide
+        target.style.height = content.clientHeight + 'px';
+        target.style.height = content.clientHeight + 'px';
+        target.classList.add('hiding');
+        target.classList.remove('shown');
+        target.removeAttribute('style');
+      }
+
+      UI_Control.accr.transition(target);
+
+      item.classList.toggle('on');
+
+      // 클릭 이벤트를 없애기 위함.
+      this.removeEventListener('click', arguments.callee);
+    })
+  },
+  transition: function (target) {
+    // transition start
+    target.addEventListener('transitionstart', function () {
+      if (this.classList.contains('showing')) {
+        const showing = new CustomEvent('accr.showing');
+        this.dispatchEvent(showing);
+      } else if (this.classList.contains('hiding')) {
+        const hiding = new CustomEvent('accr.hiding');
+        this.dispatchEvent(hiding);
+      }
+      this.removeEventListener('transitionstart', arguments.callee)
+    })
+    // transition end
+    target.addEventListener('transitionend', function () {
+      if (this.classList.contains('showing')) {
+        this.classList.remove('showing');
+        this.classList.add('shown');
+        this.removeAttribute('style');
+
+        const shown = new CustomEvent('accr.shown');
+        this.dispatchEvent(shown);
+      } else if (this.classList.contains('hiding')) {
+        this.classList.remove('hiding');
+        this.classList.add('hidden');
+
+        const hidden = new CustomEvent('accr.hidden');
+        this.dispatchEvent(hidden);
+      }
+      this.removeEventListener('transitionend', arguments.callee)
     })
   }
 }
 
 window.addEventListener('DOMContentLoaded', function () {
+  // IE closest 대응
+  if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+  }
+  if (!Element.prototype.closest) {
+    Element.prototype.closest = function (s) {
+      var el = this;
+
+      do {
+        if (el.matches(s)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el !== null && el.nodeType === 1);
+      return null;
+    };
+  }
   // IE forEach 대응
   if (window.NodeList && !NodeList.prototype.forEach) {
     NodeList.prototype.forEach = Array.prototype.forEach;
   }
+  // IE CustomEvent 대응
+  (function () {
+    if (typeof window.CustomEvent === "function") return false;
+
+    function CustomEvent(event, params) {
+      params = params || {
+        bubbles: false,
+        cancelable: false,
+        detail: undefined
+      };
+      var evt = document.createEvent('CustomEvent');
+      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+      return evt;
+    }
+    CustomEvent.prototype = window.Event.prototype;
+    window.CustomEvent = CustomEvent;
+  })();
 
   if (document.querySelectorAll('.guide-nav').length) UI_Control.layout.init();
   if (document.querySelectorAll('input[data-checkbox]').length) UI_Control.checkAll.init();
   if (document.querySelectorAll('[data-context]').length) UI_Control.contextMenu.init();
-  if (document.querySelectorAll('[data-accor]').length) UI_Control.accor.init();
+  if (document.querySelectorAll('[data-accr]').length) UI_Control.accr.init();
 })
