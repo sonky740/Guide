@@ -141,8 +141,15 @@ UI_Control.accr = {
       e.preventDefault();
       e.stopPropagation();
 
-      // show
-      if (target.classList.contains('hidden')) {
+      if (target.classList.contains('shown')) {
+        // hide
+        target.style.height = content.clientHeight + 'px';
+        target.style.height = content.clientHeight + 'px';
+        target.classList.add('hiding');
+        target.classList.remove('shown');
+        target.removeAttribute('style');
+      } else if(target.classList.contains('hidden')) {
+        // show
         // 그 중 하나만 열릴 때 [data-accr="only"]
         if (accr.getAttribute('data-accr') === 'only') {
           targetAll.forEach(function (ta) {
@@ -153,11 +160,13 @@ UI_Control.accr = {
               ta.classList.add('hiding');
               ta.removeAttribute('style');
 
-              ta.closest('[data-accr-item]').classList.remove('on')
+              ta.closest('[data-accr-item]').classList.remove('on');
 
-              ta.addEventListener('transitionend', function() {
-                this.classList.remove('hiding');
-                this.classList.add('hidden');
+              ta.addEventListener('transitionend', function () {
+                if (ta.classList.contains('hiding')) {
+                  this.classList.remove('hiding');
+                  this.classList.add('hidden');
+                }
               })
             }
           })
@@ -165,20 +174,13 @@ UI_Control.accr = {
         target.classList.remove('hidden');
         target.classList.add('showing');
         target.style.height = content.clientHeight + 'px';
-      } else {
-        // hide
-        target.style.height = content.clientHeight + 'px';
-        target.style.height = content.clientHeight + 'px';
-        target.classList.add('hiding');
-        target.classList.remove('shown');
-        target.removeAttribute('style');
       }
-
-      UI_Control.accr.transition(target);
 
       item.classList.toggle('on');
 
-      // 클릭 이벤트를 없애기 위함.
+      UI_Control.accr.transition(target);
+
+      // 이벤트 도중 클릭 이벤트를 없애기 위함.
       this.removeEventListener('click', arguments.callee);
     })
   },
