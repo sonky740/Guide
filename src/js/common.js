@@ -141,39 +141,36 @@ UI_Control.accr = {
       e.preventDefault();
       e.stopPropagation();
 
+      // 각각 열릴 때
       if (target.classList.contains('shown')) {
         // hide
         target.style.height = content.clientHeight + 'px';
         target.style.height = content.clientHeight + 'px';
-        target.classList.add('hiding');
         target.classList.remove('shown');
+        target.classList.add('hiding');
         target.removeAttribute('style');
-      } else if(target.classList.contains('hidden')) {
+      } else if (target.classList.contains('hidden')) {
         // show
-        // 그 중 하나만 열릴 때 [data-accr="only"]
-        if (accr.getAttribute('data-accr') === 'only') {
-          targetAll.forEach(function (ta) {
-            if (ta.classList.contains('shown')) {
-              ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
-              ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
-              ta.classList.remove('shown');
-              ta.classList.add('hiding');
-              ta.removeAttribute('style');
-
-              ta.closest('[data-accr-item]').classList.remove('on');
-
-              ta.addEventListener('transitionend', function () {
-                if (ta.classList.contains('hiding')) {
-                  this.classList.remove('hiding');
-                  this.classList.add('hidden');
-                }
-              })
-            }
-          })
-        }
         target.classList.remove('hidden');
         target.classList.add('showing');
         target.style.height = content.clientHeight + 'px';
+      }
+
+      // 하나만 열릴 때 [data-accr="only"]
+      if (accr.getAttribute('data-accr') === 'only') {
+        targetAll.forEach(function (ta) {
+          if (ta.classList.contains('shown')) {
+            ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
+            ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
+            ta.classList.remove('shown');
+            ta.classList.add('hiding');
+            ta.removeAttribute('style')
+
+            ta.closest('[data-accr-item]').classList.remove('on');
+
+            UI_Control.accr.transition(ta);
+          }
+        })
       }
 
       item.classList.toggle('on');
@@ -181,7 +178,7 @@ UI_Control.accr = {
       UI_Control.accr.transition(target);
 
       // 이벤트 도중 클릭 이벤트를 없애기 위함.
-      this.removeEventListener('click', arguments.callee);
+      trigger.removeEventListener('click', arguments.callee);
     })
   },
   transition: function (target) {
@@ -194,7 +191,7 @@ UI_Control.accr = {
         const hiding = new CustomEvent('accr.hiding');
         this.dispatchEvent(hiding);
       }
-      this.removeEventListener('transitionstart', arguments.callee)
+      this.removeEventListener('transitionstart', arguments.callee);
     })
     // transition end
     target.addEventListener('transitionend', function () {
@@ -212,7 +209,7 @@ UI_Control.accr = {
         const hidden = new CustomEvent('accr.hidden');
         this.dispatchEvent(hidden);
       }
-      this.removeEventListener('transitionend', arguments.callee)
+      this.removeEventListener('transitionend', arguments.callee);
     })
   }
 }
