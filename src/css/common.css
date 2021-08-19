@@ -206,7 +206,7 @@ a:link, a:hover {
   margin: auto;
   margin-bottom: 24px;
 }
-.wrapper .header > div {
+.wrapper .header-wrap {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -217,7 +217,7 @@ a:link, a:hover {
           justify-content: space-between;
 }
 @media screen and (max-width: 1120px) {
-  .wrapper .header > div {
+  .wrapper .header-wrap {
     width: 100%;
   }
 }

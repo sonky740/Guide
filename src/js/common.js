@@ -29,7 +29,7 @@ UI_Control.layout = {
 
     // header 
     const $headerParent = document.querySelector('.header');
-    let $header = '<div>'
+    let $header = '<div class="header-wrap">'
     $header += '<h1>'
     $header += '<a href="/Guide/src/html/" title="홈으로">Sonky</a>'
     $header += '</h1>'
@@ -125,11 +125,6 @@ UI_Control.accr = {
       }
 
       UI_Control.accr.click(trigger, accr, item, target, targetAll, content);
-
-      // 트랜지션 후 클릭 이벤트 복구
-      target.addEventListener('transitionend', function () {
-        trigger.addEventListener('click', UI_Control.accr.click(trigger, accr, item, target, targetAll, content))
-      })
     })
   },
   constructor: function () {
@@ -137,7 +132,7 @@ UI_Control.accr = {
     this.$accrTrigger = document.querySelectorAll('[data-accr-trigger]');
   },
   click: function (trigger, accr, item, target, targetAll, content) {
-    trigger.addEventListener('click', function (e) {
+    trigger.addEventListener('click', function click(e) {
       e.preventDefault();
       e.stopPropagation();
 
@@ -177,8 +172,17 @@ UI_Control.accr = {
 
       UI_Control.accr.transition(target);
 
-      // 이벤트 도중 클릭 이벤트를 없애기 위함.
-      trigger.removeEventListener('click', arguments.callee);
+      // 트랜지션 시작 시 클릭 이벤트 삭제
+      target.addEventListener('transitionstart', function() {
+        UI_Control.accr.$accrTrigger.forEach(function(el){
+          el.removeEventListener('click', click);
+        })
+      })
+
+      // 트랜지션 후 클릭 이벤트 복구
+      target.addEventListener('transitionend', function () {
+        trigger.addEventListener('click', click);
+      })
     })
   },
   transition: function (target) {
@@ -191,7 +195,7 @@ UI_Control.accr = {
         const hiding = new CustomEvent('accr.hiding');
         this.dispatchEvent(hiding);
       }
-      this.removeEventListener('transitionstart', arguments.callee);
+      target.removeEventListener('transitionstart', arguments.callee);
     })
     // transition end
     target.addEventListener('transitionend', function () {
@@ -209,7 +213,7 @@ UI_Control.accr = {
         const hidden = new CustomEvent('accr.hidden');
         this.dispatchEvent(hidden);
       }
-      this.removeEventListener('transitionend', arguments.callee);
+      target.removeEventListener('transitionend', arguments.callee);
     })
   }
 }
