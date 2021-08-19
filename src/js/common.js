@@ -172,16 +172,27 @@ UI_Control.accr = {
 
       UI_Control.accr.transition(target);
 
+      const stopFunc = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      };
+
       // 트랜지션 시작 시 클릭 이벤트 삭제
-      target.addEventListener('transitionstart', function() {
-        UI_Control.accr.$accrTrigger.forEach(function(el){
+      target.addEventListener('transitionstart', function () {
+        UI_Control.accr.$accrTrigger.forEach(function (el) {
           el.removeEventListener('click', click);
+          el.addEventListener('click', stopFunc, true);
         })
       })
 
       // 트랜지션 후 클릭 이벤트 복구
       target.addEventListener('transitionend', function () {
         trigger.addEventListener('click', click);
+        UI_Control.accr.$accrTrigger.forEach(function (el) {
+          el.removeEventListener('click', stopFunc, true);
+        })
       })
     })
   },
