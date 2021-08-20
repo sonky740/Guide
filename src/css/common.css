@@ -312,6 +312,20 @@ a:link, a:hover {
   transition: all 0.3s;
   -webkit-transform: translateY(-50%) rotate(45deg);
           transform: translateY(-50%) rotate(45deg);
+  -webkit-animation: nav-close 0.3s;
+          animation: nav-close 0.3s;
+}
+@-webkit-keyframes nav-close {
+  0% {
+    -webkit-transform: translateY(-50%) rotate(0);
+            transform: translateY(-50%) rotate(0);
+  }
+}
+@keyframes nav-close {
+  0% {
+    -webkit-transform: translateY(-50%) rotate(0);
+            transform: translateY(-50%) rotate(0);
+  }
 }
 .wrapper .container .guide-nav-close:after {
   -webkit-transform: translateY(-50%) rotate(-45deg);
@@ -380,8 +394,8 @@ a:link, a:hover {
   }
   .wrapper .container .guide-nav.on {
     display: block;
-    -webkit-animation: nav 0.5s;
-            animation: nav 0.5s;
+    -webkit-animation: nav 0.3s;
+            animation: nav 0.3s;
   }
   @-webkit-keyframes nav {
     0% {
@@ -398,9 +412,6 @@ a:link, a:hover {
     100% {
       left: 0;
     }
-  }
-  .wrapper .container .guide-nav.on .guide-nav-close {
-    display: block;
   }
 }
 

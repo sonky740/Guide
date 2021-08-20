@@ -109,6 +109,13 @@
           border-radius: 2px;
           transition: all .3s;
           transform: translateY(-50%) rotate(45deg);
+          animation: nav-close .3s;
+
+          @keyframes nav-close {
+            0% {
+              transform: translateY(-50%) rotate(0);
+            }
+          }
         }
 
         &:after {
@@ -191,7 +198,7 @@
 
         &.on {
           display: block;
-          animation: nav .5s;
+          animation: nav .3s;
 
           @keyframes nav {
             0% {
@@ -201,10 +208,6 @@
             100% {
               left: 0;
             }
-          }
-
-          .guide-nav-close {
-            display: block;
           }
         }
       }

@@ -33,7 +33,7 @@ UI_Control.layout = {
     $header += '<h1>'
     $header += '  <a href="/Guide/src/html/" title="홈으로">Sonky</a>'
     $header += '</h1>'
-    $header += '<button type="button" class="header-bar" title="Guide Menu">'
+    $header += '<button type="button" class="header-bar trigger" title="Guide Menu">'
     $header += '  <i aria-hidden="true"></i>'
     $header += '</button>'
     $header += '</div>'
@@ -43,20 +43,36 @@ UI_Control.layout = {
     const $menuTrigger = document.querySelector('.header-bar');
     const $menuTarget = document.querySelector('.guide-nav');
     const $menuClose = document.querySelector('.guide-nav-close');
+
+    $menuTrigger.classList.add('trigger');
+
     $menuTrigger.addEventListener('click', function () {
-      this.classList.add('on');
-      $menuTarget.classList.add('on');
+      if (this.classList.contains('trigger')) {
+        this.classList.add('on');
+        $menuTarget.classList.add('on');
+      }
+      this.classList.remove('trigger');
+    })
+
+    $menuTrigger.addEventListener('transitionend', function () {
+      $menuClose.style.display = 'block';
+      $menuClose.classList.add('trigger');
     })
 
     $menuClose.addEventListener('click', function () {
-      $menuTrigger.classList.remove('on');
-      $menuTarget.style.left = '-100%';
+      if (this.classList.contains('trigger')) {
+        $menuTrigger.classList.remove('on');
+        $menuTarget.style.left = '-100%';
+      }
     })
 
     $menuTarget.addEventListener('transitionend', function (e) {
       if (e.target === $menuTarget) {
         $menuTarget.removeAttribute('style');
         $menuTarget.classList.remove('on');
+        $menuClose.style.display = 'none';
+        $menuTrigger.classList.add('trigger');
+        $menuClose.classList.remove('trigger');
       } else {
         return false;
       }
