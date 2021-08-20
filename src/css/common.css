@@ -375,6 +375,9 @@ a:link, a:hover {
     background: #3e3e3e;
     z-index: 10;
   }
+  .wrapper .container .guide-nav-title {
+    font-size: 32px;
+  }
   .wrapper .container .guide-nav.on {
     display: block;
     -webkit-animation: nav 0.5s;

@@ -185,6 +185,10 @@
         background: #3e3e3e;
         z-index: 10;
 
+        &-title {
+          font-size: 32px;
+        }
+
         &.on {
           display: block;
           animation: nav .5s;

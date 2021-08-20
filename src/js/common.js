@@ -9,12 +9,12 @@ UI_Control.layout = {
     const $lnbParent = document.querySelector('.guide-nav');
     let $lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>'
     $lnb += '<ul>'
-    $lnb += '<li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
-    $lnb += '<li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
-    $lnb += '<li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
-    $lnb += '<li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
-    $lnb += '<li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
-    $lnb += '<li><a href="/Guide/src/html/guide/form.html">form</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/form.html">form</a></li>'
     $lnb += '</ul>'
     $lnbParent.innerHTML = $lnb;
 
@@ -48,14 +48,18 @@ UI_Control.layout = {
       $menuTarget.classList.add('on');
     })
 
-    $menuClose.addEventListener('click', function() {
+    $menuClose.addEventListener('click', function () {
       $menuTrigger.classList.remove('on');
       $menuTarget.style.left = '-100%';
     })
 
-    $menuTarget.addEventListener('transitionend', function() {
-      this.removeAttribute('style');
-      this.classList.remove('on');
+    $menuTarget.addEventListener('transitionend', function (e) {
+      if (e.target === $menuTarget) {
+        $menuTarget.removeAttribute('style');
+        $menuTarget.classList.remove('on');
+      } else {
+        return false;
+      }
     })
   }
 }
