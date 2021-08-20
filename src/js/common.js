@@ -7,7 +7,7 @@ UI_Control.layout = {
 
     // lnb
     const $lnbParent = document.querySelector('.guide-nav');
-    let $lnb = '<strong>Guide</strong>'
+    let $lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>'
     $lnb += '<ul>'
     $lnb += '<li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
     $lnb += '<li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
@@ -31,10 +31,32 @@ UI_Control.layout = {
     const $headerParent = document.querySelector('.header');
     let $header = '<div class="header-wrap">'
     $header += '<h1>'
-    $header += '<a href="/Guide/src/html/" title="홈으로">Sonky</a>'
+    $header += '  <a href="/Guide/src/html/" title="홈으로">Sonky</a>'
     $header += '</h1>'
+    $header += '<button type="button" class="header-bar" title="Guide Menu">'
+    $header += '  <i aria-hidden="true"></i>'
+    $header += '</button>'
     $header += '</div>'
     $headerParent.innerHTML = $header;
+
+    // header button
+    const $menuTrigger = document.querySelector('.header-bar');
+    const $menuTarget = document.querySelector('.guide-nav');
+    const $menuClose = document.querySelector('.guide-nav-close');
+    $menuTrigger.addEventListener('click', function () {
+      this.classList.add('on');
+      $menuTarget.classList.add('on');
+    })
+
+    $menuClose.addEventListener('click', function() {
+      $menuTrigger.classList.remove('on');
+      $menuTarget.style.left = '-100%';
+    })
+
+    $menuTarget.addEventListener('transitionend', function() {
+      this.removeAttribute('style');
+      this.classList.remove('on');
+    })
   }
 }
 
