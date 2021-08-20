@@ -55,8 +55,10 @@ UI_Control.layout = {
     })
 
     $menuTrigger.addEventListener('transitionend', function () {
-      $menuClose.style.display = 'block';
-      $menuClose.classList.add('trigger');
+      if ($menuTarget.classList.contains('on')) {
+        $menuClose.style.display = 'block';
+        $menuClose.classList.add('trigger');
+      }
     })
 
     $menuClose.addEventListener('click', function () {
@@ -70,8 +72,8 @@ UI_Control.layout = {
       if (e.target === $menuTarget) {
         $menuTarget.removeAttribute('style');
         $menuTarget.classList.remove('on');
-        $menuClose.style.display = 'none';
         $menuTrigger.classList.add('trigger');
+        $menuClose.style.display = 'none';
         $menuClose.classList.remove('trigger');
       } else {
         return false;
