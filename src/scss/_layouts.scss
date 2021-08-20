@@ -98,6 +98,8 @@
         height: 16px;
 
         &.trigger {
+          display: block;
+          
           &:before,
           &:after {
             animation: nav-close .3s;

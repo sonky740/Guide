@@ -299,6 +299,9 @@ a:link, a:hover {
   width: 24px;
   height: 16px;
 }
+.wrapper .container .guide-nav-close.trigger {
+  display: block;
+}
 .wrapper .container .guide-nav-close.trigger:before, .wrapper .container .guide-nav-close.trigger:after {
   -webkit-animation: nav-close 0.3s;
           animation: nav-close 0.3s;

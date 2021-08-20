@@ -56,7 +56,6 @@ UI_Control.layout = {
 
     $menuTrigger.addEventListener('transitionend', function () {
       if ($menuTarget.classList.contains('on')) {
-        $menuClose.style.display = 'block';
         $menuClose.classList.add('trigger');
       }
     })
@@ -73,7 +72,6 @@ UI_Control.layout = {
         $menuTarget.removeAttribute('style');
         $menuTarget.classList.remove('on');
         $menuTrigger.classList.add('trigger');
-        $menuClose.style.display = 'none';
         $menuClose.classList.remove('trigger');
       } else {
         return false;
