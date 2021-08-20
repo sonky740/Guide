@@ -299,19 +299,7 @@ a:link, a:hover {
   width: 24px;
   height: 16px;
 }
-.wrapper .container .guide-nav-close:before, .wrapper .container .guide-nav-close:after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #fff;
-  border-radius: 2px;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  -webkit-transform: translateY(-50%) rotate(45deg);
-          transform: translateY(-50%) rotate(45deg);
+.wrapper .container .guide-nav-close.trigger:before, .wrapper .container .guide-nav-close.trigger:after {
   -webkit-animation: nav-close 0.3s;
           animation: nav-close 0.3s;
 }
@@ -326,6 +314,20 @@ a:link, a:hover {
     -webkit-transform: translateY(-50%) rotate(0);
             transform: translateY(-50%) rotate(0);
   }
+}
+.wrapper .container .guide-nav-close:before, .wrapper .container .guide-nav-close:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-transform: translateY(-50%) rotate(45deg);
+          transform: translateY(-50%) rotate(45deg);
 }
 .wrapper .container .guide-nav-close:after {
   -webkit-transform: translateY(-50%) rotate(-45deg);

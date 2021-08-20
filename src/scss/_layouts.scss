@@ -97,6 +97,19 @@
         width: 24px;
         height: 16px;
 
+        &.trigger {
+          &:before,
+          &:after {
+            animation: nav-close .3s;
+
+            @keyframes nav-close {
+              0% {
+                transform: translateY(-50%) rotate(0);
+              }
+            }
+          }
+        }
+
         &:before,
         &:after {
           content: "";
@@ -109,13 +122,6 @@
           border-radius: 2px;
           transition: all .3s;
           transform: translateY(-50%) rotate(45deg);
-          animation: nav-close .3s;
-
-          @keyframes nav-close {
-            0% {
-              transform: translateY(-50%) rotate(0);
-            }
-          }
         }
 
         &:after {
