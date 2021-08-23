@@ -12,6 +12,7 @@
 @import 'accordion_jquery';
 @import 'tooltip_jquery';
 @import 'contextMenu';
+@import 'tab';
 
 .blind {
   position: absolute;
@@ -21,14 +22,6 @@
   clip: rect(0, 0, 0, 0);
   overflow: hidden;
   white-space: nowrap;
-}
-
-.ui-tabcon {
-  display: none;
-
-  &.active {
-    display: block;
-  }
 }
 
 figure {

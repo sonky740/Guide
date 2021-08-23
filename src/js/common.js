@@ -1,15 +1,22 @@
 const UI_Control = {};
 
+// 세자릿수 콤마 정규식
+function numberComma(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 UI_Control.layout = {
   init: function () {
     const $url = window.location.href.split('/');
-    const $urlLast = $url[$url.length - 1];
+    const $urlLast = $url[$url.length - 1].split('.html')[0];
 
     // lnb
     const $lnbParent = document.querySelector('.guide-nav');
     let $lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>'
     $lnb += '<ul>'
     $lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>'
     $lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
     $lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
     $lnb += '  <li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
@@ -22,7 +29,7 @@ UI_Control.layout = {
     const $lnbTrigger = document.querySelectorAll('.guide-nav ul li a');
     Array.prototype.forEach.call($lnbTrigger, function (el) {
       const $target = el.getAttribute('href').split('/');
-      const $targetLast = $target[$target.length - 1];
+      const $targetLast = $target[$target.length - 1].split('.html')[0];
 
       if ($urlLast === $targetLast) el.classList.add('active');
     })
@@ -122,7 +129,7 @@ UI_Control.checkAll = {
   }
 }
 
-UI_Control.contextMenu = {
+UI_Control.Tooltip = {
   init: function () {
     const items = document.querySelectorAll('[data-context] > button');
 
@@ -271,6 +278,153 @@ UI_Control.accr = {
   }
 }
 
+UI_Control.tab = {
+  init: function () {
+    this.constructor();
+
+    this.$tabTrigger.forEach(function (trigger) {
+      const tabNav = trigger.closest('[data-tab]');
+      const item = tabNav.querySelectorAll('[data-tab-item]');
+      const group = document.querySelectorAll('[data-tab-group="' + tabNav.getAttribute('data-tab') + '"]');
+      const target = document.querySelector('[data-tab-target="' + trigger.getAttribute('data-tab-trigger') + '"]')
+
+      UI_Control.tab.click(trigger, item, group, target)
+
+      if (trigger.parentNode.classList.contains('on')) {
+        ['fade', 'shown'].forEach(function (classNames) {
+          target.classList.add(classNames);
+        })
+      } else {
+        target.classList.add('hidden');
+      }
+    })
+  },
+  constructor: function () {
+    this.$tabTrigger = document.querySelectorAll('[data-tab-trigger]');
+  },
+  click: function (trigger, item, group, target) {
+    trigger.addEventListener('click', function click() {
+      // nav-tab
+      if (!trigger.parentNode.classList.contains('on')) {
+        item.forEach(function (el) {
+          el.classList.remove('on');
+        })
+        this.parentNode.classList.add('on');
+      } else {
+        return false;
+      }
+
+      // tab-target
+      group.forEach(function (el) {
+        if (el.classList.contains('shown')) {
+          el.classList.remove('shown');
+          el.classList.add('hiding');
+          el.classList.remove('fade');
+
+          UI_Control.tab.transition(el);
+
+          el.addEventListener('transitionend', function () {
+            target.classList.remove('hidden');
+            target.classList.add('showing');
+            setTimeout(function () {
+              target.classList.add('fade');
+            }, 100);
+            
+            UI_Control.tab.transition(target);
+            el.removeEventListener('transitionend', arguments.callee);
+          })
+        }
+      })
+
+      const stopFunc = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      };
+
+      // 트랜지션 시작 시 클릭 이벤트 삭제
+      target.addEventListener('transitionstart', function () {
+        UI_Control.tab.$tabTrigger.forEach(function (el) {
+          el.removeEventListener('click', click);
+          el.addEventListener('click', stopFunc, true);
+        })
+      })
+
+      // 트랜지션 후 클릭 이벤트 복구
+      target.addEventListener('transitionend', function () {
+        trigger.addEventListener('click', click);
+        UI_Control.tab.$tabTrigger.forEach(function (el) {
+          el.removeEventListener('click', stopFunc, true);
+        })
+      })
+    })
+  },
+  transition: function (target) {
+    // transition start
+    target.addEventListener('transitionstart', function () {
+      if (this.classList.contains('showing')) {
+        const showing = new CustomEvent('tab.showing');
+        this.dispatchEvent(showing);
+      } else if (this.classList.contains('hiding')) {
+        const hiding = new CustomEvent('tab.hiding');
+        this.dispatchEvent(hiding);
+      }
+      target.removeEventListener('transitionstart', arguments.callee);
+    })
+    // transition end
+    target.addEventListener('transitionend', function () {
+      if (this.classList.contains('showing')) {
+        this.classList.remove('showing');
+        this.classList.add('shown');
+
+        const shown = new CustomEvent('tab.shown');
+        this.dispatchEvent(shown);
+      } else if (this.classList.contains('hiding')) {
+        this.classList.remove('hiding');
+        this.classList.add('hidden');
+
+        const hidden = new CustomEvent('tab.hidden');
+        this.dispatchEvent(hidden);
+      }
+      target.removeEventListener('transitionend', arguments.callee);
+    })
+  }
+}
+
+UI_Control.counter = {
+  init: function () {
+    this.constructor();
+
+    this.$counter.forEach(function (el) {
+      const initNumber = el.getAttribute('data-init-number');
+      const duration = el.getAttribute('data-duration');
+      const comma = el.getAttribute('data-comma');
+      let startTime = null;
+
+      const step = function (currentTime) {
+        if (!startTime) {
+          startTime = currentTime;
+        }
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        if (comma) {
+          el.innerHTML = numberComma(Math.floor(progress * (el.getAttribute('data-counter') - Number(initNumber)) + Number(initNumber)));
+        } else {
+          el.innerHTML = Math.floor(progress * (el.getAttribute('data-counter') - Number(initNumber)) + Number(initNumber));
+        }
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      window.requestAnimationFrame(step);
+    })
+  },
+  constructor: function () {
+    this.$counter = document.querySelectorAll('[data-counter]');
+  }
+}
+
 window.addEventListener('DOMContentLoaded', function () {
   // IE closest 대응
   if (!Element.prototype.matches) {
@@ -310,7 +464,9 @@ window.addEventListener('DOMContentLoaded', function () {
   })();
 
   if (document.querySelectorAll('.guide-nav').length) UI_Control.layout.init();
-  if (document.querySelectorAll('input[data-checkbox]').length) UI_Control.checkAll.init();
-  if (document.querySelectorAll('[data-context]').length) UI_Control.contextMenu.init();
+  if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
+  if (document.querySelectorAll('[data-context]').length) UI_Control.Tooltip.init();
   if (document.querySelectorAll('[data-accr]').length) UI_Control.accr.init();
+  if (document.querySelectorAll('[data-tab]').length) UI_Control.tab.init();
+  if (document.querySelectorAll('[data-counter]').length) UI_Control.counter.init();
 })

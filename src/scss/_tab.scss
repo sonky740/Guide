@@ -1,0 +1,46 @@
+.nav-tab {
+    display: flex;
+    margin: -8px 0 0 -8px;
+
+    &-item {
+        margin: 8px 0 0 8px;
+        
+        [data-tab-trigger] {
+            padding: 8px;
+            border: 1px solid #0d6efd;
+            color: #0d6efd;
+            border-radius: 8px;
+        }
+    }
+}
+
+[data-tab-trigger] {
+    .nav-tab-item.on & {
+        background: #0d6efd;
+        color: #fff;
+    }
+}
+
+[data-tab-target] {
+    display: none;
+    opacity: 0;
+
+    &.showing,
+    &.hiding {
+        display: block;
+        opacity: 0;
+        transition: all .15s;
+    }
+
+    &.fade {
+        opacity: 1;
+    }
+
+    &.shown {
+        display: block;
+    }
+
+    &.hidden {
+        display: none;
+    }
+}

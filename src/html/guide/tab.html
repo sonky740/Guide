@@ -1,75 +1,69 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tab</title>
+  <title>손기연</title>
   <link rel="stylesheet" href="../../css/common.css">
-  <link rel="stylesheet" href="../../css/guide.css">
 </head>
+
 <body>
-  <!-- ### 헤더 ### -->
-  <header id="header">
-    
-  </header>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
 
-  <!-- ### 가이드 메인 ### -->
-  <main class="container">
-    <section class="guide">
-      <h3 class="title">탭<span>([data-tag-group])</span></h3>
-      <div class="area-btn" data-tab-group="tabgroup1">
-        <a href="#none" class="btn-type1 active" data-tabtit="tabcon1">탭1</a>
-        <a href="#none" class="btn-type1" data-tabtit="tabcon2">탭2</a>
-      </div>
-      <div id="tabcon1" class="ui-tabcon active" data-tabcon="tabgroup1">
-        ㅁㄴㅇㄹ
-      </div>
-      <div id="tabcon2" class="ui-tabcon active" data-tabcon="tabgroup1">
-        qwer
-      </div>
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section">
+        <h3 class="tit-main" data-text="Tab">Tab</h3>
 
-      <div class="area-btn" data-tab-group="tabgroup2">
-        <a href="#none" class="active" data-tabtit="tabcon3">탭1</a>
-        <a href="#none" data-tabtit="tabcon4">탭2</a>
-      </div>
-      <div id="tabcon3" class="ui-tabcon active" data-tabcon="tabgroup2">
-        ㅁㄴㅇㄹ
-      </div>
-      <div id="tabcon4" class="ui-tabcon" data-tabcon="tabgroup2">
-        qwer
-      </div>
-    </section>
-    <!-- // -->
-    <section class="guide">
-      <h2 class="title">라디오 탭</h2>
-      <div class="label-btn1" data-tab-group="radiogroup1">
-        <input type="radio" name="form_radio7" data-tabtit="radiotab1" checked>
-        <span>탭1</span>
-        <input type="radio" name="form_radio7" data-tabtit="radiotab2">
-        <span>탭2</span>
-      </div>
-      <div id="radiotab1" class="ui-tabcon active" data-tabcon="radiogroup1">
-        ㅁㄴㅇㄹ
-      </div>
-      <div id="radiotab2" class="ui-tabcon" data-tabcon="radiogroup1">
-        qwer
-      </div>
+        <ul class="nav-tab" data-tab="group1">
+          <li class="nav-tab-item on" data-tab-item><button type="button" data-tab-trigger="tab1">Tab1</button></li>
+          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab2">Tab2</button></li>
+          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab3">Tab3</button></li>
+          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab4">Tab4</button></li>
+        </ul>
 
-      <div class="label-btn1" data-tab-group="radiogroup2">
-        <input type="radio" name="form_radio8" data-tabtit="radiotab3" checked>
-        <span>탭1</span>
-        <input type="radio" name="form_radio8" data-tabtit="radiotab4">
-        <span>탭2</span>
-      </div>
-      <div id="radiotab3" class="ui-tabcon active" data-tabcon="radiogroup2">
-        ㅁㄴㅇㄹ
-      </div>
-      <div id="radiotab4" class="ui-tabcon" data-tabcon="radiogroup2">
-        qwer
-      </div>
-    </section>
-  </main>
+        <div data-tab-group="group1" data-tab-target="tab1">
+          tab1
+        </div>
+        <div data-tab-group="group1" data-tab-target="tab2">
+          tab2
+        </div>
+        <div data-tab-group="group1" data-tab-target="tab3">
+          tab3
+        </div>
+        <div data-tab-group="group1" data-tab-target="tab4">
+          tab4
+        </div>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
 
   <script src="../../js/common.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[data-tab-target]').forEach(function (el) {
+        el.addEventListener('tab.showing', function (e) {
+          console.log(e.target, 'showing')
+        })
+        el.addEventListener('tab.shown', function (e) {
+          console.log(e.target, 'shown')
+        })
+        el.addEventListener('tab.hiding', function (e) {
+          console.log(e.target, 'hiding')
+        })
+        el.addEventListener('tab.hidden', function (e) {
+          console.log(e.target, 'hidden')
+        })
+      })
+    })
+  </script>
 </body>
+
 </html>

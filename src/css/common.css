@@ -712,13 +712,13 @@ span.btn-type1:hover {
           box-shadow: none;
 }
 
-.tit-main1 {
+.tit-main {
   position: relative;
   font-size: 48px;
   margin-bottom: 24px;
   text-align: center;
 }
-.tit-main1:before {
+.tit-main:before {
   content: attr(data-text);
   position: absolute;
   top: 0;
@@ -730,7 +730,7 @@ span.btn-type1:hover {
   font-weight: 900;
 }
 @media screen and (max-width: 640px) {
-  .tit-main1:before {
+  .tit-main:before {
     content: "";
   }
 }
@@ -1119,6 +1119,47 @@ span.btn-type1:hover {
   z-index: 1;
 }
 
+.nav-tab {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: -8px 0 0 -8px;
+}
+.nav-tab-item {
+  margin: 8px 0 0 8px;
+}
+.nav-tab-item [data-tab-trigger] {
+  padding: 8px;
+  border: 1px solid #0d6efd;
+  color: #0d6efd;
+  border-radius: 8px;
+}
+
+.nav-tab-item.on [data-tab-trigger] {
+  background: #0d6efd;
+  color: #fff;
+}
+
+[data-tab-target] {
+  display: none;
+  opacity: 0;
+}
+[data-tab-target].showing, [data-tab-target].hiding {
+  display: block;
+  opacity: 0;
+  -webkit-transition: all 0.15s;
+  transition: all 0.15s;
+}
+[data-tab-target].fade {
+  opacity: 1;
+}
+[data-tab-target].shown {
+  display: block;
+}
+[data-tab-target].hidden {
+  display: none;
+}
+
 .blind {
   position: absolute;
   width: 1px;
@@ -1127,13 +1168,6 @@ span.btn-type1:hover {
   clip: rect(0, 0, 0, 0);
   overflow: hidden;
   white-space: nowrap;
-}
-
-.ui-tabcon {
-  display: none;
-}
-.ui-tabcon.active {
-  display: block;
 }
 
 figure img {
