@@ -1147,8 +1147,8 @@ span.btn-type1:hover {
 [data-tab-target].showing, [data-tab-target].hiding {
   display: block;
   opacity: 0;
-  -webkit-transition: all 0.15s;
-  transition: all 0.15s;
+  -webkit-transition: all 0.05s;
+  transition: all 0.05s;
 }
 [data-tab-target].fade {
   opacity: 1;
@@ -1158,6 +1158,155 @@ span.btn-type1:hover {
 }
 [data-tab-target].hidden {
   display: none;
+}
+
+.range {
+  padding-top: 32px;
+}
+.range + .range {
+  margin-top: 16px;
+}
+.range-area {
+  position: relative;
+  padding-top: 15px;
+}
+.range-area input[type=range] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 15px;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1;
+}
+.range-area input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+          appearance: none;
+  width: 21px;
+  height: 21px;
+  border: none;
+  border-radius: 50%;
+  background: #fff url("../images/ico_range_btn.svg") no-repeat 50% 52%/11px;
+  -webkit-box-shadow: 2px 2px 9px rgba(29, 76, 216, 0.71);
+          box-shadow: 2px 2px 9px rgba(29, 76, 216, 0.71);
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.range-label {
+  display: inline-block;
+  position: absolute;
+  top: -36px;
+  left: 0;
+  min-width: 66px;
+  padding: 2px 7px;
+  background-color: #2f62fb;
+  border-radius: 11px;
+  text-align: center;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 1;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+.range-label:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 3px solid #2f62fb;
+  -webkit-transform: translate(-50%, 100%);
+          transform: translate(-50%, 100%);
+}
+.range-label.left, .range-label.right {
+  -webkit-transform: translateX(0) !important;
+          transform: translateX(0) !important;
+}
+.range-label.left:after, .range-label.right:after {
+  content: none;
+}
+.range-label.left {
+  right: auto !important;
+  left: -8px !important;
+}
+.range-label.right {
+  right: -6px !important;
+  left: auto !important;
+}
+.range-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: -5px;
+}
+.range-bar, .range-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #f6f7f8;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.range-fill {
+  top: 0;
+  left: 0;
+  background: #2f62fb;
+}
+.range-fill-spacing {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.range-fill-spacing > li {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+}
+.range-fill-spacing > li:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 2px;
+  height: 100%;
+  background: #fff;
+}
+.range-bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 4px;
+}
+.range-bottom > span {
+  color: #b7b7b7;
+  font-weight: 700;
+}
+.range.type1 {
+  padding-top: 0;
 }
 
 .blind {

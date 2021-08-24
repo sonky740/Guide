@@ -16,6 +16,7 @@ UI_Control.layout = {
     $lnb += '<ul>'
     $lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
     $lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>'
+    $lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>'
     $lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>'
     $lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
     $lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
@@ -329,7 +330,7 @@ UI_Control.tab = {
             setTimeout(function () {
               target.classList.add('fade');
             }, 100);
-            
+
             UI_Control.tab.transition(target);
             el.removeEventListener('transitionend', arguments.callee);
           })
@@ -344,18 +345,19 @@ UI_Control.tab = {
       };
 
       // 트랜지션 시작 시 클릭 이벤트 삭제
+      // 혹시 나중에 트랜지션이 길어져서 오류가 생길경우 transitionstart 삭제 => 대신 IE대응이 안됨.
       target.addEventListener('transitionstart', function () {
-        UI_Control.tab.$tabTrigger.forEach(function (el) {
-          el.removeEventListener('click', click);
-          el.addEventListener('click', stopFunc, true);
+        UI_Control.tab.$tabTrigger.forEach(function (triggerAll) {
+          triggerAll.removeEventListener('click', click);
+          triggerAll.addEventListener('click', stopFunc, true);
         })
       })
 
       // 트랜지션 후 클릭 이벤트 복구
       target.addEventListener('transitionend', function () {
         trigger.addEventListener('click', click);
-        UI_Control.tab.$tabTrigger.forEach(function (el) {
-          el.removeEventListener('click', stopFunc, true);
+        UI_Control.tab.$tabTrigger.forEach(function (triggerAll) {
+          triggerAll.removeEventListener('click', stopFunc, true);
         })
       })
     })
@@ -425,6 +427,144 @@ UI_Control.counter = {
   }
 }
 
+UI_Control.range = {
+  init: function () {
+    this.constructor();
+
+    this.$range.forEach(function (rangeThis) {
+      var rangeTarget = rangeThis.querySelector('input[type="range"]');
+      var rangeLabel = rangeThis.querySelector('.range-label');
+      var rangeFill = rangeThis.querySelector('.range-fill');
+
+      // init
+      UI_Control.range.input(rangeThis, rangeTarget, rangeLabel, rangeFill);
+
+      // 간격 표시
+      var spacingBody = rangeThis.querySelector('.range-fill-spacing');
+      if (spacingBody) {
+        var spacing = rangeTarget.max / rangeTarget.step;
+
+        for (var i = 0; i < spacing; i++) {
+          var spacing_li = document.createElement('li');
+          spacingBody.appendChild(spacing_li);
+        }
+      }
+
+      // input event
+      rangeTarget.addEventListener('input', function () {
+        UI_Control.range.input(rangeThis, rangeTarget, rangeLabel, rangeFill);
+      })
+
+      // IE 얼럿
+      if ((navigator.appName == 'Netscape' && navigator.userAgent.toLowerCase().indexOf('trident') != -1) || (navigator.userAgent.toLowerCase().indexOf("msie") != -1)) {
+        alert('IE에서는 작동하지 않습니다. ')
+        return false;
+      } else {
+        UI_Control.range.polyfill(rangeTarget);
+      }
+    })
+  },
+  constructor: function () {
+    this.$range = document.querySelectorAll('[data-range]');
+  },
+  input: function (rangeThis, rangeTarget, rangeLabel, rangeFill) {
+    // percent
+    var $per = (rangeTarget.value - rangeTarget.min) / (rangeTarget.max - rangeTarget.min) * 100;
+
+    // bar
+    rangeFill.style.width = $per + '%';
+
+    // 말풍선
+    if (rangeLabel) {
+      rangeLabel.style.left = $per + '%';
+      rangeLabel.innerHTML = numberComma(rangeTarget.value) + rangeTarget.getAttribute('data-unit');
+
+      if ($per < 12.5) {
+        rangeLabel.classList.add('left');
+        rangeLabel.classList.remove('right');
+      } else if ($per <= 12.5) {
+        rangeLabel.classList.remove('right');
+        rangeLabel.style.transform = 'translateX(-44%)';
+      } else if ($per <= 25) {
+        rangeLabel.classList.remove('right');
+        rangeLabel.style.transform = 'translateX(-46%)';
+      } else if ($per <= 37.5) {
+        rangeLabel.classList.remove('right');
+        rangeLabel.style.transform = 'translateX(-48%)';
+      } else if ($per <= 50) {
+        rangeLabel.classList.remove('right');
+        rangeLabel.style.transform = 'translateX(-50%)';
+      } else if ($per <= 62.5) {
+        rangeLabel.classList.remove('right');
+        rangeLabel.style.transform = 'translateX(-51%)';
+      } else if ($per <= 75) {
+        rangeLabel.classList.add('right');
+        rangeLabel.style.transform = 'translateX(-53%)';
+      } else if ($per <= 87.5) {
+        rangeLabel.classList.add('right');
+        rangeLabel.style.transform = 'translateX(-55%)';
+      } else if ($per > 87.5) {
+        rangeLabel.classList.add('right');
+        rangeLabel.classList.remove('left');
+      } else {
+        rangeLabel.classList.remove('right');
+        rangeLabel.classList.remove('left');
+        rangeLabel.style.left = $per + '%';
+      }
+    }
+
+    // min값 선택 안되게
+    if ($per === 0 && rangeThis.classList.contains('min-no')) {
+      rangeLabel.classList.remove('left');
+      rangeTarget.value = rangeTarget.step;
+      rangeLabel.innerHTML = numberComma(rangeTarget.step) + rangeTarget.getAttribute('data-unit');
+      rangeLabel.style.left = (rangeTarget.step / rangeTarget.max) * 100 + '%';
+      rangeFill.style.width = (rangeTarget.step / rangeTarget.max) * 100 + '%';
+    }
+
+    // 타입1 = 급속, 완속 충전
+    if (rangeThis.classList.contains('type1')) {
+      var dataLeft = rangeThis.querySelector('[data-left]');
+      var dataRight = rangeThis.querySelector('[data-right]');
+
+      dataLeft.innerHTML = rangeTarget.value + rangeTarget.getAttribute('data-unit');
+      dataRight.innerHTML = Number(rangeTarget.max - rangeTarget.value) + rangeTarget.getAttribute('data-unit');
+    }
+  },
+  polyfill: function (rangeTarget) {
+    // ios range 터치되게
+    function iosPolyfill(e) {
+      var val = (e.pageX - rangeTarget.getBoundingClientRect().left) /
+        (rangeTarget.getBoundingClientRect().right - rangeTarget.getBoundingClientRect().left),
+        max = rangeTarget.getAttribute("max"),
+        segment = 1 / (max - 1),
+        segmentArr = [];
+
+      max++;
+
+      for (var i = 0; i < max; i++) {
+        segmentArr.push(segment * i);
+      }
+
+      var segCopy = segmentArr.slice()
+      // arrow 함수로 변경해야함. IE에서 자꾸 에러 띄워서 function으로 냅둠.
+      var ind = segmentArr.sort(function (a, b) {
+        Math.abs(val - a) - Math.abs(val - b)
+      })[0];
+      // var ind = segmentArr.sort((a, b) => Math.abs(val - a) - Math.abs(val - b))[0];
+
+      rangeTarget.value = segCopy.indexOf(ind) + 1;
+
+      init(e.target);
+    }
+    if (!!navigator.platform.match(/iPhone|iPod|iPad/)) {
+      rangeTarget.addEventListener("touchend", iosPolyfill, {
+        passive: true
+      });
+    }
+  }
+}
+
 window.addEventListener('DOMContentLoaded', function () {
   // IE closest 대응
   if (!Element.prototype.matches) {
@@ -469,4 +609,5 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-accr]').length) UI_Control.accr.init();
   if (document.querySelectorAll('[data-tab]').length) UI_Control.tab.init();
   if (document.querySelectorAll('[data-counter]').length) UI_Control.counter.init();
+  if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
 })
