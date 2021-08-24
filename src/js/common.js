@@ -498,10 +498,10 @@ UI_Control.range = {
         rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-51%)';
       } else if ($per <= 75) {
-        rangeLabel.classList.add('right');
+        rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-53%)';
       } else if ($per <= 87.5) {
-        rangeLabel.classList.add('right');
+        rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-55%)';
       } else if ($per > 87.5) {
         rangeLabel.classList.add('right');

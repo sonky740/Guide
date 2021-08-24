@@ -1161,7 +1161,7 @@ span.btn-type1:hover {
 }
 
 .range {
-  padding-top: 32px;
+  padding-top: 40px;
 }
 .range + .range {
   margin-top: 16px;
@@ -1202,10 +1202,10 @@ span.btn-type1:hover {
   position: absolute;
   top: -36px;
   left: 0;
-  min-width: 66px;
+  min-width: 72px;
   padding: 2px 7px;
   background-color: #2f62fb;
-  border-radius: 11px;
+  border-radius: 8px;
   text-align: center;
   color: #fff;
   font-size: 11px;
