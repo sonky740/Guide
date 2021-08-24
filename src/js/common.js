@@ -7,80 +7,80 @@ function numberComma(x) {
 
 UI_Control.layout = {
   init: function () {
-    const $url = window.location.href.split('/');
-    const $urlLast = $url[$url.length - 1].split('.html')[0];
+    const url = window.location.href.split('/');
+    const urlLast = url[url.length - 1].split('.html')[0];
 
     // lnb
-    const $lnbParent = document.querySelector('.guide-nav');
-    let $lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>'
-    $lnb += '<ul>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
-    $lnb += '  <li><a href="/Guide/src/html/guide/form.html">form</a></li>'
-    $lnb += '</ul>'
-    $lnbParent.innerHTML = $lnb;
+    const lnbParent = document.querySelector('.guide-nav');
+    let lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>'
+    lnb += '<ul>'
+    lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/form.html">form</a></li>'
+    lnb += '</ul>'
+    lnbParent.innerHTML = lnb;
 
     // lnb === url ? active : null
-    const $lnbTrigger = document.querySelectorAll('.guide-nav ul li a');
-    Array.prototype.forEach.call($lnbTrigger, function (el) {
-      const $target = el.getAttribute('href').split('/');
-      const $targetLast = $target[$target.length - 1].split('.html')[0];
+    const lnbTrigger = document.querySelectorAll('.guide-nav ul li a');
+    Array.prototype.forEach.call(lnbTrigger, function (el) {
+      const target = el.getAttribute('href').split('/');
+      const targetLast = target[target.length - 1].split('.html')[0];
 
-      if ($urlLast === $targetLast) el.classList.add('active');
+      if (urlLast === targetLast) el.classList.add('active');
     })
 
     // header 
-    const $headerParent = document.querySelector('.header');
-    let $header = '<div class="header-wrap">'
-    $header += '<h1>'
-    $header += '  <a href="/Guide/src/html/" title="홈으로">Sonky</a>'
-    $header += '</h1>'
-    $header += '<button type="button" class="header-bar trigger" title="Guide Menu">'
-    $header += '  <i aria-hidden="true"></i>'
-    $header += '</button>'
-    $header += '</div>'
-    $headerParent.innerHTML = $header;
+    const headerParent = document.querySelector('.header');
+    let header = '<div class="header-wrap">'
+    header += '<h1>'
+    header += '  <a href="/Guide/src/html/" title="홈으로">Sonky</a>'
+    header += '</h1>'
+    header += '<button type="button" class="header-bar trigger" title="Guide Menu">'
+    header += '  <i aria-hidden="true"></i>'
+    header += '</button>'
+    header += '</div>'
+    headerParent.innerHTML = header;
 
     // header button
-    const $menuTrigger = document.querySelector('.header-bar');
-    const $menuTarget = document.querySelector('.guide-nav');
-    const $menuClose = document.querySelector('.guide-nav-close');
+    const menuTrigger = document.querySelector('.header-bar');
+    const menuTarget = document.querySelector('.guide-nav');
+    const menuClose = document.querySelector('.guide-nav-close');
 
-    $menuTrigger.classList.add('trigger');
+    menuTrigger.classList.add('trigger');
 
-    $menuTrigger.addEventListener('click', function () {
+    menuTrigger.addEventListener('click', function () {
       if (this.classList.contains('trigger')) {
         this.classList.add('on');
-        $menuTarget.classList.add('on');
+        menuTarget.classList.add('on');
       }
       this.classList.remove('trigger');
     })
 
-    $menuTrigger.addEventListener('transitionend', function () {
-      if ($menuTarget.classList.contains('on')) {
-        $menuClose.classList.add('trigger');
+    menuTrigger.addEventListener('transitionend', function () {
+      if (menuTarget.classList.contains('on')) {
+        menuClose.classList.add('trigger');
       }
     })
 
-    $menuClose.addEventListener('click', function () {
+    menuClose.addEventListener('click', function () {
       if (this.classList.contains('trigger')) {
-        $menuTrigger.classList.remove('on');
-        $menuTarget.style.left = '-100%';
+        menuTrigger.classList.remove('on');
+        menuTarget.style.left = '-100%';
       }
     })
 
-    $menuTarget.addEventListener('transitionend', function (e) {
-      if (e.target === $menuTarget) {
-        $menuTarget.removeAttribute('style');
-        $menuTarget.classList.remove('on');
-        $menuTrigger.classList.add('trigger');
-        $menuClose.classList.remove('trigger');
+    menuTarget.addEventListener('transitionend', function (e) {
+      if (e.target === menuTarget) {
+        menuTarget.removeAttribute('style');
+        menuTarget.classList.remove('on');
+        menuTrigger.classList.add('trigger');
+        menuClose.classList.remove('trigger');
       } else {
         return false;
       }
@@ -90,12 +90,12 @@ UI_Control.layout = {
 
 UI_Control.checkAll = {
   init: function () {
-    const $check = document.querySelectorAll('input[data-checkbox]');
-    Array.prototype.forEach.call($check, function (el) {
-      const $elem = '[name=' + el.getAttribute('data-checkbox') + ']:not([data-checkbox])';
-      const $bullet = document.querySelectorAll($elem);
+    const check = document.querySelectorAll('input[data-checkbox]');
+    Array.prototype.forEach.call(check, function (el) {
+      const elem = '[name=' + el.getAttribute('data-checkbox') + ']:not([data-checkbox])';
+      const bullet = document.querySelectorAll(elem);
 
-      Array.prototype.forEach.call($bullet, function (al) {
+      Array.prototype.forEach.call(bullet, function (al) {
         // 전체 클릭, 해제
         el.addEventListener('click', function () {
           if (el.checked === true) {
@@ -107,8 +107,8 @@ UI_Control.checkAll = {
 
         // 요소 클릭, 해제
         al.addEventListener('click', function () {
-          const $checked = document.querySelectorAll('input:checked' + $elem).length;
-          if ($checked === $bullet.length) {
+          const checked = document.querySelectorAll('input:checked' + elem).length;
+          if (checked === bullet.length) {
             el.checked = true;
           } else {
             el.checked = false;
@@ -121,8 +121,8 @@ UI_Control.checkAll = {
         }
 
         // 전부 클릭이 되어있다면
-        const $gChecked = document.querySelectorAll('input:checked' + $elem).length;
-        if ($gChecked === $bullet.length) {
+        const gChecked = document.querySelectorAll('input:checked' + elem).length;
+        if (gChecked === bullet.length) {
           el.checked = true;
         }
       })
@@ -163,7 +163,7 @@ UI_Control.accr = {
   init: function () {
     this.constructor();
 
-    this.$accrTrigger.forEach(function (trigger) {
+    this.accrTrigger.forEach(function (trigger) {
       const accr = trigger.closest('[data-accr]');
       const item = trigger.closest('[data-accr-item]');
       const target = item.querySelector('[data-accr-target]');
@@ -178,8 +178,8 @@ UI_Control.accr = {
     })
   },
   constructor: function () {
-    this.$accr = document.querySelectorAll('[data-accr]');
-    this.$accrTrigger = document.querySelectorAll('[data-accr-trigger]');
+    this.accr = document.querySelectorAll('[data-accr]');
+    this.accrTrigger = document.querySelectorAll('[data-accr-trigger]');
   },
   click: function (trigger, accr, item, target, targetAll, content) {
     trigger.addEventListener('click', function click(e) {
@@ -231,7 +231,7 @@ UI_Control.accr = {
 
       // 트랜지션 시작 시 클릭 이벤트 삭제
       target.addEventListener('transitionstart', function () {
-        UI_Control.accr.$accrTrigger.forEach(function (el) {
+        UI_Control.accr.accrTrigger.forEach(function (el) {
           el.removeEventListener('click', click);
           el.addEventListener('click', stopFunc, true);
         })
@@ -240,7 +240,7 @@ UI_Control.accr = {
       // 트랜지션 후 클릭 이벤트 복구
       target.addEventListener('transitionend', function () {
         trigger.addEventListener('click', click);
-        UI_Control.accr.$accrTrigger.forEach(function (el) {
+        UI_Control.accr.accrTrigger.forEach(function (el) {
           el.removeEventListener('click', stopFunc, true);
         })
       })
@@ -283,7 +283,7 @@ UI_Control.tab = {
   init: function () {
     this.constructor();
 
-    this.$tabTrigger.forEach(function (trigger) {
+    this.tabTrigger.forEach(function (trigger) {
       const tabNav = trigger.closest('[data-tab]');
       const item = tabNav.querySelectorAll('[data-tab-item]');
       const group = document.querySelectorAll('[data-tab-group="' + tabNav.getAttribute('data-tab') + '"]');
@@ -301,7 +301,7 @@ UI_Control.tab = {
     })
   },
   constructor: function () {
-    this.$tabTrigger = document.querySelectorAll('[data-tab-trigger]');
+    this.tabTrigger = document.querySelectorAll('[data-tab-trigger]');
   },
   click: function (trigger, item, group, target) {
     trigger.addEventListener('click', function click() {
@@ -347,7 +347,7 @@ UI_Control.tab = {
       // 트랜지션 시작 시 클릭 이벤트 삭제
       // 혹시 나중에 트랜지션이 길어져서 오류가 생길경우 transitionstart 삭제 => 대신 IE대응이 안됨.
       target.addEventListener('transitionstart', function () {
-        UI_Control.tab.$tabTrigger.forEach(function (triggerAll) {
+        UI_Control.tab.tabTrigger.forEach(function (triggerAll) {
           triggerAll.removeEventListener('click', click);
           triggerAll.addEventListener('click', stopFunc, true);
         })
@@ -356,7 +356,7 @@ UI_Control.tab = {
       // 트랜지션 후 클릭 이벤트 복구
       target.addEventListener('transitionend', function () {
         trigger.addEventListener('click', click);
-        UI_Control.tab.$tabTrigger.forEach(function (triggerAll) {
+        UI_Control.tab.tabTrigger.forEach(function (triggerAll) {
           triggerAll.removeEventListener('click', stopFunc, true);
         })
       })
@@ -398,7 +398,7 @@ UI_Control.counter = {
   init: function () {
     this.constructor();
 
-    this.$counter.forEach(function (el) {
+    this.counter.forEach(function (el) {
       const initNumber = el.getAttribute('data-init-number');
       const duration = el.getAttribute('data-duration');
       const comma = el.getAttribute('data-comma');
@@ -423,7 +423,7 @@ UI_Control.counter = {
     })
   },
   constructor: function () {
-    this.$counter = document.querySelectorAll('[data-counter]');
+    this.counter = document.querySelectorAll('[data-counter]');
   }
 }
 
@@ -431,7 +431,7 @@ UI_Control.range = {
   init: function () {
     this.constructor();
 
-    this.$range.forEach(function (rangeThis) {
+    this.range.forEach(function (rangeThis) {
       var rangeTarget = rangeThis.querySelector('input[type="range"]');
       var rangeLabel = rangeThis.querySelector('.range-label');
       var rangeFill = rangeThis.querySelector('.range-fill');
@@ -465,56 +465,56 @@ UI_Control.range = {
     })
   },
   constructor: function () {
-    this.$range = document.querySelectorAll('[data-range]');
+    this.range = document.querySelectorAll('[data-range]');
   },
   input: function (rangeThis, rangeTarget, rangeLabel, rangeFill) {
     // percent
-    var $per = (rangeTarget.value - rangeTarget.min) / (rangeTarget.max - rangeTarget.min) * 100;
+    var per = (rangeTarget.value - rangeTarget.min) / (rangeTarget.max - rangeTarget.min) * 100;
 
     // bar
-    rangeFill.style.width = $per + '%';
+    rangeFill.style.width = per + '%';
 
     // 말풍선
     if (rangeLabel) {
-      rangeLabel.style.left = $per + '%';
+      rangeLabel.style.left = per + '%';
       rangeLabel.innerHTML = numberComma(rangeTarget.value) + rangeTarget.getAttribute('data-unit');
 
-      if ($per < 12.5) {
+      if (per < 12.5) {
         rangeLabel.classList.add('left');
         rangeLabel.classList.remove('right');
-      } else if ($per <= 12.5) {
+      } else if (per <= 12.5) {
         rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-44%)';
-      } else if ($per <= 25) {
+      } else if (per <= 25) {
         rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-46%)';
-      } else if ($per <= 37.5) {
+      } else if (per <= 37.5) {
         rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-48%)';
-      } else if ($per <= 50) {
+      } else if (per <= 50) {
         rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-50%)';
-      } else if ($per <= 62.5) {
+      } else if (per <= 62.5) {
         rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-51%)';
-      } else if ($per <= 75) {
+      } else if (per <= 75) {
         rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-53%)';
-      } else if ($per <= 87.5) {
+      } else if (per <= 87.5) {
         rangeLabel.classList.remove('right');
         rangeLabel.style.transform = 'translateX(-55%)';
-      } else if ($per > 87.5) {
+      } else if (per > 87.5) {
         rangeLabel.classList.add('right');
         rangeLabel.classList.remove('left');
       } else {
         rangeLabel.classList.remove('right');
         rangeLabel.classList.remove('left');
-        rangeLabel.style.left = $per + '%';
+        rangeLabel.style.left = per + '%';
       }
     }
 
     // min값 선택 안되게
-    if ($per === 0 && rangeThis.classList.contains('min-no')) {
+    if (per === 0 && rangeThis.classList.contains('min-no')) {
       rangeLabel.classList.remove('left');
       rangeTarget.value = rangeTarget.step;
       rangeLabel.innerHTML = numberComma(rangeTarget.step) + rangeTarget.getAttribute('data-unit');
