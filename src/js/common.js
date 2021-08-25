@@ -535,7 +535,7 @@ UI_Control.range = {
   polyfill: function (rangeTarget) {
     // ios range 터치되게
     function iosPolyfill(e) {
-      const val = (e.pageX - rangeTarget.getBoundingClientRect().left) /
+      let val = (e.pageX - rangeTarget.getBoundingClientRect().left) /
         (rangeTarget.getBoundingClientRect().right - rangeTarget.getBoundingClientRect().left),
         max = rangeTarget.getAttribute("max"),
         segment = 1 / (max - 1),
@@ -547,12 +547,12 @@ UI_Control.range = {
         segmentArr.push(segment * i);
       }
 
-      const segCopy = segmentArr.slice()
+      var segCopy = segmentArr.slice(),
       // arrow 함수로 변경해야함. IE에서 자꾸 에러 띄워서 function으로 냅둠.
-      const ind = segmentArr.sort(function (a, b) {
+      ind = segmentArr.sort(function (a, b) {
         Math.abs(val - a) - Math.abs(val - b)
       })[0];
-      // const ind = segmentArr.sort((a, b) => Math.abs(val - a) - Math.abs(val - b))[0];
+      // ind = segmentArr.sort((a, b) => Math.abs(val - a) - Math.abs(val - b))[0];
 
       rangeTarget.value = segCopy.indexOf(ind) + 1;
 
