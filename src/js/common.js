@@ -178,7 +178,6 @@ UI_Control.accr = {
     })
   },
   constructor: function () {
-    this.accr = document.querySelectorAll('[data-accr]');
     this.accrTrigger = document.querySelectorAll('[data-accr-trigger]');
   },
   click: function (trigger, accr, item, target, targetAll, content) {
@@ -212,6 +211,7 @@ UI_Control.accr = {
             ta.removeAttribute('style')
 
             ta.closest('[data-accr-item]').classList.remove('on');
+            ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
 
             UI_Control.accr.transition(ta);
           }
@@ -219,6 +219,7 @@ UI_Control.accr = {
       }
 
       item.classList.toggle('on');
+      trigger.classList.toggle('on');
 
       UI_Control.accr.transition(target);
 
@@ -432,20 +433,20 @@ UI_Control.range = {
     this.constructor();
 
     this.range.forEach(function (rangeThis) {
-      var rangeTarget = rangeThis.querySelector('input[type="range"]');
-      var rangeLabel = rangeThis.querySelector('.range-label');
-      var rangeFill = rangeThis.querySelector('.range-fill');
+      const rangeTarget = rangeThis.querySelector('input[type="range"]');
+      const rangeLabel = rangeThis.querySelector('.range-label');
+      const rangeFill = rangeThis.querySelector('.range-fill');
 
       // init
       UI_Control.range.input(rangeThis, rangeTarget, rangeLabel, rangeFill);
 
       // 간격 표시
-      var spacingBody = rangeThis.querySelector('.range-fill-spacing');
+      const spacingBody = rangeThis.querySelector('.range-fill-spacing');
       if (spacingBody) {
-        var spacing = rangeTarget.max / rangeTarget.step;
+        const spacing = rangeTarget.max / rangeTarget.step;
 
-        for (var i = 0; i < spacing; i++) {
-          var spacing_li = document.createElement('li');
+        for (let i = 0; i < spacing; i++) {
+          const spacing_li = document.createElement('li');
           spacingBody.appendChild(spacing_li);
         }
       }
@@ -469,7 +470,7 @@ UI_Control.range = {
   },
   input: function (rangeThis, rangeTarget, rangeLabel, rangeFill) {
     // percent
-    var per = (rangeTarget.value - rangeTarget.min) / (rangeTarget.max - rangeTarget.min) * 100;
+    const per = (rangeTarget.value - rangeTarget.min) / (rangeTarget.max - rangeTarget.min) * 100;
 
     // bar
     rangeFill.style.width = per + '%';
@@ -524,8 +525,8 @@ UI_Control.range = {
 
     // 타입1 = 급속, 완속 충전
     if (rangeThis.classList.contains('type1')) {
-      var dataLeft = rangeThis.querySelector('[data-left]');
-      var dataRight = rangeThis.querySelector('[data-right]');
+      const dataLeft = rangeThis.querySelector('[data-left]');
+      const dataRight = rangeThis.querySelector('[data-right]');
 
       dataLeft.innerHTML = rangeTarget.value + rangeTarget.getAttribute('data-unit');
       dataRight.innerHTML = Number(rangeTarget.max - rangeTarget.value) + rangeTarget.getAttribute('data-unit');
@@ -534,7 +535,7 @@ UI_Control.range = {
   polyfill: function (rangeTarget) {
     // ios range 터치되게
     function iosPolyfill(e) {
-      var val = (e.pageX - rangeTarget.getBoundingClientRect().left) /
+      const val = (e.pageX - rangeTarget.getBoundingClientRect().left) /
         (rangeTarget.getBoundingClientRect().right - rangeTarget.getBoundingClientRect().left),
         max = rangeTarget.getAttribute("max"),
         segment = 1 / (max - 1),
@@ -542,16 +543,16 @@ UI_Control.range = {
 
       max++;
 
-      for (var i = 0; i < max; i++) {
+      for (let i = 0; i < max; i++) {
         segmentArr.push(segment * i);
       }
 
-      var segCopy = segmentArr.slice()
+      const segCopy = segmentArr.slice()
       // arrow 함수로 변경해야함. IE에서 자꾸 에러 띄워서 function으로 냅둠.
-      var ind = segmentArr.sort(function (a, b) {
+      const ind = segmentArr.sort(function (a, b) {
         Math.abs(val - a) - Math.abs(val - b)
       })[0];
-      // var ind = segmentArr.sort((a, b) => Math.abs(val - a) - Math.abs(val - b))[0];
+      // const ind = segmentArr.sort((a, b) => Math.abs(val - a) - Math.abs(val - b))[0];
 
       rangeTarget.value = segCopy.indexOf(ind) + 1;
 

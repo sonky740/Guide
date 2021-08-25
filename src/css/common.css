@@ -892,6 +892,28 @@ span.btn-type1:hover {
   -webkit-transform: translateY(-50%) rotate(135deg);
           transform: translateY(-50%) rotate(135deg);
 }
+.accordion-button.on:before {
+  -webkit-transform: translateY(-50%) rotate(-45deg);
+          transform: translateY(-50%) rotate(-45deg);
+}
+.accordion-button.on:after {
+  -webkit-transform: translateY(-50%) rotate(225deg);
+          transform: translateY(-50%) rotate(225deg);
+}
+.accordion-button.plus:before, .accordion-button.plus:after {
+  width: 12px;
+  right: 25px;
+  -webkit-transform: translateY(-50%) rotate(90deg);
+          transform: translateY(-50%) rotate(90deg);
+}
+.accordion-button.plus:after {
+  -webkit-transform: translateY(-50%) rotate(0);
+          transform: translateY(-50%) rotate(0);
+}
+.accordion-button.plus.on:before {
+  -webkit-transform: translateY(-50%) rotate(360deg);
+          transform: translateY(-50%) rotate(360deg);
+}
 .accordion [data-accr-target] {
   display: none;
 }
@@ -910,14 +932,6 @@ span.btn-type1:hover {
 }
 .accordion-body {
   padding: 1rem;
-}
-.accordion-item.on > .accordion-title > [data-accr-trigger]:before {
-  -webkit-transform: translateY(-50%) rotate(-45deg);
-          transform: translateY(-50%) rotate(-45deg);
-}
-.accordion-item.on > .accordion-title > [data-accr-trigger]:after {
-  -webkit-transform: translateY(-50%) rotate(225deg);
-          transform: translateY(-50%) rotate(225deg);
 }
 
 .accordion + .accordion {
