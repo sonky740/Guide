@@ -169,18 +169,22 @@ UI_Control.accr = {
       const target = item.querySelector('[data-accr-target]');
       const targetAll = accr.querySelectorAll('[data-accr-target]');
       const content = target.querySelector('.accordion-body');
+      const ir = trigger.querySelector('.blind');
 
       if (!item.classList.contains('on')) {
         target.classList.add('hidden');
+        ir.innerHTML = '펼치기';
+      } else {
+        ir.innerHTML = '접기';
       }
 
-      UI_Control.accr.click(trigger, accr, item, target, targetAll, content);
+      UI_Control.accr.click(trigger, accr, item, target, targetAll, content, ir);
     })
   },
   constructor: function () {
     this.accrTrigger = document.querySelectorAll('[data-accr-trigger]');
   },
-  click: function (trigger, accr, item, target, targetAll, content) {
+  click: function (trigger, accr, item, target, targetAll, content, ir) {
     trigger.addEventListener('click', function click(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -193,11 +197,13 @@ UI_Control.accr = {
         target.classList.remove('shown');
         target.classList.add('hiding');
         target.removeAttribute('style');
+        ir.innerHTML = '펼치기';
       } else if (target.classList.contains('hidden')) {
         // show
         target.classList.remove('hidden');
         target.classList.add('showing');
         target.style.height = content.clientHeight + 'px';
+        ir.innerHTML = '접기';
       }
 
       // 하나만 열릴 때 [data-accr="only"]
@@ -212,6 +218,7 @@ UI_Control.accr = {
 
             ta.closest('[data-accr-item]').classList.remove('on');
             ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
+            ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').querySelector('.blind').innerHTML = '펼치기';
 
             UI_Control.accr.transition(ta);
           }
