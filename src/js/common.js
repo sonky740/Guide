@@ -203,6 +203,8 @@ UI_Control.accr = {
         target.classList.remove('hidden');
         target.classList.add('showing');
         target.style.height = content.clientHeight + 'px';
+
+        item.classList.add('on');
         ir.innerHTML = '접기';
       }
 
@@ -216,7 +218,7 @@ UI_Control.accr = {
             ta.classList.add('hiding');
             ta.removeAttribute('style')
 
-            ta.closest('[data-accr-item]').classList.remove('on');
+            // ta.closest('[data-accr-item]').classList.remove('on');
             ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
             ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').querySelector('.blind').innerHTML = '펼치기';
 
@@ -225,7 +227,7 @@ UI_Control.accr = {
         })
       }
 
-      item.classList.toggle('on');
+      // item.classList.toggle('on');
       trigger.classList.toggle('on');
 
       UI_Control.accr.transition(target);
@@ -278,6 +280,7 @@ UI_Control.accr = {
       } else if (this.classList.contains('hiding')) {
         this.classList.remove('hiding');
         this.classList.add('hidden');
+        this.closest('[data-accr-item]').classList.remove('on');
 
         const hidden = new CustomEvent('accr.hidden');
         this.dispatchEvent(hidden);
