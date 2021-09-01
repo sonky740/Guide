@@ -470,9 +470,10 @@ UI_Control.range = {
       if ((navigator.appName == 'Netscape' && navigator.userAgent.toLowerCase().indexOf('trident') != -1) || (navigator.userAgent.toLowerCase().indexOf("msie") != -1)) {
         alert('IE에서는 작동하지 않습니다. ')
         return false;
-      } else {
-        UI_Control.range.polyfill(rangeTarget);
       }
+      // else {
+      //   UI_Control.range.polyfill(rangeTarget);
+      // }
     })
   },
   constructor: function () {
@@ -542,38 +543,38 @@ UI_Control.range = {
       dataRight.innerHTML = Number(rangeTarget.max - rangeTarget.value) + rangeTarget.getAttribute('data-unit');
     }
   },
-  polyfill: function (rangeTarget) {
-    // ios range 터치되게
-    function iosPolyfill(e) {
-      let val = (e.pageX - rangeTarget.getBoundingClientRect().left) /
-        (rangeTarget.getBoundingClientRect().right - rangeTarget.getBoundingClientRect().left),
-        max = rangeTarget.getAttribute("max"),
-        segment = 1 / (max - 1),
-        segmentArr = [];
+  // polyfill: function (rangeTarget) {
+  //   // ios range 터치되게
+  //   function iosPolyfill(e) {
+  //     let val = (e.pageX - rangeTarget.getBoundingClientRect().left) /
+  //       (rangeTarget.getBoundingClientRect().right - rangeTarget.getBoundingClientRect().left),
+  //       max = rangeTarget.getAttribute("max"),
+  //       segment = 1 / (max - 1),
+  //       segmentArr = [];
 
-      max++;
+  //     max++;
 
-      for (let i = 0; i < max; i++) {
-        segmentArr.push(segment * i);
-      }
+  //     for (let i = 0; i < max; i++) {
+  //       segmentArr.push(segment * i);
+  //     }
 
-      var segCopy = segmentArr.slice(),
-      // arrow 함수로 변경해야함. IE에서 자꾸 에러 띄워서 function으로 냅둠.
-      ind = segmentArr.sort(function (a, b) {
-        Math.abs(val - a) - Math.abs(val - b)
-      })[0];
-      // ind = segmentArr.sort((a, b) => Math.abs(val - a) - Math.abs(val - b))[0];
+  //     var segCopy = segmentArr.slice(),
+  //     // arrow 함수로 변경해야함. IE에서 자꾸 에러 띄워서 function으로 냅둠.
+  //     ind = segmentArr.sort(function (a, b) {
+  //       Math.abs(val - a) - Math.abs(val - b)
+  //     })[0];
+  //     // ind = segmentArr.sort((a, b) => Math.abs(val - a) - Math.abs(val - b))[0];
 
-      rangeTarget.value = segCopy.indexOf(ind) + 1;
+  //     rangeTarget.value = segCopy.indexOf(ind) + 1;
 
-      init(e.target);
-    }
-    if (!!navigator.platform.match(/iPhone|iPod|iPad/)) {
-      rangeTarget.addEventListener("touchend", iosPolyfill, {
-        passive: true
-      });
-    }
-  }
+  //     init(e.target);
+  //   }
+  //   if (!!navigator.platform.match(/iPhone|iPod|iPad/)) {
+  //     rangeTarget.addEventListener("touchend", iosPolyfill, {
+  //       passive: true
+  //     });
+  //   }
+  // }
 }
 
 window.addEventListener('DOMContentLoaded', function () {
