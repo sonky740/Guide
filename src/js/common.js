@@ -55,6 +55,7 @@ UI_Control.layout = {
     menuTrigger.classList.add('trigger');
 
     menuTrigger.addEventListener('click', function () {
+      document.body.style.overflow = 'hidden';
       if (this.classList.contains('trigger')) {
         this.classList.add('on');
         menuTarget.classList.add('on');
@@ -69,6 +70,7 @@ UI_Control.layout = {
     })
 
     menuClose.addEventListener('click', function () {
+      document.body.removeAttribute('style');
       if (this.classList.contains('trigger')) {
         menuTrigger.classList.remove('on');
         menuTarget.style.left = '-100%';
