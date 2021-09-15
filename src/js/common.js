@@ -14,6 +14,7 @@ UI_Control.layout = {
     const lnbParent = document.querySelector('.guide-nav');
     let lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>'
     lnb += '<ul>'
+    lnb += '  <li><a href="/Guide/src/html/guide/modal.html">modal</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>'
@@ -90,74 +91,84 @@ UI_Control.layout = {
   }
 }
 
-UI_Control.checkAll = {
+UI_Control.modal = {
   init: function () {
-    const check = document.querySelectorAll('input[data-checkbox]');
-    Array.prototype.forEach.call(check, function (el) {
-      const elem = '[name=' + el.getAttribute('data-checkbox') + ']:not([data-checkbox])';
-      const bullet = document.querySelectorAll(elem);
+    this.constructor();
+    this.open();
+    this.close();
 
-      Array.prototype.forEach.call(bullet, function (al) {
-        // 전체 클릭, 해제
-        el.addEventListener('click', function () {
-          if (el.checked === true) {
-            al.checked = true;
-          } else {
-            al.checked = false;
-          }
-        })
+    this.transition();
+  },
+  constructor: function () {
+    this.modalTrigger = document.querySelectorAll('[data-modal-trigger]');
+    this.modalTarget = document.querySelectorAll('.ly-modal');
+    this.modalClose = document.querySelectorAll('[data-modal-close]');
+  },
+  open: function () {
+    this.modalTrigger.forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
+        target.classList.add('showing');
 
-        // 요소 클릭, 해제
-        al.addEventListener('click', function () {
-          const checked = document.querySelectorAll('input:checked' + elem).length;
-          if (checked === bullet.length) {
-            el.checked = true;
-          } else {
-            el.checked = false;
-          }
-        })
-
-        // 전체 클릭이 되어있다면
-        if (el.checked) {
-          al.checked = true;
-        }
-
-        // 전부 클릭이 되어있다면
-        const gChecked = document.querySelectorAll('input:checked' + elem).length;
-        if (gChecked === bullet.length) {
-          el.checked = true;
-        }
+        setTimeout(function () {
+          target.classList.add('fade');
+        }, 0)
       })
     })
-  }
-}
-
-UI_Control.Tooltip = {
-  init: function () {
-    const items = document.querySelectorAll('[data-context] > button');
-
-    document.body.addEventListener('click', function (e) {
-      const targetClassList = e.target;
-      if (targetClassList.classList.contains('context')) return;
-
-      // 개별토글
-      Array.prototype.forEach.call(items, function (el) {
-        if (targetClassList === el) {
-          e.preventDefault();
-          targetClassList.parentNode.classList.toggle('open');
-          items.forEach(function (elem) {
-            if (elem !== e.target) elem.parentNode.classList.remove('open');
-          });
-          return;
-        }
+  },
+  close: function () {
+    // 닫기 버튼
+    this.modalClose.forEach(function (el) {
+      const modal = el.closest('.ly-modal');
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        modal.classList.add('hiding');
+        modal.classList.remove('shown');
+        modal.classList.remove('fade');
       })
+    })
 
-      // 전체 삭제
-      items.forEach(function (elem) {
-        if (targetClassList === elem) return;
-        elem.parentNode.classList.remove('open');
-      });
-    });
+    // dim 클릭 닫기
+    document.addEventListener('click', function (e) {
+      if (e.target.classList.contains('ly-modal')) {
+        e.target.classList.add('hiding');
+        e.target.classList.remove('shown');
+        e.target.classList.remove('fade');
+      }
+    })
+  },
+  transition: function () {
+    this.modalTarget.forEach(function (el) {
+      // 이벤트 시작 시
+      el.addEventListener('transitionstart', function (e) {
+        if (el.classList.contains('showing') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
+          console.log(e)
+          const showing = new CustomEvent('modal.showing');
+          this.dispatchEvent(showing);
+        } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
+          const hiding = new CustomEvent('modal.hiding');
+          this.dispatchEvent(hiding);
+        }
+        return false;
+      })
+      // 이벤트 끝날 시
+      el.addEventListener('transitionend', function (e) {
+        if (el.classList.contains('showing') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
+          el.classList.remove('showing')
+          el.classList.add('shown');
+
+          const shown = new CustomEvent('modal.shown');
+          this.dispatchEvent(shown);
+        } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
+          el.classList.remove('hiding');
+
+          const hidden = new CustomEvent('modal.hidden');
+          this.dispatchEvent(hidden);
+        }
+        return false;
+      })
+    })
   }
 }
 
@@ -196,14 +207,14 @@ UI_Control.accr = {
         // hide
         target.style.height = content.clientHeight + 'px';
         target.style.height = content.clientHeight + 'px';
-        target.classList.remove('shown');
         target.classList.add('hiding');
+        target.classList.remove('shown');
         target.removeAttribute('style');
         ir.innerHTML = '펼치기';
       } else if (target.classList.contains('hidden')) {
         // show
-        target.classList.remove('hidden');
         target.classList.add('showing');
+        target.classList.remove('hidden');
         target.style.height = content.clientHeight + 'px';
 
         item.classList.add('on');
@@ -216,8 +227,8 @@ UI_Control.accr = {
           if (ta.classList.contains('shown')) {
             ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
             ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
-            ta.classList.remove('shown');
             ta.classList.add('hiding');
+            ta.classList.remove('shown');
             ta.removeAttribute('style')
 
             // ta.closest('[data-accr-item]').classList.remove('on');
@@ -331,15 +342,15 @@ UI_Control.tab = {
       // tab-target
       group.forEach(function (el) {
         if (el.classList.contains('shown')) {
-          el.classList.remove('shown');
           el.classList.add('hiding');
+          el.classList.remove('shown');
           el.classList.remove('fade');
 
           UI_Control.tab.transition(el);
 
           el.addEventListener('transitionend', function () {
-            target.classList.remove('hidden');
             target.classList.add('showing');
+            target.classList.remove('hidden');
             setTimeout(function () {
               target.classList.add('fade');
             }, 100);
@@ -579,6 +590,77 @@ UI_Control.range = {
   // }
 }
 
+UI_Control.checkAll = {
+  init: function () {
+    const check = document.querySelectorAll('input[data-checkbox]');
+    Array.prototype.forEach.call(check, function (el) {
+      const elem = '[name=' + el.getAttribute('data-checkbox') + ']:not([data-checkbox])';
+      const bullet = document.querySelectorAll(elem);
+
+      Array.prototype.forEach.call(bullet, function (al) {
+        // 전체 클릭, 해제
+        el.addEventListener('click', function () {
+          if (el.checked === true) {
+            al.checked = true;
+          } else {
+            al.checked = false;
+          }
+        })
+
+        // 요소 클릭, 해제
+        al.addEventListener('click', function () {
+          const checked = document.querySelectorAll('input:checked' + elem).length;
+          if (checked === bullet.length) {
+            el.checked = true;
+          } else {
+            el.checked = false;
+          }
+        })
+
+        // 전체 클릭이 되어있다면
+        if (el.checked) {
+          al.checked = true;
+        }
+
+        // 전부 클릭이 되어있다면
+        const gChecked = document.querySelectorAll('input:checked' + elem).length;
+        if (gChecked === bullet.length) {
+          el.checked = true;
+        }
+      })
+    })
+  }
+}
+
+UI_Control.Tooltip = {
+  init: function () {
+    const items = document.querySelectorAll('[data-context] > button');
+
+    document.body.addEventListener('click', function (e) {
+      const targetClassList = e.target;
+      if (targetClassList.classList.contains('context')) return;
+
+      // 개별토글
+      Array.prototype.forEach.call(items, function (el) {
+        if (targetClassList === el) {
+          e.preventDefault();
+          targetClassList.parentNode.classList.toggle('open');
+          items.forEach(function (elem) {
+            if (elem !== e.target) elem.parentNode.classList.remove('open');
+          });
+          return;
+        }
+      })
+
+      // 전체 삭제
+      items.forEach(function (elem) {
+        if (targetClassList === elem) return;
+        elem.parentNode.classList.remove('open');
+      });
+    });
+  }
+}
+
 window.addEventListener('DOMContentLoaded', function () {
   // IE closest 대응
   if (!Element.prototype.matches) {
@@ -618,10 +700,11 @@ window.addEventListener('DOMContentLoaded', function () {
   })();
 
   if (document.querySelectorAll('.guide-nav').length) UI_Control.layout.init();
-  if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
-  if (document.querySelectorAll('[data-context]').length) UI_Control.Tooltip.init();
+  if (document.querySelectorAll('.ly-modal').length) UI_Control.modal.init();
   if (document.querySelectorAll('[data-accr]').length) UI_Control.accr.init();
   if (document.querySelectorAll('[data-tab]').length) UI_Control.tab.init();
   if (document.querySelectorAll('[data-counter]').length) UI_Control.counter.init();
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
+  if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
+  if (document.querySelectorAll('[data-context]').length) UI_Control.Tooltip.init();
 })

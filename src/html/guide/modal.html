@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>손기연</title>
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
+
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section">
+        <h3 class="tit-main" data-text="Modal">Modal</h3>
+
+        <button type="button" data-modal-trigger="modal1" style="color: #fff;">모달 트리거1</button>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
+
+  <div id="modal1" class="ly-modal full" data-modal>
+    <div class="ly-modal-wrap">
+      <header class="ly-modal-header">
+        <h1 class="ly-modal-title">모달 타이틀</h1>
+        <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
+      </header>
+      <article class="ly-modal-content">
+        <button type="button" data-modal-trigger="modal2">모달 트리거2</button>
+        내용
+      </article>
+    </div>
+  </div>
+
+  <div id="modal2" class="ly-modal" data-modal>
+    <div class="ly-modal-wrap">
+      <header class="ly-modal-header">
+        <h1 class="ly-modal-title">모달 타이틀</h1>
+        <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
+      </header>
+      <article class="ly-modal-content">
+        내용
+      </article>
+    </div>
+  </div>
+
+  <script src="../../js/common.js"></script>
+  <script>
+    const modal = document.querySelector('#modal1');
+    modal.addEventListener('modal.showing', function(e) {
+      console.log(e.target, 'showing')
+    })
+    modal.addEventListener('modal.hiding', function(e) {
+      console.log(e.target, 'hiding')
+    })
+    modal.addEventListener('modal.shown', function(e) {
+      console.log(e.target, 'shown')
+    })
+    modal.addEventListener('modal.hidden', function(e) {
+      console.log(e.target, 'hidden')
+    })
+  </script>
+</body>
+
+</html>
