@@ -143,7 +143,8 @@ UI_Control.modal = {
 
     // dim 클릭 닫기
     document.addEventListener('click', function (e) {
-      if (e.target.classList.contains('ly-modal')) {
+      console.log()
+      if (e.target.classList.contains('ly-modal') && e.target.getAttribute('data-backdrop') === null) {
 
         if (UI_Control.modal.isTransitioning) {
           return false;

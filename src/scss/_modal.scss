@@ -40,6 +40,10 @@
         transition: all .3s;
     }
 
+    &-content {
+        color: #222;
+    }
+
     &-close {
         position: absolute;
         top: 0.8rem;

@@ -898,6 +898,9 @@ span.btn-type1:hover {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+.ly-modal-content {
+  color: #222;
+}
 .ly-modal-close {
   position: absolute;
   top: 0.8rem;
