@@ -116,11 +116,13 @@ UI_Control.modal = {
         }
 
         const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
-        target.classList.add('showing');
+        setTimeout(function() {
+          target.classList.add('showing');
+        }, 0)
 
         setTimeout(function () {
           target.classList.add('fade');
-        }, 0)
+        }, 100)
       })
     })
   },
@@ -143,7 +145,6 @@ UI_Control.modal = {
 
     // dim 클릭 닫기
     document.addEventListener('click', function (e) {
-      console.log()
       if (e.target.classList.contains('ly-modal') && e.target.getAttribute('data-backdrop') === null) {
 
         if (UI_Control.modal.isTransitioning) {
