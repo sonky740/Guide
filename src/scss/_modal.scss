@@ -110,13 +110,29 @@
 
     &.full {
         .ly-modal-wrap {
+            top: 40px;
+            transform: translate(-50%, 0);
             height: 100%;
         }
 
         &.fade {
             .ly-modal-wrap {
                 top: 0;
-                transform: translate(-50%, 0);
+            }
+        }
+    }
+
+    &.btm {
+        .ly-modal-wrap {
+            top: unset;
+            bottom: -100%;
+            transform: translate(-50%, 0);
+            border-radius: 16px 16px 0 0;
+        }
+
+        &.fade {
+            .ly-modal-wrap {
+                bottom: 0;
             }
         }
     }

@@ -21,7 +21,9 @@
       <section class="main-section">
         <h3 class="tit-main" data-text="Modal">Modal</h3>
 
-        <button type="button" data-modal-trigger="modal1" style="color: #fff;">모달 트리거1</button>
+        <button type="button" data-modal-trigger="modal1" style="color: #fff;">모달 트리거1 (full)</button>
+        <br>
+        <button type="button" data-modal-trigger="modal3" style="color: #fff;">모달 트리거3 (bottom)</button>
       </section>
     </main>
     <!-- ### // ### -->
@@ -52,19 +54,31 @@
     </div>
   </div>
 
+  <div id="modal3" class="ly-modal btm" data-modal>
+    <div class="ly-modal-wrap">
+      <header class="ly-modal-header">
+        <h1 class="ly-modal-title">모달 타이틀</h1>
+        <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
+      </header>
+      <article class="ly-modal-content">
+        내용
+      </article>
+    </div>
+  </div>
+
   <script src="../../js/common.js"></script>
   <script>
     const modal = document.querySelector('#modal1');
-    modal.addEventListener('modal.showing', function(e) {
+    modal.addEventListener('modal.showing', function (e) {
       console.log(e.target, 'showing')
     })
-    modal.addEventListener('modal.hiding', function(e) {
+    modal.addEventListener('modal.hiding', function (e) {
       console.log(e.target, 'hiding')
     })
-    modal.addEventListener('modal.shown', function(e) {
+    modal.addEventListener('modal.shown', function (e) {
       console.log(e.target, 'shown')
     })
-    modal.addEventListener('modal.hidden', function(e) {
+    modal.addEventListener('modal.hidden', function (e) {
       console.log(e.target, 'hidden')
     })
   </script>

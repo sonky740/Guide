@@ -979,12 +979,23 @@ span.btn-type1:hover {
   opacity: 1;
 }
 .ly-modal.full .ly-modal-wrap {
+  top: 40px;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
   height: 100%;
 }
 .ly-modal.full.fade .ly-modal-wrap {
   top: 0;
+}
+.ly-modal.btm .ly-modal-wrap {
+  top: unset;
+  bottom: -100%;
   -webkit-transform: translate(-50%, 0);
           transform: translate(-50%, 0);
+  border-radius: 16px 16px 0 0;
+}
+.ly-modal.btm.fade .ly-modal-wrap {
+  bottom: 0;
 }
 
 .accordion + .accordion {

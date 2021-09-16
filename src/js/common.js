@@ -94,6 +94,7 @@ UI_Control.layout = {
 UI_Control.modal = {
   init: function () {
     this.constructor();
+
     this.open();
     this.close();
 
@@ -103,11 +104,17 @@ UI_Control.modal = {
     this.modalTrigger = document.querySelectorAll('[data-modal-trigger]');
     this.modalTarget = document.querySelectorAll('.ly-modal');
     this.modalClose = document.querySelectorAll('[data-modal-close]');
+    this.isTransitioning = false;
   },
   open: function () {
     this.modalTrigger.forEach(function (el) {
       el.addEventListener('click', function (e) {
         e.preventDefault();
+
+        if (UI_Control.modal.isTransitioning) {
+          return false;
+        }
+
         const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
         target.classList.add('showing');
 
@@ -123,6 +130,11 @@ UI_Control.modal = {
       const modal = el.closest('.ly-modal');
       el.addEventListener('click', function (e) {
         e.preventDefault();
+
+        if (UI_Control.modal.isTransitioning) {
+          return false;
+        }
+
         modal.classList.add('hiding');
         modal.classList.remove('shown');
         modal.classList.remove('fade');
@@ -132,6 +144,11 @@ UI_Control.modal = {
     // dim 클릭 닫기
     document.addEventListener('click', function (e) {
       if (e.target.classList.contains('ly-modal')) {
+
+        if (UI_Control.modal.isTransitioning) {
+          return false;
+        }
+
         e.target.classList.add('hiding');
         e.target.classList.remove('shown');
         e.target.classList.remove('fade');
@@ -142,8 +159,9 @@ UI_Control.modal = {
     this.modalTarget.forEach(function (el) {
       // 이벤트 시작 시
       el.addEventListener('transitionstart', function (e) {
+        UI_Control.modal.setTransitioning(true);
+
         if (el.classList.contains('showing') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
-          console.log(e)
           const showing = new CustomEvent('modal.showing');
           this.dispatchEvent(showing);
         } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
@@ -154,8 +172,10 @@ UI_Control.modal = {
       })
       // 이벤트 끝날 시
       el.addEventListener('transitionend', function (e) {
+        UI_Control.modal.setTransitioning(false);
+
         if (el.classList.contains('showing') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
-          el.classList.remove('showing')
+          el.classList.remove('showing');
           el.classList.add('shown');
 
           const shown = new CustomEvent('modal.shown');
@@ -169,6 +189,9 @@ UI_Control.modal = {
         return false;
       })
     })
+  },
+  setTransitioning: function (isTransitioning) {
+    this.isTransitioning = isTransitioning;
   }
 }
 
@@ -196,21 +219,27 @@ UI_Control.accr = {
   },
   constructor: function () {
     this.accrTrigger = document.querySelectorAll('[data-accr-trigger]');
+    this.isTransitioning = false;
   },
   click: function (trigger, accr, item, target, targetAll, content, ir) {
     trigger.addEventListener('click', function click(e) {
       e.preventDefault();
       e.stopPropagation();
 
+      if (UI_Control.accr.isTransitioning) {
+        return false;
+      }
+
       // 각각 열릴 때
       if (target.classList.contains('shown')) {
         // hide
         target.style.height = content.clientHeight + 'px';
-        target.style.height = content.clientHeight + 'px';
-        target.classList.add('hiding');
-        target.classList.remove('shown');
-        target.removeAttribute('style');
-        ir.innerHTML = '펼치기';
+        setTimeout(function () {
+          target.classList.add('hiding');
+          target.classList.remove('shown');
+          target.removeAttribute('style');
+          ir.innerHTML = '펼치기';
+        }, 0)
       } else if (target.classList.contains('hidden')) {
         // show
         target.classList.add('showing');
@@ -226,16 +255,17 @@ UI_Control.accr = {
         targetAll.forEach(function (ta) {
           if (ta.classList.contains('shown')) {
             ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
-            ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
-            ta.classList.add('hiding');
-            ta.classList.remove('shown');
-            ta.removeAttribute('style')
+            setTimeout(function () {
+              ta.classList.add('hiding');
+              ta.classList.remove('shown');
+              ta.removeAttribute('style')
 
-            // ta.closest('[data-accr-item]').classList.remove('on');
-            ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
-            ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').querySelector('.blind').innerHTML = '펼치기';
+              // ta.closest('[data-accr-item]').classList.remove('on');
+              ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
+              ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').querySelector('.blind').innerHTML = '펼치기';
 
-            UI_Control.accr.transition(ta);
+              UI_Control.accr.transition(ta);
+            }, 0)
           }
         })
       }
@@ -244,34 +274,13 @@ UI_Control.accr = {
       trigger.classList.toggle('on');
 
       UI_Control.accr.transition(target);
-
-      const stopFunc = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        return false;
-      };
-
-      // 트랜지션 시작 시 클릭 이벤트 삭제
-      target.addEventListener('transitionstart', function () {
-        UI_Control.accr.accrTrigger.forEach(function (el) {
-          el.removeEventListener('click', click);
-          el.addEventListener('click', stopFunc, true);
-        })
-      })
-
-      // 트랜지션 후 클릭 이벤트 복구
-      target.addEventListener('transitionend', function () {
-        trigger.addEventListener('click', click);
-        UI_Control.accr.accrTrigger.forEach(function (el) {
-          el.removeEventListener('click', stopFunc, true);
-        })
-      })
     })
   },
   transition: function (target) {
     // transition start
     target.addEventListener('transitionstart', function () {
+      UI_Control.accr.setTransitioning(true);
+
       if (this.classList.contains('showing')) {
         const showing = new CustomEvent('accr.showing');
         this.dispatchEvent(showing);
@@ -279,10 +288,13 @@ UI_Control.accr = {
         const hiding = new CustomEvent('accr.hiding');
         this.dispatchEvent(hiding);
       }
+
       target.removeEventListener('transitionstart', arguments.callee);
     })
     // transition end
     target.addEventListener('transitionend', function () {
+      UI_Control.accr.setTransitioning(false);
+
       if (this.classList.contains('showing')) {
         this.classList.remove('showing');
         this.classList.add('shown');
@@ -298,8 +310,12 @@ UI_Control.accr = {
         const hidden = new CustomEvent('accr.hidden');
         this.dispatchEvent(hidden);
       }
+
       target.removeEventListener('transitionend', arguments.callee);
     })
+  },
+  setTransitioning: function (isTransitioning) {
+    this.isTransitioning = isTransitioning;
   }
 }
 
@@ -326,9 +342,16 @@ UI_Control.tab = {
   },
   constructor: function () {
     this.tabTrigger = document.querySelectorAll('[data-tab-trigger]');
+    this.isTransitioning = false;
   },
   click: function (trigger, item, group, target) {
-    trigger.addEventListener('click', function click() {
+    trigger.addEventListener('click', function click(e) {
+      e.preventDefault();
+
+      if (UI_Control.tab.isTransitioning) {
+        return false;
+      }
+
       // nav-tab
       if (!trigger.parentNode.classList.contains('on')) {
         item.forEach(function (el) {
@@ -360,35 +383,13 @@ UI_Control.tab = {
           })
         }
       })
-
-      const stopFunc = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        return false;
-      };
-
-      // 트랜지션 시작 시 클릭 이벤트 삭제
-      // 혹시 나중에 트랜지션이 길어져서 오류가 생길경우 transitionstart 삭제 => 대신 IE대응이 안됨.
-      target.addEventListener('transitionstart', function () {
-        UI_Control.tab.tabTrigger.forEach(function (triggerAll) {
-          triggerAll.removeEventListener('click', click);
-          triggerAll.addEventListener('click', stopFunc, true);
-        })
-      })
-
-      // 트랜지션 후 클릭 이벤트 복구
-      target.addEventListener('transitionend', function () {
-        trigger.addEventListener('click', click);
-        UI_Control.tab.tabTrigger.forEach(function (triggerAll) {
-          triggerAll.removeEventListener('click', stopFunc, true);
-        })
-      })
     })
   },
   transition: function (target) {
     // transition start
     target.addEventListener('transitionstart', function () {
+      UI_Control.tab.setTransitioning(true);
+
       if (this.classList.contains('showing')) {
         const showing = new CustomEvent('tab.showing');
         this.dispatchEvent(showing);
@@ -400,6 +401,8 @@ UI_Control.tab = {
     })
     // transition end
     target.addEventListener('transitionend', function () {
+      UI_Control.tab.setTransitioning(false);
+
       if (this.classList.contains('showing')) {
         this.classList.remove('showing');
         this.classList.add('shown');
@@ -415,6 +418,9 @@ UI_Control.tab = {
       }
       target.removeEventListener('transitionend', arguments.callee);
     })
+  },
+  setTransitioning: function (isTransitioning) {
+    this.isTransitioning = isTransitioning;
   }
 }
 
