@@ -885,6 +885,13 @@ span.btn-type1:hover {
   color: #222;
 }
 .ly-modal-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   position: fixed;
   top: calc(50% + 20px);
   left: 50%;
@@ -899,7 +906,11 @@ span.btn-type1:hover {
   transition: all 0.3s;
 }
 .ly-modal-content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   color: #222;
+  overflow: auto;
 }
 .ly-modal-close {
   position: absolute;
@@ -999,6 +1010,7 @@ span.btn-type1:hover {
 }
 .ly-modal.btm.fade .ly-modal-wrap {
   bottom: 0;
+  max-height: calc(100vh - 100px);
 }
 
 .accordion + .accordion {

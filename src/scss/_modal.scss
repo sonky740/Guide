@@ -28,6 +28,8 @@
     }
 
     &-wrap {
+        display: flex;
+        flex-direction: column;
         position: fixed;
         top: calc(50% + 20px);
         left: 50%;
@@ -41,7 +43,9 @@
     }
 
     &-content {
+        flex: 1;
         color: #222;
+        overflow: auto;
     }
 
     &-close {
@@ -137,6 +141,7 @@
         &.fade {
             .ly-modal-wrap {
                 bottom: 0;
+                max-height: calc(100vh - 100px);
             }
         }
     }
