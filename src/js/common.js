@@ -257,12 +257,11 @@ UI_Control.accr = {
         targetAll.forEach(function (ta) {
           if (ta.classList.contains('shown')) {
             ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
-            setTimeout(function () {
-              ta.classList.add('hiding');
-              ta.classList.remove('shown');
-              ta.removeAttribute('style')
+            ta.classList.add('hiding');
+            ta.classList.remove('shown');
 
-              // ta.closest('[data-accr-item]').classList.remove('on');
+            setTimeout(function () {
+              ta.removeAttribute('style')
               ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
               ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').querySelector('.blind').innerHTML = '펼치기';
 
@@ -272,7 +271,6 @@ UI_Control.accr = {
         })
       }
 
-      // item.classList.toggle('on');
       trigger.classList.toggle('on');
 
       UI_Control.accr.transition(target);
@@ -280,7 +278,7 @@ UI_Control.accr = {
   },
   transition: function (target) {
     // transition start
-    target.addEventListener('transitionstart', function () {
+    target.addEventListener('transitionstart', function transitionstart() {
       UI_Control.accr.setTransitioning(true);
 
       if (this.classList.contains('showing')) {
@@ -291,10 +289,10 @@ UI_Control.accr = {
         this.dispatchEvent(hiding);
       }
 
-      target.removeEventListener('transitionstart', arguments.callee);
+      target.removeEventListener('transitionstart', transitionstart);
     })
     // transition end
-    target.addEventListener('transitionend', function () {
+    target.addEventListener('transitionend', function transitionend() {
       UI_Control.accr.setTransitioning(false);
 
       if (this.classList.contains('showing')) {
@@ -313,7 +311,7 @@ UI_Control.accr = {
         this.dispatchEvent(hidden);
       }
 
-      target.removeEventListener('transitionend', arguments.callee);
+      target.removeEventListener('transitionend', transitionend);
     })
   },
   setTransitioning: function (isTransitioning) {
@@ -359,7 +357,7 @@ UI_Control.tab = {
         item.forEach(function (el) {
           el.classList.remove('on');
         })
-        this.parentNode.classList.add('on');
+        e.target.parentNode.classList.add('on');
       } else {
         return false;
       }
@@ -373,7 +371,7 @@ UI_Control.tab = {
 
           UI_Control.tab.transition(el);
 
-          el.addEventListener('transitionend', function () {
+          el.addEventListener('transitionend', function transitionend() {
             target.classList.add('showing');
             target.classList.remove('hidden');
             setTimeout(function () {
@@ -381,15 +379,17 @@ UI_Control.tab = {
             }, 100);
 
             UI_Control.tab.transition(target);
-            el.removeEventListener('transitionend', arguments.callee);
+            el.removeEventListener('transitionend', transitionend);
           })
+        } else {
+          return false;
         }
       })
     })
   },
   transition: function (target) {
     // transition start
-    target.addEventListener('transitionstart', function () {
+    target.addEventListener('transitionstart', function transitionstart() {
       UI_Control.tab.setTransitioning(true);
 
       if (this.classList.contains('showing')) {
@@ -399,10 +399,10 @@ UI_Control.tab = {
         const hiding = new CustomEvent('tab.hiding');
         this.dispatchEvent(hiding);
       }
-      target.removeEventListener('transitionstart', arguments.callee);
+      target.removeEventListener('transitionstart', transitionstart);
     })
     // transition end
-    target.addEventListener('transitionend', function () {
+    target.addEventListener('transitionend', function transitionend() {
       UI_Control.tab.setTransitioning(false);
 
       if (this.classList.contains('showing')) {
@@ -418,7 +418,7 @@ UI_Control.tab = {
         const hidden = new CustomEvent('tab.hidden');
         this.dispatchEvent(hidden);
       }
-      target.removeEventListener('transitionend', arguments.callee);
+      target.removeEventListener('transitionend', transitionend);
     })
   },
   setTransitioning: function (isTransitioning) {
