@@ -24,12 +24,12 @@
 [data-tab-target] {
     display: none;
     opacity: 0;
+    transition: all .15s;
 
     &.showing,
     &.hiding {
         display: block;
         opacity: 0;
-        transition: all .05s;
     }
 
     &.fade {

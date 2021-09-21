@@ -116,7 +116,7 @@ UI_Control.modal = {
         }
 
         const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
-        setTimeout(function() {
+        setTimeout(function () {
           target.classList.add('showing');
         }, 0)
 
@@ -374,12 +374,12 @@ UI_Control.tab = {
           el.addEventListener('transitionend', function transitionend() {
             target.classList.add('showing');
             target.classList.remove('hidden');
+
             setTimeout(function () {
               target.classList.add('fade');
-            }, 100);
-
-            UI_Control.tab.transition(target);
-            el.removeEventListener('transitionend', transitionend);
+              UI_Control.tab.transition(target);
+              el.removeEventListener('transitionend', transitionend);
+            }, 0);
           })
         } else {
           return false;

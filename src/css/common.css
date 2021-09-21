@@ -1125,7 +1125,7 @@ span.btn-type1:hover {
 }
 
 .ly-modal.btm .ly-modal-wrap {
-  top: unset;
+  top: auto;
   bottom: -100%;
   -webkit-transform: translate(-50%, 0);
           transform: translate(-50%, 0);
@@ -1484,13 +1484,13 @@ span.btn-type1:hover {
 [data-tab-target] {
   display: none;
   opacity: 0;
+  -webkit-transition: all .15s;
+  transition: all .15s;
 }
 
 [data-tab-target].showing, [data-tab-target].hiding {
   display: block;
   opacity: 0;
-  -webkit-transition: all .05s;
-  transition: all .05s;
 }
 
 [data-tab-target].fade {
