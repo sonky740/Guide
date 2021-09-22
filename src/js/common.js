@@ -236,12 +236,11 @@ UI_Control.accr = {
       if (target.classList.contains('shown')) {
         // hide
         target.style.height = content.clientHeight + 'px';
-        setTimeout(function () {
-          target.classList.add('hiding');
-          target.classList.remove('shown');
-          target.removeAttribute('style');
-          ir.innerHTML = '펼치기';
-        }, 0)
+        target.style.height = content.clientHeight + 'px';
+        target.classList.add('hiding');
+        target.classList.remove('shown');
+        target.removeAttribute('style');
+        ir.innerHTML = '펼치기';
       } else if (target.classList.contains('hidden')) {
         // show
         target.classList.add('showing');
@@ -257,10 +256,11 @@ UI_Control.accr = {
         targetAll.forEach(function (ta) {
           if (ta.classList.contains('shown')) {
             ta.style.height = ta.querySelector('.accordion-body').clientHeight + 'px';
-            ta.classList.add('hiding');
-            ta.classList.remove('shown');
 
             setTimeout(function () {
+              ta.classList.add('hiding');
+              ta.classList.remove('shown');
+
               ta.removeAttribute('style')
               ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
               ta.closest('[data-accr-item]').querySelector('[data-accr-trigger]').querySelector('.blind').innerHTML = '펼치기';
