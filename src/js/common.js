@@ -379,7 +379,7 @@ UI_Control.tab = {
               target.classList.add('fade');
               UI_Control.tab.transition(target);
               el.removeEventListener('transitionend', transitionend);
-            }, 0);
+            }, 50); // 시간을 안주면 ie 에서 안됨.
           })
         } else {
           return false;
