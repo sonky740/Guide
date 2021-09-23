@@ -7,34 +7,21 @@ UI.hasJqueryObject = function ($el) {
 // tab
 UI.tab = {
     init: function () {
-        this.reset();
+        this.createSelector();
+
+        this.click();
     },
     createSelector: function () {
-        this.$tab = UI.$body.find(".tab-wrap");
-        this.$tabCtrl = this.$tab.find(".ctrl");
-        this.$tabView = this.$tab.find(".view");
+        this.$tab = UI.$body.find(".tabs");
+        this.$tabTrigger = this.$tab.find("[data-tab-trigger]");
+        this.$tabTarget = this.$tab.find(".tabs-content");
+        this.isTransitioning = false;
     },
-    reset: function () {
-        this.createSelector();
-        this.$tab.each(function (idx) {
-            var that = $(this);
-            that.attr("data-tab", idx).find(UI.tab.$tabCtrl).each(function (_idx) {
-                $(this).attr("data-ctrl", _idx);
-            });
-            that.find(UI.tab.$tabCtrl).eq(0).addClass("on");
-        });
-        this.addEvents();
+    click: function () {
+
     },
-    addEvents: function () {
-        this.$tabCtrl.off("click.tab").on("click.tab", this.handleTabClick);
-    },
-    handleTabClick: function () {
-        var tabIdx = $(this).parents(".tab-wrap").attr("data-tab");
-        var ctrlIdx = $(this).attr("data-ctrl");
-        UI.tab.$tab.eq(tabIdx).find(UI.tab.$tabView).hide();
-        UI.tab.$tab.eq(tabIdx).find(UI.tab.$tabView).eq(ctrlIdx).show();
-        UI.tab.$tab.eq(tabIdx).find(UI.tab.$tabCtrl).removeClass("on");
-        UI.tab.$tab.eq(tabIdx).find(UI.tab.$tabCtrl).eq(ctrlIdx).addClass("on");
+    transition: function () {
+
     }
 };
 
@@ -177,7 +164,6 @@ UI.tooltip = {
         this.$tooltipTarget.addClass('hidden');
 
         this.click();
-        // this.hover();
     },
     createSelector: function () {
         this.$tooltip = UI.$body.find('[data-tooltip]');
@@ -190,25 +176,15 @@ UI.tooltip = {
 
             const current = $(e.target);
             const current_tooltip = current.closest('[data-tooltip]');
+            const current_trigger = current.closest('[data-tooltip-trigger]');
             const current_target = current_tooltip.find('[data-tooltip-target]');
 
-            if (current.is(UI.tooltip.$tooltipTrigger)) {
+            if (current.is(current_trigger)) {
                 if (current_target.hasClass('shown')) {
                     // hide
                     current_target.removeClass('fade');
                     current_target.removeClass('shown');
                     current_target.addClass('hiding');
-
-                    current_target.off('transitionstart').on('transitionstart', function () {
-                        $(this).trigger('tooltip.hiding');
-                    })
-
-                    current_target.off('transitionend').on('transitionend', function () {
-                        $(this).removeClass('hiding');
-                        $(this).addClass('hidden');
-
-                        $(this).trigger('tooltip.hidden');
-                    })
                 } else {
                     // show
                     current_target.removeClass('hiding');
@@ -216,21 +192,13 @@ UI.tooltip = {
                     current_target.addClass('showing');
                     setTimeout(function () {
                         current_target.addClass('fade');
-                    }, 10)
-                    current_target.off('transitionstart').on('transitionstart', function () {
-                        $(this).trigger('tooltip.showing');
-                    })
-
-                    current_target.off('transitionend').on('transitionend', function () {
-                        $(this).removeClass('showing');
-                        $(this).addClass('shown');
-
-                        $(this).trigger('tooltip.shown');
-                    });
+                    }, 0)
                 }
             } else if (!current.is(UI.tooltip.$tooltipTarget)) {
                 UI.tooltip.backdrop();
             }
+
+            UI.tooltip.transition(current_target);
         })
     },
     backdrop: function () {
@@ -239,7 +207,7 @@ UI.tooltip = {
                 const b_target = $(this).find('[data-tooltip-target]');
                 b_target.removeClass('showing');
                 b_target.removeClass('fade');
-
+                
                 b_target.off('transitionstart').on('transitionstart', function () {
                     $(this).removeClass('shown');
                     $(this).addClass('hiding');
@@ -256,74 +224,27 @@ UI.tooltip = {
             }
         })
     },
-    // click: function () {
-    //     this.$tooltipTrigger.off('click.tooltip').on('click.tooltip', function (e) {
-    //         const current_tooltip = $(e.target).closest('[data-tooltip]');
-    //         const current_target = $(e.target).siblings('[data-tooltip-target]');
-
-    //         // show
-    //         if (!current_target.hasClass('shown')) {
-    //             current_target.removeClass('hidden');
-    //             current_target.addClass('showing');
-    //             setTimeout(function () {
-    //                 current_target.addClass('fade');
-    //             }, 10)
-
-    //             current_target.off('transitionstart').on('transitionstart', function () {
-    //                 $(this).trigger('tooltip.showing');
-    //             })
-
-    //             current_target.off('transitionend').on('transitionend', function () {
-    //                 $(this).removeClass('showing');
-    //                 $(this).addClass('shown');
-    //                 $(this).removeAttr('style');
-
-    //                 $(this).trigger('tooltip.shown');
-    //             });
-    //         } else {
-    //             // hide
-    //             current_target.removeClass('shown');
-    //             current_target.removeClass('fade');
-    //             current_target.addClass('hiding');
-
-    //             current_target.off('transitionstart').on('transitionstart', function () {
-    //                 $(this).trigger('tooltip.hiding');
-    //             })
-
-    //             current_target.off('transitionend').on('transitionend', function () {
-    //                 $(this).removeClass('hiding');
-    //                 $(this).addClass('hidden');
-    //                 $(this).removeAttr('style');
-
-    //                 $(this).trigger('tooltip.hidden');
-    //             })
-    //         }
-
-    //         current_tooltip.toggleClass('on');
-
-    //         UI.tooltip.$tooltipTrigger.off('click.tooltip', UI.tooltip.click());
-    //         UI.tooltip.$tooltipTarget.on('transitionend', function () {
-    //             UI.tooltip.$tooltipTrigger.on('click.tooltip', UI.tooltip.click());
-
-    //             UI.tooltip.$tooltipTarget.off('transitionstart').off('transitionend');
-    //         })
-    //     });
-    //     UI.$body.off('click.tooltip').on('click.tooltip', function(e) {
-    //         if(!$(e.target).is('[data-tooltip-trigger]') && !$(e.target).is('[data-tooltip-target]')) {
-    //             UI.tooltip.$tooltip.each(function() {
-    //                 if($(this).is('.backdrop')) {
-    //                     $(this).removeClass('on');
-    //                 }
-    //             })
-    //         }
-    //     })
-    // },
-    hover: function () {
-        this.$tooltipTrigger.on('mouseover', function () {
-            console.log('b')
+    transition: function (target) {
+        target.off('transitionstart').on('transitionstart', function () {
+            if (target.hasClass('showing')) {
+                target.trigger('tooltip.showing');
+            } else if (target.hasClass('hiding')) {
+                target.trigger('tooltip.hiding');
+            }
         })
-        this.$tooltipTrigger.on('mouseout', function () {
-            console.log('c')
+
+        target.off('transitionend').on('transitionend', function () {
+            if (target.hasClass('showing')) {
+                target.removeClass('showing');
+                target.addClass('shown');
+
+                target.trigger('tooltip.shown');
+            } else if (target.hasClass('hiding')) {
+                target.removeClass('hiding');
+                target.addClass('hidden');
+
+                target.trigger('tooltip.hidden');
+            }
         })
     }
 }

@@ -21,6 +21,7 @@ UI_Control.layout = {
     lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/tab_jquery.html">tab_jquery</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/context-menu.html">context-menu</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/form.html">form</a></li>'
