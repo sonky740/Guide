@@ -1072,13 +1072,13 @@ span.btn-type1:hover {
 }
 .accordion [data-accr-target] {
   display: none;
+  -webkit-transition: height 0.3s;
+  transition: height 0.3s;
 }
 .accordion [data-accr-target].showing, .accordion [data-accr-target].hiding {
   display: block;
   height: 0;
   overflow: hidden;
-  -webkit-transition: height 0.3s;
-  transition: height 0.3s;
 }
 .accordion [data-accr-target].shown {
   display: block;

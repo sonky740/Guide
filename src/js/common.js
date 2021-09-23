@@ -213,10 +213,16 @@ UI_Control.accr = {
         target.classList.add('hidden');
         ir.innerHTML = '펼치기';
       } else {
+        trigger.classList.add('on');
+        target.classList.add('shown');
         ir.innerHTML = '접기';
       }
 
-      UI_Control.accr.click(trigger, accr, item, target, targetAll, content, ir);
+      if (accr.getAttribute('data-accr-animation') !== "false") {
+        UI_Control.accr.click(trigger, accr, item, target, targetAll, content, ir);
+      } else {
+        UI_Control.accr.clickNoAni(trigger, accr, item, target, targetAll, content, ir);
+      }
     })
   },
   constructor: function () {
@@ -235,20 +241,19 @@ UI_Control.accr = {
       // 각각 열릴 때
       if (target.classList.contains('shown')) {
         // hide
+        ir.innerHTML = '펼치기';
         target.style.height = content.clientHeight + 'px';
         target.style.height = content.clientHeight + 'px';
         target.classList.add('hiding');
         target.classList.remove('shown');
         target.removeAttribute('style');
-        ir.innerHTML = '펼치기';
       } else if (target.classList.contains('hidden')) {
         // show
+        item.classList.add('on');
+        ir.innerHTML = '접기';
         target.classList.add('showing');
         target.classList.remove('hidden');
         target.style.height = content.clientHeight + 'px';
-
-        item.classList.add('on');
-        ir.innerHTML = '접기';
       }
 
       // 하나만 열릴 때 [data-accr="only"]
@@ -274,6 +279,53 @@ UI_Control.accr = {
       trigger.classList.toggle('on');
 
       UI_Control.accr.transition(target);
+    })
+  },
+  clickNoAni: function (trigger, accr, item, target, targetAll, content, ir) {
+    trigger.addEventListener('click', function click(e) {
+      e.preventDefault();
+
+      // 숨길 때 - 공통
+      if (target.classList.contains('shown')) {
+        target.classList.remove('shown');
+        target.classList.add('hidden');
+        ir.innerHTML = '펼치기'
+
+        const hidden = new CustomEvent('accr.hidden');
+        target.dispatchEvent(hidden);
+      } else {
+        // 하나만 펼쳐질 때
+        if (accr.getAttribute('data-accr') === 'only') {
+          targetAll.forEach(function (ta) {
+            if (ta.classList.contains('shown')) {
+              ta.classList.remove('shown');
+              ta.classList.add('hidden');
+
+              const hidden = new CustomEvent('accr.hidden');
+              ta.dispatchEvent(hidden);
+            }
+          })
+          accr.querySelectorAll('[data-accr-trigger]').forEach(function (tr) {
+            tr.classList.remove('on');
+            tr.querySelector('.blind').innerHTML = '펼치기';
+          })
+
+          target.classList.remove('hidden');
+          target.classList.add('shown');
+          ir.innerHTML = '접기'
+          const shown = new CustomEvent('accr.shown');
+          target.dispatchEvent(shown);
+        } else {
+          // 각각 펼쳐질 때
+          target.classList.add('hidden');
+          target.classList.add('shown');
+          ir.innerHTML = '접기'
+
+          const shown = new CustomEvent('accr.shown');
+          target.dispatchEvent(shown);
+        }
+      }
+      trigger.classList.toggle('on');
     })
   },
   transition: function (target) {
