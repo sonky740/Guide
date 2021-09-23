@@ -218,10 +218,10 @@ UI_Control.accr = {
         ir.innerHTML = '접기';
       }
 
-      if (accr.getAttribute('data-accr-animation') !== "false") {
+      if (!accr.getAttribute('data-accr-animation')) {
         UI_Control.accr.click(trigger, accr, item, target, targetAll, content, ir);
       } else {
-        UI_Control.accr.clickNoAni(trigger, accr, item, target, targetAll, content, ir);
+        UI_Control.accr.clickNoAni(trigger, accr, item, target, targetAll, ir);
       }
     })
   },
@@ -281,7 +281,7 @@ UI_Control.accr = {
       UI_Control.accr.transition(target);
     })
   },
-  clickNoAni: function (trigger, accr, item, target, targetAll, content, ir) {
+  clickNoAni: function (trigger, accr, item, target, targetAll, ir) {
     trigger.addEventListener('click', function click(e) {
       e.preventDefault();
 
@@ -305,26 +305,21 @@ UI_Control.accr = {
               ta.dispatchEvent(hidden);
             }
           })
-          accr.querySelectorAll('[data-accr-trigger]').forEach(function (tr) {
-            tr.classList.remove('on');
-            tr.querySelector('.blind').innerHTML = '펼치기';
+          accr.querySelectorAll('[data-accr-item]').forEach(function (items) {
+            items.classList.remove('on');
+            items.querySelector('[data-accr-trigger]').classList.remove('on');
+            items.querySelector('.blind').innerHTML = '펼치기';
           })
-
-          target.classList.remove('hidden');
-          target.classList.add('shown');
-          ir.innerHTML = '접기'
-          const shown = new CustomEvent('accr.shown');
-          target.dispatchEvent(shown);
-        } else {
-          // 각각 펼쳐질 때
-          target.classList.add('hidden');
-          target.classList.add('shown');
-          ir.innerHTML = '접기'
-
-          const shown = new CustomEvent('accr.shown');
-          target.dispatchEvent(shown);
         }
+        // 각각 펼쳐질 때
+        target.classList.remove('hidden');
+        target.classList.add('shown');
+        ir.innerHTML = '접기'
+
+        const shown = new CustomEvent('accr.shown');
+        target.dispatchEvent(shown);
       }
+      item.classList.toggle('on');
       trigger.classList.toggle('on');
     })
   },
