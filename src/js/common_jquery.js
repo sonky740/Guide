@@ -163,77 +163,81 @@ UI.tooltip = {
 
         this.$tooltipTarget.addClass('hidden');
 
-        this.click();
+        this.show();
+        this.close();
     },
     createSelector: function () {
         this.$tooltip = UI.$body.find('[data-tooltip]');
         this.$tooltipTrigger = this.$tooltip.find('[data-tooltip-trigger]');
         this.$tooltipTarget = this.$tooltip.find('[data-tooltip-target]');
+        this.isTransitioning = false;
     },
-    click: function () {
-        UI.$body.on('click.tooltip', function (e) {
-            e.stopPropagation();
+    show: function () {
+        this.$tooltipTrigger.off('click.tooltip').on('click.tooltip', function (e) {
+            e.preventDefault();
 
-            const current = $(e.target);
-            const current_tooltip = current.closest('[data-tooltip]');
-            const current_trigger = current.closest('[data-tooltip-trigger]');
-            const current_target = current_tooltip.find('[data-tooltip-target]');
+            if (UI.tooltip.isTransitioning) return false;
 
-            if (current.is(current_trigger)) {
-                if (current_target.hasClass('shown')) {
-                    // hide
-                    current_target.removeClass('fade');
-                    current_target.removeClass('shown');
-                    current_target.addClass('hiding');
-                } else {
-                    // show
-                    current_target.removeClass('hiding');
-                    current_target.removeClass('hidden');
-                    current_target.addClass('showing');
-                    setTimeout(function () {
-                        current_target.addClass('fade');
-                    }, 0)
-                }
-            } else if (!current.is(UI.tooltip.$tooltipTarget)) {
-                UI.tooltip.backdrop();
+            const trigger = $(e.target);
+            const tooltip = trigger.closest('[data-tooltip]');
+            const target = tooltip.find('[data-tooltip-target]');
+
+            if (target.hasClass('hidden')) {
+                target.removeClass('hidden');
+                target.addClass('showing');
+                setTimeout(function () {
+                    target.addClass('fade');
+                }, 0)
+            } else if (target.hasClass('shown')) {
+                return false;
             }
 
-            UI.tooltip.transition(current_target);
+            UI.tooltip.transition(target);
         })
     },
-    backdrop: function () {
-        UI.tooltip.$tooltip.each(function () {
-            if ($(this).is('.backdrop')) {
-                const b_target = $(this).find('[data-tooltip-target]');
-                b_target.removeClass('showing');
-                b_target.removeClass('fade');
-                
-                b_target.off('transitionstart').on('transitionstart', function () {
-                    $(this).removeClass('shown');
-                    $(this).addClass('hiding');
+    close: function () {
+        $(document).on('click.tooltip', function (e) {
+            const current = $(e.target);
+            const tooltip = current.closest('[data-tooltip]');
+            const target = tooltip.find('[data-tooltip-target]');
+            const backdrop = $('[data-tooltip="backdrop"]').find('[data-tooltip-target]')
 
-                    $(this).trigger('tooltip.hiding');
-                })
+            if (current.is('[data-tooltip-close]')) {
+                if (UI.tooltip.isTransitioning) return false;
 
-                b_target.off('transitionend').on('transitionend', function () {
-                    $(this).removeClass('hiding');
-                    $(this).addClass('hidden');
-
-                    $(this).trigger('tooltip.hidden');
-                })
+                target.removeClass('shown');
+                target.addClass('hiding');
+                target.removeClass('fade');
             }
+
+            backdrop.each(function () {
+                if ($(this).hasClass('shown')) {
+                    if (UI.tooltip.isTransitioning) return false;
+
+                    if (!current.is('[data-tooltip-target]')) {
+                        $(this).removeClass('shown');
+                        $(this).addClass('hiding');
+                        $(this).removeClass('fade');
+                    }
+                }
+            })
+
+            UI.tooltip.transition(target);
         })
     },
     transition: function (target) {
-        target.off('transitionstart').on('transitionstart', function () {
+        target.off('transitionstart.tooltip').on('transitionstart.tooltip', function () {
+            UI.tooltip.isTransitioning = true;
+
             if (target.hasClass('showing')) {
                 target.trigger('tooltip.showing');
             } else if (target.hasClass('hiding')) {
                 target.trigger('tooltip.hiding');
             }
         })
+        target.off('transitionend.tooltip').on('transitionend.tooltip', function () {
+            UI.tooltip.isTransitioning = false;
 
-        target.off('transitionend').on('transitionend', function () {
             if (target.hasClass('showing')) {
                 target.removeClass('showing');
                 target.addClass('shown');
