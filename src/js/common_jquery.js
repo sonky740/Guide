@@ -214,7 +214,7 @@ UI.tooltip = {
                 if ($(this).hasClass('shown')) {
                     if (UI.tooltip.isTransitioning) return false;
 
-                    if (!current.is('[data-tooltip-target]')) {
+                    if (!current.is(backdrop)) {
                         $(this).removeClass('shown');
                         $(this).addClass('hiding');
                         $(this).removeClass('fade');
@@ -249,6 +249,9 @@ UI.tooltip = {
 
                 target.trigger('tooltip.hidden');
             }
+        })
+        target.off('transitioncancel').on('transitioncancel', function() {
+            console.log('a')
         })
     }
 }
