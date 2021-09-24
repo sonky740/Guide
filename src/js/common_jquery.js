@@ -200,7 +200,7 @@ UI.tooltip = {
             const current = $(e.target);
             const tooltip = current.closest('[data-tooltip]');
             const target = tooltip.find('[data-tooltip-target]');
-            const backdrop = $('[data-tooltip="backdrop"]').find('[data-tooltip-target]')
+            const backdrop = $('[data-tooltip].backdrop').find('[data-tooltip-target]')
 
             if (current.is('[data-tooltip-close]')) {
                 if (UI.tooltip.isTransitioning) return false;
@@ -250,7 +250,7 @@ UI.tooltip = {
                 target.trigger('tooltip.hidden');
             }
         })
-        target.off('transitioncancel').on('transitioncancel', function() {
+        target.off('transitioncancel').on('transitioncancel', function () {
             console.log('a')
         })
     }

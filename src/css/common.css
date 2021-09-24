@@ -1157,6 +1157,7 @@ span.btn-type1:hover {
 }
 
 .tooltip {
+  display: inline-block;
   position: relative;
 }
 .tooltip [data-tooltip-trigger] {
