@@ -1093,6 +1093,9 @@ span.btn-type1:hover {
 .accordion + .accordion {
   margin-top: 1rem;
 }
+.accordion-item.on > [data-accor-target] {
+  display: block;
+}
 .accordion-title {
   display: block;
   position: relative;
@@ -1143,17 +1146,6 @@ span.btn-type1:hover {
 }
 .accordion-body {
   padding: 1rem;
-}
-.accordion-item.on > .accordion-title > [data-accor-trigger]:before {
-  -webkit-transform: translateY(-50%) rotate(-45deg);
-          transform: translateY(-50%) rotate(-45deg);
-}
-.accordion-item.on > .accordion-title > [data-accor-trigger]:after {
-  -webkit-transform: translateY(-50%) rotate(225deg);
-          transform: translateY(-50%) rotate(225deg);
-}
-.accordion-item.on > [data-accor-target] {
-  display: block;
 }
 
 .tooltip {

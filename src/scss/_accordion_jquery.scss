@@ -4,6 +4,14 @@
     margin-top: 1rem;
   }
 
+  &-item {
+    &.on {
+      >[data-accor-target] {
+        display: block;
+      }
+    }
+  }
+
   &-title {
     display: block;
     position: relative;
@@ -58,25 +66,5 @@
 
   &-body {
     padding: 1rem;
-  }
-
-  &-item {
-    &.on {
-      >.accordion-title {
-        >[data-accor-trigger] {
-          &:before {
-            transform: translateY(-50%) rotate(-45deg);
-          }
-
-          &:after {
-            transform: translateY(-50%) rotate(225deg);
-          }
-        }
-      }
-
-      >[data-accor-target] {
-        display: block;
-      }
-    }
   }
 }
