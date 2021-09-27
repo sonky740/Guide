@@ -425,12 +425,11 @@ UI_Control.tab = {
 
             setTimeout(function () {
               target.classList.add('fade');
-              UI_Control.tab.transition(target);
-              el.removeEventListener('transitionend', transitionend);
-            }, 50); // 시간을 안주면 ie 에서 안됨.
+            }, 0);
+
+            UI_Control.tab.transition(target);
+            el.removeEventListener('transitionend', transitionend);
           })
-        } else {
-          return false;
         }
       })
     })
