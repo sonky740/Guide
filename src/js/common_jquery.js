@@ -151,7 +151,9 @@ UI.accor = {
                 target.addClass('shown');
                 target.removeAttr('style');
 
-                target.trigger('accor.shown');
+                setTimeout(function () {
+                    target.trigger('accor.shown');
+                }, 0)
             } else if (target.hasClass('hiding')) {
                 target.removeClass('hiding');
                 target.addClass('hidden');
@@ -159,7 +161,9 @@ UI.accor = {
 
                 target.closest('[data-accor-item]').removeClass('on');
 
-                target.trigger('accor.hidden');
+                setTimeout(function () {
+                    target.trigger('accor.hidden');
+                }, 0)
             }
         })
     }
