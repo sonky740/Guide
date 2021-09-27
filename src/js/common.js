@@ -220,7 +220,6 @@ UI_Control.accr = {
       const accr = trigger.closest('[data-accr]');
       const item = trigger.closest('[data-accr-item]');
       const target = item.querySelector('[data-accr-target]');
-      const targetAll = accr.querySelectorAll('[data-accr-target]');
       const content = target.querySelector('.accordion-body');
       const ir = trigger.querySelector('.blind');
 
@@ -236,7 +235,7 @@ UI_Control.accr = {
       if (!accr.getAttribute('data-accr-animation')) {
         UI_Control.accr.click(trigger, accr, item, target, content, ir);
       } else {
-        UI_Control.accr.clickNoAni(trigger, accr, item, target, targetAll, ir);
+        UI_Control.accr.clickNoAni(trigger, accr, item, target, ir);
       }
     })
   },
@@ -297,7 +296,7 @@ UI_Control.accr = {
       UI_Control.accr.transition(target);
     })
   },
-  clickNoAni: function (trigger, accr, item, target, targetAll, ir) {
+  clickNoAni: function (trigger, accr, item, target, ir) {
     trigger.addEventListener('click', function click(e) {
       e.preventDefault();
 
