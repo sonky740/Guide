@@ -9,6 +9,17 @@ UI.tab = {
     init: function () {
         this.createSelector();
 
+        this.$tabTrigger.each(function () {
+            const li = $(this).parent();
+            const target = $('[data-tabs-target=' + $(this).data('tabs-trigger') + ']')
+
+            if (li.hasClass('on')) {
+                target.addClass('fade shown');
+            } else {
+                target.addClass('hidden');
+            }
+        })
+
         this.click();
     },
     createSelector: function () {
@@ -18,12 +29,72 @@ UI.tab = {
         this.isTransitioning = false;
     },
     click: function () {
-        this.$tabTrigger.off('click.tab').on('click.tab', function () {
-            console.log('a')
+        this.$tabTrigger.off('click.tabs').on('click.tabs', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (UI.tab.isTransitioning) {
+                return false;
+            }
+
+            const trigger = $(e.target);
+            const target = $('[data-tabs-target= ' + trigger.data('tabs-trigger') + ']');
+
+            if (!trigger.parent().hasClass('on')) {
+                trigger.parent().siblings().each(function () {
+                    $(this).removeClass('on');
+                })
+                trigger.parent().addClass('on');
+            } else {
+                return false;
+            }
+
+            target.siblings().each(function () {
+                const targetAll = $(this)
+
+                if (targetAll.hasClass('shown')) {
+                    targetAll.removeClass('shown');
+                    targetAll.addClass('hiding');
+                    targetAll.removeClass('fade');
+
+                    UI.tab.transition(targetAll);
+                }
+                targetAll.on('transitionend.tabs', function () {
+                    target.removeClass('hidden');
+                    target.addClass('showing');
+
+                    setTimeout(function () {
+                        target.addClass('fade');
+                    }, 0)
+                })
+            })
+            UI.tab.transition(target);
         })
     },
-    transition: function () {
+    transition: function (target) {
+        target.off('transitionstart.tabs').on('transitionstart.tabs', function () {
+            UI.tab.isTransitioning = true;
+            if (target.hasClass('showing')) {
+                target.trigger('tabs.showing');
+            } else if (target.hasClass('hiding')) {
+                target.trigger('tabs.hiding');
+            }
+        })
+        target.off('transitionend.tabs').on('transitionend.tabs', function () {
+            UI.tab.isTransitioning = false;
 
+            if (target.hasClass('showing')) {
+                target.removeClass('showing');
+                target.addClass('shown');
+
+                target.trigger('tabs.shown');
+            } else if (target.hasClass('hiding')) {
+                target.removeClass('hiding');
+                target.addClass('hidden');
+
+                target.trigger('tabs.hidden');
+            }
+        })
     }
 };
 

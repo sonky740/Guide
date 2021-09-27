@@ -1262,7 +1262,7 @@ span.btn-type1:hover {
   border-left: none;
 }
 .tabs-title li.on button {
-  color: red;
+  color: #1d4cd8;
 }
 .tabs-title li.on button:before {
   content: "";
@@ -1271,25 +1271,27 @@ span.btn-type1:hover {
   left: -1px;
   width: calc(100% + 2px);
   height: calc(100% + 2px);
-  border: 1px solid red;
+  border: 1px solid #1d4cd8;
 }
 .tabs-title li button {
   display: block;
   position: relative;
   width: 100%;
   height: 100%;
+  padding: 8px;
   color: #fff;
   border: 1px solid #fff;
+  overflow: visible;
 }
 .tabs-content {
   display: none;
+  margin-top: 10px;
   opacity: 0;
   -webkit-transition: all 0.15s;
   transition: all 0.15s;
 }
 .tabs-content.showing, .tabs-content.hiding {
   display: block;
-  opacity: 0;
 }
 .tabs-content.fade {
   opacity: 1;

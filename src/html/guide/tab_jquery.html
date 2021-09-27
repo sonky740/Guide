@@ -31,19 +31,19 @@
 
           <div class="tabs-content" data-tabs-target="tab1">
             <h4 class="blind">탭1</h4>
-            내용
+            탭1 내용
           </div>
           <div class="tabs-content" data-tabs-target="tab2">
             <h4 class="blind">탭2</h4>
-            내용
+            탭2 내용
           </div>
           <div class="tabs-content" data-tabs-target="tab3">
             <h4 class="blind">탭3</h4>
-            내용
+            탭3 내용
           </div>
           <div class="tabs-content" data-tabs-target="tab4">
             <h4 class="blind">탭4</h4>
-            내용
+            탭4 내용
           </div>
         </div>
       </section>
@@ -55,20 +55,20 @@
   <script src="../../js/common.js"></script>
   <script src="../../js/common_jquery.js"></script>
   <script>
-    const target = $('[data-tooltip-target]');
-    target.on('tooltip.showing', function (e) {
+    const target = $('[data-tabs-target]');
+    target.on('tabs.showing', function (e) {
       console.log(e.target, 'showing');
     })
 
-    target.on('tooltip.shown', function (e) {
+    target.on('tabs.shown', function (e) {
       console.log(e.target, 'shown');
     })
 
-    target.on('tooltip.hiding', function (e) {
+    target.on('tabs.hiding', function (e) {
       console.log(e.target, 'hiding');
     })
 
-    target.on('tooltip.hidden', function (e) {
+    target.on('tabs.hidden', function (e) {
       console.log(e.target, 'hidden');
     })
   </script>

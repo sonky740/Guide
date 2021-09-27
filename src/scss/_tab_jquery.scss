@@ -13,7 +13,7 @@
 
       &.on {
         button {
-          color: red;
+          color: #1d4cd8;
 
           &:before {
             content: "";
@@ -22,7 +22,7 @@
             left: -1px;
             width: calc(100% + 2px);
             height: calc(100% + 2px);
-            border: 1px solid red;
+            border: 1px solid #1d4cd8;
           }
         }
       }
@@ -32,21 +32,23 @@
         position: relative;
         width: 100%;
         height: 100%;
+        padding: 8px;
         color: #fff;
         border: 1px solid #fff;
+        overflow: visible;
       }
     }
   }
 
   &-content {
     display: none;
+    margin-top: 10px;
     opacity: 0;
     transition: all .15s;
 
     &.showing,
     &.hiding {
       display: block;
-      opacity: 0;
     }
 
     &.fade {
