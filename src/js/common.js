@@ -33,6 +33,8 @@ UI_Control.layout = {
     lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/scroll.html">scroll</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/swiper.html">swiper</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/tab_jquery.html">tab_jquery</a></li>'
@@ -731,6 +733,25 @@ UI_Control.Tooltip = {
   }
 }
 
+UI_Control.scrollView = {
+  init: function() {
+    this.constructor();
+
+    this.scrollItem.forEach(function(el) {
+
+      UI_Control.scrollView.scroll(el);
+    })
+  },
+  constructor: function() {
+    this.scrollItem = document.querySelectorAll('[data-scroll-item]');
+  },
+  scroll: function(item) {
+    document.addEventListener('scroll', function(e) {
+      console.log(e)
+    })
+  }
+}
+
 UI_Control.swiper = {
   init: function () {
 
@@ -738,12 +759,12 @@ UI_Control.swiper = {
     document.addEventListener('touchmove', handleTouchMove, false);
     document.addEventListener('touchend', handleTouchEnd, false);
 
-    var xDown = null;
-    var yDown = null;
-    var xDiff = null;
-    var yDiff = null;
-    var timeDown = null;
-    var startEl = null;
+    let xDown = null;
+    let yDown = null;
+    let xDiff = null;
+    let yDiff = null;
+    let timeDown = null;
+    let startEl = null;
 
     /**
      * Fires swiped event if swipe detected on touchend
@@ -755,11 +776,11 @@ UI_Control.swiper = {
       // if the user released on a different target, cancel!
       if (startEl !== e.target) return;
 
-      var swipeThreshold = parseInt(getNearestAttribute(startEl, 'data-swipe-threshold', '20'), 10); // default 20px
-      var swipeTimeout = parseInt(getNearestAttribute(startEl, 'data-swipe-timeout', '500'), 10); // default 500ms
-      var timeDiff = Date.now() - timeDown;
-      var eventType = '';
-      var changedTouches = e.changedTouches || e.touches || [];
+      let swipeThreshold = parseInt(getNearestAttribute(startEl, 'data-swipe-threshold', '20'), 10); // default 20px
+      let swipeTimeout = parseInt(getNearestAttribute(startEl, 'data-swipe-timeout', '500'), 10); // default 500ms
+      let timeDiff = Date.now() - timeDown;
+      let eventType = '';
+      let changedTouches = e.changedTouches || e.touches || [];
 
       if (Math.abs(xDiff) > Math.abs(yDiff)) { // most significant
         if (Math.abs(xDiff) > swipeThreshold && timeDiff < swipeTimeout) {
@@ -779,7 +800,7 @@ UI_Control.swiper = {
 
       if (eventType !== '') {
 
-        var eventData = {
+        let eventData = {
           dir: eventType.replace(/swiped-/, ''),
           xStart: parseInt(xDown, 10),
           xEnd: parseInt((changedTouches[0] || {}).clientX || -1, 10),
@@ -836,8 +857,8 @@ UI_Control.swiper = {
 
       if (!xDown || !yDown) return;
 
-      var xUp = e.touches[0].clientX;
-      var yUp = e.touches[0].clientY;
+      let xUp = e.touches[0].clientX;
+      let yUp = e.touches[0].clientY;
 
       xDiff = xDown - xUp;
       yDiff = yDown - yUp;
@@ -855,7 +876,7 @@ UI_Control.swiper = {
       // walk up the dom tree looking for data-action and data-trigger
       while (el && el !== document.documentElement) {
 
-        var attributeValue = el.getAttribute(attributeName);
+        const attributeValue = el.getAttribute(attributeName);
 
         if (attributeValue) {
           return attributeValue;
@@ -915,5 +936,5 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
   if (document.querySelectorAll('[data-context]').length) UI_Control.Tooltip.init();
-  UI_Control.swiper.init();
+  if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
 })
