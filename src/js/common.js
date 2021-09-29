@@ -19,6 +19,19 @@ function siblings(node) {
   });
 }
 
+// 쓰로틀 - 일정 시간 간격으로 func 실행
+function throttle(fn, delay) {
+  let timer
+  return function () {
+    if (!timer) {
+      timer = setTimeout(function () {
+        timer = null
+        fn.apply(this, arguments)
+      }, delay)
+    }
+  }
+}
+
 UI_Control.layout = {
   init: function () {
     const url = window.location.href.split('/');
@@ -734,21 +747,35 @@ UI_Control.Tooltip = {
 }
 
 UI_Control.scrollView = {
-  init: function() {
+  init: function () {
     this.constructor();
 
-    this.scrollItem.forEach(function(el) {
+    this.scrollItem.forEach(function (item) {
+      let itemTop = item.getBoundingClientRect().top;
+      let viewH = document.documentElement.offsetHeight;
+      let multiple = Number(item.getAttribute('data-scroll-multiple')) || 3 / 5;
 
-      UI_Control.scrollView.scroll(el);
+      if (itemTop < viewH * multiple) {
+        item.classList.add('focus-in');
+      }
+
+      UI_Control.scrollView.scroll(item, multiple);
     })
   },
-  constructor: function() {
+  constructor: function () {
     this.scrollItem = document.querySelectorAll('[data-scroll-item]');
   },
-  scroll: function(item) {
-    document.addEventListener('scroll', function(e) {
-      console.log(e)
-    })
+  scroll: function (item, multiple) {
+    // let oldScrollTop = document.documentElement.scrollTop;
+    document.addEventListener('scroll', throttle(function () {
+      let itemTop = item.getBoundingClientRect().top;
+      let viewH = document.documentElement.offsetHeight;
+      console.log('a');
+      // let direction = oldScrollTop - document.documentElement.scrollTop;
+      // oldScrollTop = document.documentElement.scrollTop;
+
+      (itemTop < viewH * multiple) ? item.classList.add('focus-in'): item.classList.remove('focus-in');
+    }, 100))
   }
 }
 
@@ -936,5 +963,9 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
   if (document.querySelectorAll('[data-context]').length) UI_Control.Tooltip.init();
+  if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
+})
+
+window.addEventListener('resize', function () {
   if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
 })
