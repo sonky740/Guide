@@ -20,14 +20,14 @@ function siblings(node) {
 }
 
 // 쓰로틀 - 일정 시간 간격으로 func 실행
-function throttle(fn, delay) {
-  let timer
+function throttle(fn, ms) {
+  let throttled = false;
   return function () {
-    if (!timer) {
-      timer = setTimeout(function () {
-        timer = null
+    if (!throttled) {
+      throttled = setTimeout(function () {
+        throttled = null
         fn.apply(this, arguments)
-      }, delay)
+      }, ms)
     }
   }
 }
