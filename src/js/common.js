@@ -1,3 +1,4 @@
+'use strict';
 const UI_Control = {};
 
 // 세자릿수 콤마 정규식
@@ -770,7 +771,6 @@ UI_Control.scrollView = {
     document.addEventListener('scroll', throttle(function () {
       let itemTop = item.getBoundingClientRect().top;
       let viewH = document.documentElement.offsetHeight;
-      console.log('a');
       // let direction = oldScrollTop - document.documentElement.scrollTop;
       // oldScrollTop = document.documentElement.scrollTop;
 
@@ -779,7 +779,7 @@ UI_Control.scrollView = {
   }
 }
 
-UI_Control.swiper = {
+UI_Control.touchCheck = {
   init: function () {
 
     document.addEventListener('touchstart', handleTouchStart, false);
