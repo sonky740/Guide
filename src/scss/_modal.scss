@@ -133,15 +133,15 @@
     &.btm {
         .ly-modal-wrap {
             top: auto;
-            bottom: -100%;
-            transform: translate(-50%, 0);
+            bottom: 0;
+            transform: translate(-50%, 50%);
             border-radius: 16px 16px 0 0;
+            max-height: calc(100vh - 100px);
         }
 
         &.fade {
             .ly-modal-wrap {
-                bottom: 0;
-                max-height: calc(100vh - 100px);
+                transform: translate(-50%, 0);
             }
         }
     }
