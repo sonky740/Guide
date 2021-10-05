@@ -754,7 +754,7 @@ UI_Control.scrollView = {
     this.scrollItem.forEach(function (item) {
       let itemTop = item.getBoundingClientRect().top;
       let viewH = document.documentElement.offsetHeight;
-      let multiple = Number(item.getAttribute('data-scroll-multiple')) || 3 / 5;
+      let multiple = Number(item.getAttribute('data-scroll-multiple')) || 4 / 5;
 
       if (itemTop < viewH * multiple) {
         item.classList.add('focus-in');
@@ -774,7 +774,11 @@ UI_Control.scrollView = {
       // let direction = oldScrollTop - document.documentElement.scrollTop;
       // oldScrollTop = document.documentElement.scrollTop;
 
-      (itemTop < viewH * multiple) ? item.classList.add('focus-in'): item.classList.remove('focus-in');
+      if (itemTop < viewH * multiple) {
+        item.classList.add('focus-in')
+      } else if (itemTop > viewH * multiple / multiple * 3 / 4) {
+        item.classList.remove('focus-in');
+      }
     }, 100))
   }
 }
