@@ -236,7 +236,7 @@ UI_Control.accr = {
       const accr = trigger.closest('[data-accr]');
       const item = trigger.closest('[data-accr-item]');
       const target = item.querySelector('[data-accr-target]');
-      const content = target.querySelector('.accordion-body');
+      const content = target.children[0];
       const ir = trigger.querySelector('.blind');
 
       if (!item.classList.contains('on')) {
@@ -291,7 +291,7 @@ UI_Control.accr = {
         siblings(item).forEach(function (ta) {
           const targetAll = ta.querySelector('[data-accr-target]');
           if (targetAll.classList.contains('shown')) {
-            targetAll.style.height = targetAll.querySelector('.accordion-body').clientHeight + 'px';
+            targetAll.style.height = targetAll.children[0].clientHeight + 'px';
 
             setTimeout(function () {
               targetAll.classList.add('hiding');
