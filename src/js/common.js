@@ -148,13 +148,11 @@ UI_Control.modal = {
         }
 
         const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
-        setTimeout(function () {
-          target.classList.add('showing');
-        }, 0)
+        target.classList.add('showing');
 
         setTimeout(function () {
           target.classList.add('fade');
-        }, 100)
+        }, 50)
       })
     })
   },
