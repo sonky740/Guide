@@ -35,10 +35,18 @@
     </main>
     <!-- ### // ### -->
   </div>
-  
+
   <script src="../../js/common.js"></script>
   <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
   <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      const counter = document.querySelectorAll('[data-counter]');
+      counter.forEach(function (el) {
+        el.addEventListener('counter.end', function () {
+          console.log(this, 'counter end')
+        })
+      })
+    })
   </script>
 </body>
 

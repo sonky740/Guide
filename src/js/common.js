@@ -564,7 +564,7 @@ UI_Control.tip = {
           return false;
         }
 
-        if(target.closest('[data-tip]').getAttribute('data-tip') === "backdrop" && e.target !== target && e.target !== trigger) {
+        if (target.closest('[data-tip]').getAttribute('data-tip') === "backdrop" && e.target !== target && e.target !== trigger) {
           target.classList.add('hiding');
           target.classList.remove('shown');
           target.classList.remove('fade');
@@ -633,8 +633,13 @@ UI_Control.counter = {
           window.requestAnimationFrame(step);
         }
       };
-
+      
       window.requestAnimationFrame(step);
+
+      setTimeout(function () {
+        const counterEnd = new CustomEvent('counter.end');
+        el.dispatchEvent(counterEnd);
+      }, duration)
     })
   },
   constructor: function () {
