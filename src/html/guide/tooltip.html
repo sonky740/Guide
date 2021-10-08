@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>손기연</title>
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
+
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section">
+        <h3 class="tit-main" data-text="Tooltip">Tooltip</h3>
+
+        <div class="tip" data-tip>
+          <button type="button" data-tip-trigger>tip</button>
+          <div class="tip-content" data-tip-target>
+            tip content
+            <button type="button" class="tip-close" data-tip-close><span class="blind">툴팁 닫기</span></button>
+          </div>
+        </div>
+        
+        <div class="tip" data-tip="backdrop">
+          <button type="button" data-tip-trigger>tip</button>
+          <div class="tip-content" data-tip-target>
+            tip content
+            <button type="button" class="tip-close" data-tip-close><span class="blind">툴팁 닫기</span></button>
+          </div>
+        </div>
+
+        <div class="tip" data-tip="backdrop">
+          <button type="button" data-tip-trigger>tip</button>
+          <div class="tip-content" data-tip-target>
+            tip content
+            <button type="button" class="tip-close" data-tip-close><span class="blind">툴팁 닫기</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
+
+  <script src="../../js/common.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[data-tip-target]').forEach(function (el) {
+        el.addEventListener('tip.showing', function (e) {
+          console.log(e.target, 'showing')
+        })
+        el.addEventListener('tip.shown', function (e) {
+          console.log(e.target, 'shown')
+        })
+        el.addEventListener('tip.hiding', function (e) {
+          console.log(e.target, 'hiding')
+        })
+        el.addEventListener('tip.hidden', function (e) {
+          console.log(e.target, 'hidden')
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>

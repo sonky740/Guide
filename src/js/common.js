@@ -45,6 +45,7 @@ UI_Control.layout = {
     lnb += '  <li><a href="/Guide/src/html/guide/modal.html">modal</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>'
+    lnb += '  <li><a href="/Guide/src/html/guide/tooltip.html">tooltip</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>'
     lnb += '  <li><a href="/Guide/src/html/guide/scroll.html">scroll</a></li>'
@@ -495,6 +496,110 @@ UI_Control.tab = {
 
         const hidden = new CustomEvent('tab.hidden');
         this.dispatchEvent(hidden);
+      }
+      target.removeEventListener('transitionend', transitionend);
+    })
+  },
+  setTransitioning: function (isTransitioning) {
+    this.isTransitioning = isTransitioning;
+  }
+}
+
+UI_Control.tip = {
+  init: function () {
+    this.constructor();
+
+    this.tipTrigger.forEach(function (trigger) {
+      const tooltip = trigger.closest('[data-tip]');
+      const target = tooltip.querySelector('[data-tip-target]');
+      const close = tooltip.querySelector('[data-tip-close]');
+
+      target.classList.add('hidden');
+
+      UI_Control.tip.show(trigger, target);
+      UI_Control.tip.hide(trigger, target, close);
+    })
+  },
+  constructor: function () {
+    this.tipTrigger = document.querySelectorAll('[data-tip-trigger]');
+    this.isTransitioning = false;
+  },
+  show: function (trigger, target) {
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      if (UI_Control.tip.isTransitioning) {
+        return false;
+      }
+
+      if (target.classList.contains('hidden')) {
+        target.classList.remove('hidden');
+        target.classList.add('showing');
+
+        setTimeout(function () {
+          target.classList.add('fade');
+        }, 0)
+      } else {
+        return false;
+      }
+
+      UI_Control.tip.transition(target);
+    })
+  },
+  hide: function (trigger, target, close) {
+    document.addEventListener('click', function (e) {
+      const cTarget = close.closest('[data-tip-target]')
+
+      if (target.classList.contains('shown')) {
+
+        if (UI_Control.tip.isTransitioning) {
+          return false;
+        }
+
+        if (e.target === close) {
+          cTarget.classList.add('hiding');
+          cTarget.classList.remove('shown');
+          cTarget.classList.remove('fade');
+          UI_Control.tip.transition(target);
+          return false;
+        }
+
+        if(target.closest('[data-tip]').getAttribute('data-tip') === "backdrop" && e.target !== target && e.target !== trigger) {
+          target.classList.add('hiding');
+          target.classList.remove('shown');
+          target.classList.remove('fade');
+          UI_Control.tip.transition(target);
+          return false;
+        }
+      }
+    })
+  },
+  transition: function (target) {
+    target.addEventListener('transitionstart', function transitionstart() {
+      UI_Control.tip.isTransitioning = true;
+      if (target.classList.contains('showing')) {
+        const showing = new CustomEvent('tip.showing');
+        target.dispatchEvent(showing);
+      } else if (target.classList.contains('hiding')) {
+        const hiding = new CustomEvent('tip.hiding');
+        target.dispatchEvent(hiding);
+      }
+      target.removeEventListener('transitionstart', transitionstart);
+    })
+    target.addEventListener('transitionend', function transitionend() {
+      UI_Control.tip.isTransitioning = false;
+      if (target.classList.contains('showing')) {
+        target.classList.add('shown');
+        target.classList.remove('showing');
+
+        const shown = new CustomEvent('tip.shown');
+        target.dispatchEvent(shown);
+      } else if (target.classList.contains('hiding')) {
+        target.classList.add('hidden');
+        target.classList.remove('hiding');
+
+        const hidden = new CustomEvent('tip.hidden');
+        target.dispatchEvent(hidden);
       }
       target.removeEventListener('transitionend', transitionend);
     })
@@ -963,6 +1068,7 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('.ly-modal').length) UI_Control.modal.init();
   if (document.querySelectorAll('[data-accr]').length) UI_Control.accr.init();
   if (document.querySelectorAll('[data-tab]').length) UI_Control.tab.init();
+  if (document.querySelectorAll('[data-tip-trigger]').length) UI_Control.tip.init();
   if (document.querySelectorAll('[data-counter]').length) UI_Control.counter.init();
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
