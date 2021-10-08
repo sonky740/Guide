@@ -538,7 +538,7 @@ UI_Control.tip = {
 
         setTimeout(function () {
           target.classList.add('fade');
-        }, 0)
+        }, 50)
       } else {
         return false;
       }
