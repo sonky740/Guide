@@ -1,8 +1,7 @@
 .wrapper {
   min-height: 100vh;
-  
+
   .header {
-    max-width: 1200px;
     margin: auto;
     margin-bottom: 24px;
 
@@ -12,6 +11,46 @@
       font-size: 24px;
       align-items: center;
       justify-content: space-between;
+
+      svg {
+        text {
+          stroke-width: 1;
+          fill: #fff;
+          stroke: #fff;
+          font-size: 28px;
+          animation: stroke 5s linear;
+          letter-spacing: 1px;
+
+          @keyframes stroke {
+            0% {
+              fill: rgba(72, 138, 20, 0);
+              stroke: #fff;
+              stroke-dashoffset: 25%;
+              stroke-dasharray: 0 50%;
+              stroke-width: 2;
+            }
+
+            70% {
+              fill: rgba(72, 138, 20, 0);
+              stroke: #fff;
+            }
+
+            80% {
+              fill: rgba(72, 138, 20, 0);
+              stroke: #fff;
+              stroke-width: 3;
+            }
+
+            100% {
+              fill: #fff;
+              stroke: rgba(54, 95, 160, 0);
+              stroke-dashoffset: -25%;
+              stroke-dasharray: 50% 0;
+              stroke-width: 2;
+            }
+          }
+        }
+      }
 
       @media screen and (max-width: 1120px) {
         width: 100%;
@@ -101,7 +140,7 @@
 
         &.trigger {
           display: block;
-          
+
           &:before,
           &:after {
             animation: nav-close .3s;

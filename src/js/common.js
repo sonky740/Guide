@@ -72,7 +72,11 @@ UI_Control.layout = {
     const headerParent = document.querySelector('.header');
     let header = '<div class="header-wrap">'
     header += '<h1>'
-    header += '  <a href="/Guide/src/html/" title="홈으로">Sonky</a>'
+    header += '  <a href="/Guide/src/html/" title="홈으로">'
+    header += '    <svg width="100" height="40" viewBox="0 0 100 45">'
+    header += '      <text x="0" y="85%">SONKY</text>'
+    header += '    </svg>'
+    header += '  </a>'
     header += '</h1>'
     header += '<button type="button" class="header-bar trigger" title="Guide Menu">'
     header += '  <i aria-hidden="true"></i>'
