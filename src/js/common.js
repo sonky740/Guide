@@ -631,15 +631,13 @@ UI_Control.counter = {
         }
         if (progress < 1) {
           window.requestAnimationFrame(step);
+        } else {
+          const counterEnd = new CustomEvent('counter.end');
+          el.dispatchEvent(counterEnd);
         }
       };
-      
-      window.requestAnimationFrame(step);
 
-      setTimeout(function () {
-        const counterEnd = new CustomEvent('counter.end');
-        el.dispatchEvent(counterEnd);
-      }, duration)
+      window.requestAnimationFrame(step);
     })
   },
   constructor: function () {
