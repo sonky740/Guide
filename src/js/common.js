@@ -791,42 +791,60 @@ UI_Control.range = {
 
 UI_Control.checkAll = {
   init: function () {
-    const check = document.querySelectorAll('input[data-checkbox]');
-    Array.prototype.forEach.call(check, function (el) {
-      const elem = '[name=' + el.getAttribute('data-checkbox') + ']:not([data-checkbox])';
+    this.constructor();
+
+    this.all.forEach(function (master) {
+      const elem = '[name=' + master.getAttribute('data-checkbox') + ']:not([data-checkbox])';
       const bullet = document.querySelectorAll(elem);
 
-      Array.prototype.forEach.call(bullet, function (al) {
-        // 전체 클릭, 해제
-        el.addEventListener('click', function () {
-          if (el.checked === true) {
-            al.checked = true;
-          } else {
-            al.checked = false;
-          }
-        })
-
-        // 요소 클릭, 해제
-        al.addEventListener('click', function () {
-          const checked = document.querySelectorAll('input:checked' + elem).length;
-          if (checked === bullet.length) {
-            el.checked = true;
-          } else {
-            el.checked = false;
-          }
-        })
-
+      bullet.forEach(function (child, i) {
         // 전체 클릭이 되어있다면
-        if (el.checked) {
-          al.checked = true;
+        if (master.checked) {
+          child.checked = true;
         }
 
         // 전부 클릭이 되어있다면
         const gChecked = document.querySelectorAll('input:checked' + elem).length;
         if (gChecked === bullet.length) {
-          el.checked = true;
+          master.checked = true;
         }
+
+        UI_Control.checkAll.click(elem, master, bullet, child, i);
       })
+    })
+  },
+  constructor: function () {
+    this.all = document.querySelectorAll('input[data-checkbox]');
+  },
+  click: function (elem, master, bullet, child, i) {
+    const checkA = new CustomEvent('checked');
+    const checkC = new CustomEvent('unchecked');
+
+    // 전체 클릭, 해제
+    master.addEventListener('click', function () {
+      if (master.checked) {
+        child.checked = true;
+        if (i === 0) {
+          master.dispatchEvent(checkA);
+        }
+      } else {
+        child.checked = false;
+        if (i === 0) {
+          master.dispatchEvent(checkC);
+        }
+      }
+    })
+
+    // 요소 클릭, 해제
+    child.addEventListener('click', function () {
+      const checked = document.querySelectorAll('input:checked' + elem).length;
+      if (checked === bullet.length) {
+        master.checked = true;
+        master.dispatchEvent(checkA);
+      } else if (master.checked && checked === bullet.length - 1) {
+        master.checked = false;
+        master.dispatchEvent(checkC);
+      }
     })
   }
 }

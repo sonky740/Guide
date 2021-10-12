@@ -30,7 +30,7 @@
 figure {
 
   img {
-    max-width: 400px;
+    max-width: 40rem;
 
     @media screen and (max-width: 620px) {
       max-width: 100%;
@@ -42,11 +42,11 @@ figure {
   }
 
   +figure {
-    margin-top: 16px;
+    margin-top: 1.6rem;
   }
 }
 
 // codepen
 .cp_embed_wrapper {
-  margin: 24px 0;
+  margin: 2.4rem 0;
 }

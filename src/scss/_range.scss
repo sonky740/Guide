@@ -1,13 +1,13 @@
 .range {
-    padding-top: 40px;
+    padding-top: 4rem;
 
     &+& {
-        margin-top: 16px;
+        margin-top: 1.6rem;
     }
 
     &-area {
         position: relative;
-        padding-top: 15px;
+        padding-top: 1.5rem;
 
         input[type="range"] {
             appearance: none;
@@ -16,19 +16,19 @@
             left: 0;
             right: 0;
             width: 100%;
-            height: 15px;
+            height: 1.5rem;
             background: transparent;
             cursor: pointer;
             z-index: 1;
 
             &::-webkit-slider-thumb {
                 appearance: none;
-                width: 21px;
-                height: 21px;
+                width: 2.1rem;
+                height: 2.1rem;
                 border: none;
                 border-radius: 50%;
-                background: #fff url('https://sonky740.github.io/Guide/src/images/ico_range_btn.svg') no-repeat 50% 52%/11px;
-                box-shadow: 2px 2px 9px rgba(29, 76, 216, .71);
+                background: #fff url('https://sonky740.github.io/Guide/src/images/ico_range_btn.svg') no-repeat 50% 52%/1.1rem;
+                box-shadow: 0.2rem 0.2rem 0.9rem rgba(29, 76, 216, .71);
                 cursor: grab;
             }
         }
@@ -39,13 +39,13 @@
         position: absolute;
         top: -36px;
         left: 0;
-        min-width: 72px;
-        padding: 2px 7px;
+        min-width: 7.2rem;
+        padding: 0.2rem 0.7rem;
         background-color: #2f62fb;
-        border-radius: 8px;
+        border-radius: 0.8rem;
         text-align: center;
         color: #fff;
-        font-size: 11px;
+        font-size: 1.1rem;
         font-weight: 700;
         z-index: 1;
         transform: translateX(-50%);
@@ -55,9 +55,9 @@
             position: absolute;
             bottom: 0;
             left: 50%;
-            border-left: 3px solid transparent;
-            border-right: 3px solid transparent;
-            border-top: 3px solid #2f62fb;
+            border-left: 0.3rem solid transparent;
+            border-right: 0.3rem solid transparent;
+            border-top: 0.3rem solid #2f62fb;
             transform: translate(-50%, 100%);
         }
 
@@ -72,11 +72,11 @@
 
         &.left {
             right: auto !important;
-            left: -8px !important;
+            left: -0.8rem !important;
         }
 
         &.right {
-            right: -6px !important;
+            right: -0.6rem !important;
             left: auto !important;
         }
     }
@@ -87,7 +87,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        margin: -5px;
+        margin: -0.5rem;
     }
 
     &-bar,
@@ -96,9 +96,9 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 4px;
+        height: 0.4rem;
         background: #f6f7f8;
-        border-radius: 2px;
+        border-radius: 0.2rem;
         overflow: hidden;
     }
 
@@ -125,8 +125,8 @@
                     content: "";
                     position: absolute;
                     top: 0;
-                    right: -2px;
-                    width: 2px;
+                    right: -0.2rem;
+                    width: 0.2rem;
                     height: 100%;
                     background: #fff;
                 }
@@ -137,7 +137,7 @@
     &-bottom {
         display: flex;
         justify-content: space-between;
-        margin-top: 4px;
+        margin-top: 0.4rem;
 
         >span {
             color: #b7b7b7;

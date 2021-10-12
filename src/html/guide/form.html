@@ -183,6 +183,19 @@
     <!-- ### // ### -->
   </div>
   <script src="../../js/common.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      const check = document.querySelectorAll('[data-checkbox]');
+      check.forEach(function(el) {
+        el.addEventListener('checked', function() {
+          console.log(this, 'checked')
+        })
+        el.addEventListener('unchecked', function() {
+          console.log(this, 'unchecked')
+        })
+      })
+    })
+  </script>
 </body>
 
 </html>

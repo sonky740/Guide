@@ -2,11 +2,11 @@
   display: flex;
   position: relative; // 하단 툴팁이 들어갈 경우
   flex-wrap: wrap;
-  margin: 0 -4px;
+  margin: 0 -0.4rem;
   text-align: center;
 
   >* {
-    margin: 2px 4px 2px;
+    margin: 0.2rem 0.4rem 0.2rem;
   }
 }
 
@@ -14,11 +14,11 @@
 .btn-type1 {
   display: inline-block;
   position: relative;
-  height: 40px;
-  padding: 8px 16px;
-  border: 1px solid $btn1;
-  border-radius: 24px;
-  font-size: 14px;
+  height: 4rem;
+  padding: 0.8rem 1.6rem;
+  border: 0.1rem solid $btn1;
+  border-radius: 2.4rem;
+  font-size: 1.4rem;
   transition: all .5s ease;
   overflow: hidden;
 
@@ -26,7 +26,7 @@
     content: "";
     position: absolute;
     top: 0;
-    left: -150px;
+    left: -15rem;
     width: 100%;
     height: 100%;
     background: $btn1;
@@ -35,7 +35,7 @@
   }
 
   +.btn-type1 {
-    margin-left: 4px;
+    margin-left: 0.4rem;
   }
 
   &.active,

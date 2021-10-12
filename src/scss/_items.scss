@@ -3,7 +3,7 @@
     text-align: center;
     
     p {
-      font-size: 24px;
+      font-size: 2.4rem;
       color: $text-type1;
     }
   }
@@ -19,17 +19,17 @@
 
   >article {
     position: relative;
-    width: calc(50% - 16px);
-    height: 320px;
-    padding: 24px;
-    border-radius: 16px;
+    width: calc(50% - 1.6rem);
+    height: 32rem;
+    padding: 2.4rem;
+    border-radius: 1.6rem;
     background: rgba(255, 255, 255, 0.1);
     color: $text-default;
     transition: all 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
 
     &:hover {
       transform: translateY(-10px) !important;
-      box-shadow: 0 20px 20px -8px rgba(122, 122, 122, 0.32);
+      box-shadow: 0 2rem 2rem -0.8rem rgba(122, 122, 122, 0.32);
     }
 
     .bottom {
@@ -37,27 +37,27 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      padding: 0 24px 24px;
-      font-size: 16px;
+      padding: 0 2.4rem 2.4rem;
+      font-size: 1.6rem;
       color: #fff;
 
       >.btn-area1 {
-        margin-top: 8px;
+        margin-top: 0.8rem;
       }
     }
 
     .content {
-      font-size: 16px;
-      margin-top: 8px;
+      font-size: 1.6rem;
+      margin-top: 0.8rem;
     }
 
     @media screen and (min-width: 640px) {
       &:nth-of-type(2n) {
-        margin-left: 16px;
+        margin-left: 1.6rem;
       }
 
       &:nth-of-type(2n)~article {
-        margin-top: 16px;
+        margin-top: 1.6rem;
       }
     }
 
@@ -66,7 +66,7 @@
       margin-left: 0 !important;
 
       &:not(:first-child) {
-        margin-top: 16px;
+        margin-top: 1.6rem;
       }
     }
   }
@@ -77,23 +77,23 @@
     width: 100%;
 
     +article {
-      margin: 16px 0 0 0;
+      margin: 1.6rem 0 0 0;
     }
   }
 }
 
 // pre 코드
 .code {
-  max-width: calc(100vw - 48px);
-  margin-top: 24px;
+  max-width: calc(100vw - 4.8rem);
+  margin-top: 2.4rem;
   text-align: left;
 
   +.code {
-    margin-top: 16px;
+    margin-top: 1.6rem;
   }
 
   pre {
-    max-height: 400px;
+    max-height: 40rem;
   }
 }
 
@@ -102,25 +102,25 @@
   &-wrap {
     display: flex;
     flex-wrap: wrap;
-    margin: -16px 0 0 -16px;
+    margin: -1.6rem 0 0 -1.6rem;
   }
 
   &-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(50% - 16px);
-    margin: 16px 0 0 16px;
-    height: 300px;
+    width: calc(50% - 1.6rem);
+    margin: 1.6rem 0 0 1.6rem;
+    height: 30rem;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    border-radius: 1.6rem;
   }
 }
 
 [data-scroll-item] {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(30px);
+  transform: translateY(3rem);
   transition: all .5s;
 
   &.focus-in {
