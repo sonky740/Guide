@@ -869,17 +869,20 @@ UI_Control.scrollView = {
     this.scrollItem = document.querySelectorAll('[data-scroll-item]');
   },
   scroll: function (item, multiple) {
-    // let oldScrollTop = document.documentElement.scrollTop;
     document.addEventListener('scroll', throttle(function () {
       let itemTop = item.getBoundingClientRect().top;
       let viewH = document.documentElement.offsetHeight;
-      // let direction = oldScrollTop - document.documentElement.scrollTop;
-      // oldScrollTop = document.documentElement.scrollTop;
 
-      if (itemTop < viewH * multiple) {
+      if (itemTop < viewH * multiple && !item.classList.contains('focus-in')) {
         item.classList.add('focus-in')
-      } else if (itemTop > viewH * multiple / multiple * 3 / 4) {
+
+        const show = new CustomEvent('scroll.show');
+        item.dispatchEvent(show);
+      } else if (itemTop > viewH * multiple / multiple * 3 / 4 && item.classList.contains('focus-in')) {
         item.classList.remove('focus-in');
+
+        const hide = new CustomEvent('scroll.hide');
+        item.dispatchEvent(hide);
       }
     }, 100))
   }

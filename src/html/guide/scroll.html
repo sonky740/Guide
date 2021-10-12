@@ -43,6 +43,19 @@
   </div>
 
   <script src="../../js/common.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      const scrollItem = document.querySelectorAll('[data-scroll-item]');
+      scrollItem.forEach(function(el) {
+        el.addEventListener('scroll.show', function() {
+          console.log(this, 'show');
+        })
+        el.addEventListener('scroll.hide', function() {
+          console.log(this, 'hide');
+        })
+      })
+    })
+  </script>
 </body>
 
 </html>
