@@ -131,8 +131,8 @@ UI_Control.modal = {
   init: function () {
     this.constructor();
 
-    this.open();
-    this.close();
+    this.show();
+    this.hide();
 
     this.transition();
   },
@@ -142,7 +142,7 @@ UI_Control.modal = {
     this.modalClose = document.querySelectorAll('[data-modal-close]');
     this.isTransitioning = false;
   },
-  open: function () {
+  show: function () {
     this.modalTrigger.forEach(function (el) {
       el.addEventListener('click', function (e) {
         e.preventDefault();
@@ -160,7 +160,7 @@ UI_Control.modal = {
       })
     })
   },
-  close: function () {
+  hide: function () {
     // 닫기 버튼
     this.modalClose.forEach(function (el) {
       const modal = el.closest('.ly-modal');
@@ -828,35 +828,6 @@ UI_Control.checkAll = {
   }
 }
 
-UI_Control.Tooltip = {
-  init: function () {
-    const items = document.querySelectorAll('[data-context] > button');
-
-    document.body.addEventListener('click', function (e) {
-      const targetClassList = e.target;
-      if (targetClassList.classList.contains('context')) return;
-
-      // 개별토글
-      Array.prototype.forEach.call(items, function (el) {
-        if (targetClassList === el) {
-          e.preventDefault();
-          targetClassList.parentNode.classList.toggle('open');
-          items.forEach(function (elem) {
-            if (elem !== e.target) elem.parentNode.classList.remove('open');
-          });
-          return;
-        }
-      })
-
-      // 전체 삭제
-      items.forEach(function (elem) {
-        if (targetClassList === elem) return;
-        elem.parentNode.classList.remove('open');
-      });
-    });
-  }
-}
-
 UI_Control.scrollView = {
   init: function () {
     this.constructor();
@@ -1077,7 +1048,6 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-counter]').length) UI_Control.counter.init();
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
-  if (document.querySelectorAll('[data-context]').length) UI_Control.Tooltip.init();
   if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
 })
 
