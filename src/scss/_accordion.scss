@@ -21,17 +21,17 @@
       content: "";
       position: absolute;
       top: 50%;
-      right: 30px;
-      width: 9px;
-      height: 2px;
+      right: 3rem;
+      width: 0.9rem;
+      height: 0.2rem;
       background: #fff;
-      border-radius: 2px;
+      border-radius: 0.2rem;
       transform: translateY(-50%) rotate(45deg);
       transition: transform .3s;
     }
 
     &:after {
-      right: 24px;
+      right: 2.4rem;
       transform: translateY(-50%) rotate(135deg);
     }
 
@@ -48,8 +48,8 @@
     &.plus {
       &:before,
       &:after {
-        width: 12px;
-        right: 25px;
+        width: 1.2rem;
+        right: 2.5rem;
         transform: translateY(-50%) rotate(90deg);
       }
 

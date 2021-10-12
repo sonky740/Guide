@@ -1,7 +1,7 @@
 .tit-main {
   position: relative;
-  font-size: 48px;
-  margin-bottom: 24px;
+  font-size: 4.8rem;
+  margin-bottom: 2.4rem;
   text-align: center;
 
   &:before {
@@ -10,7 +10,7 @@
     top: 0;
     left: 0;
     right: 0;
-    font-size: 70px;
+    font-size: 7rem;
     color: rgba(255, 255, 255, 0.15);
     z-index: -1;
     font-weight: 900;
@@ -24,20 +24,20 @@
 .tit-sub {
 
   &1 {
-    font-size: 20px;
+    font-size: 2rem;
     color: $text-type1;
-    margin-bottom: 16px;
+    margin-bottom: 1.6rem;
   }
 
   &2 {
-    font-size: 18px;
-    margin-bottom: 16px;
+    font-size: 1.8rem;
+    margin-bottom: 1.6rem;
   }
 }
 
 .txt-p {
   color: $text-default;
-  margin-bottom: 16px;
+  margin-bottom: 1.6rem;
 
   a {
     color: #fff;

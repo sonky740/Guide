@@ -1,15 +1,15 @@
 .nav-tab {
     display: flex;
-    margin: -8px 0 0 -8px;
+    margin: -0.8rem 0 0 -0.8rem;
 
     &-item {
-        margin: 8px 0 0 8px;
+        margin: 0.8rem 0 0 0.8rem;
         
         [data-tab-trigger] {
-            padding: 8px;
-            border: 1px solid #0d6efd;
+            padding: 0.8rem;
+            border: 0.1rem solid #0d6efd;
             color: #0d6efd;
-            border-radius: 8px;
+            border-radius: 0.8rem;
             transition: background .3s;
         }
     }
