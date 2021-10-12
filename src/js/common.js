@@ -155,6 +155,8 @@ UI_Control.modal = {
 
         setTimeout(function () {
           target.classList.add('fade');
+          target.setAttribute('tabindex', '0');
+          target.focus();
         }, 50)
       })
     })
@@ -200,6 +202,8 @@ UI_Control.modal = {
           const showing = new CustomEvent('modal.showing');
           this.dispatchEvent(showing);
         } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
+          document.querySelector('[data-modal-trigger="' + el.getAttribute('id') + '"]').focus();
+          el.removeAttribute('tabindex');
           const hiding = new CustomEvent('modal.hiding');
           this.dispatchEvent(hiding);
         }
