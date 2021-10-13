@@ -7,6 +7,14 @@
   <title>손기연 | 스와이퍼</title>
   <link rel="stylesheet" href="../../css/common.css">
   <link rel="stylesheet" href="../../css/swiper.css">
+
+  <style>
+    .swiper3 {
+      height: 400px;
+      background: #fff;
+      color: #222;
+    }
+  </style>
 </head>
 
 <body>
@@ -45,6 +53,21 @@
           </div>
           <div class="swiper-pagination"></div>
         </div>
+
+        <div class="swiper-container swiper3">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 10</div>
+            <div class="swiper-slide">Slide 20</div>
+            <div class="swiper-slide">Slide 30</div>
+            <div class="swiper-slide">Slide 40</div>
+            <div class="swiper-slide">Slide 50</div>
+            <div class="swiper-slide">Slide 60</div>
+            <div class="swiper-slide">Slide 70</div>
+            <div class="swiper-slide">Slide 80</div>
+            <div class="swiper-slide">Slide 90</div>
+          </div>
+          <div class="swiper-scrollbar"></div>
+        </div>
       </section>
     </main>
     <!-- ### // ### -->
@@ -71,6 +94,20 @@
           el: ".swiper-pagination",
           clickable: true,
           dynamicBullets: true,
+        }
+      });
+
+      const swiper3 = new Swiper(".swiper3", {
+        keyboard: true,
+        slidesPerView: "auto",
+        scrollbar: {
+          el: ".swiper-scrollbar",
+          draggable: true
+        },
+        on: {
+          slideChange: function() {
+            console.log(this)
+          }
         }
       });
     })
