@@ -53,25 +53,27 @@
   <script src="../../js/common.js"></script>
   <script src="../../js/library/swiper-4.5.1.min.js"></script>
   <script>
-    const swiper1 = new Swiper(".swiper1", {
-      slidesPerView: "auto",
-      initialSlide: 0,
-      resistanceRatio: 0
-    });
+    window.addEventListener('load', function () {
+      const swiper1 = new Swiper(".swiper1", {
+        slidesPerView: "auto",
+        initialSlide: 0,
+        resistanceRatio: 0
+      });
 
-    const swiper2 = new Swiper(".swiper2", {
-      keyboard: {
-        enabled: true
-      },
-      slidesPerView: "auto",
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      pagination: {
-        el: ".swiper-pagination",
-      },
-    });
+      const swiper2 = new Swiper(".swiper2", {
+        keyboard: true,
+        slidesPerView: "auto",
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+          dynamicBullets: true,
+        }
+      });
+    })
   </script>
 </body>
 
