@@ -192,6 +192,8 @@ UI_Control.modal = {
         e.target.classList.add('hiding');
         e.target.classList.remove('shown');
         e.target.classList.remove('fade');
+
+        return false;
       }
     })
   },
