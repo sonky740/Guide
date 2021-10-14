@@ -145,10 +145,13 @@ UI_Control.modal = {
     this.modalTrigger.forEach(function (el) {
       el.addEventListener('click', function (e) {
         e.preventDefault();
+        e.stopPropagation();
 
         if (UI_Control.modal.isTransitioning) {
           return false;
         }
+
+        UI_Control.modal.setTransitioning(true);
 
         const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
         target.classList.add('showing');
@@ -196,8 +199,6 @@ UI_Control.modal = {
     this.modalTarget.forEach(function (el) {
       // 이벤트 시작 시
       el.addEventListener('transitionstart', function (e) {
-        UI_Control.modal.setTransitioning(true);
-
         if (el.classList.contains('showing') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
           const showing = new CustomEvent('modal.showing');
           this.dispatchEvent(showing);
@@ -273,6 +274,8 @@ UI_Control.accr = {
       if (UI_Control.accr.isTransitioning) {
         return false;
       }
+
+      UI_Control.accr.setTransitioning(true);
 
       // 각각 열릴 때
       if (target.classList.contains('shown')) {
@@ -364,8 +367,6 @@ UI_Control.accr = {
   transition: function (target) {
     // transition start
     target.addEventListener('transitionstart', function transitionstart() {
-      UI_Control.accr.setTransitioning(true);
-
       if (this.classList.contains('showing')) {
         const showing = new CustomEvent('accr.showing');
         this.dispatchEvent(showing);
@@ -432,6 +433,7 @@ UI_Control.tab = {
   click: function (trigger, item, group, target) {
     trigger.addEventListener('click', function click(e) {
       e.preventDefault();
+      e.stopPropagation();
 
       if (UI_Control.tab.isTransitioning) {
         return false;
@@ -581,7 +583,7 @@ UI_Control.tip = {
   },
   transition: function (target) {
     target.addEventListener('transitionstart', function transitionstart() {
-      UI_Control.tip.isTransitioning = true;
+      UI_Control.tip.setTransitioning(true);
       if (target.classList.contains('showing')) {
         const showing = new CustomEvent('tip.showing');
         target.dispatchEvent(showing);
@@ -592,7 +594,7 @@ UI_Control.tip = {
       target.removeEventListener('transitionstart', transitionstart);
     })
     target.addEventListener('transitionend', function transitionend() {
-      UI_Control.tip.isTransitioning = false;
+      UI_Control.tip.setTransitioning(false);
       if (target.classList.contains('showing')) {
         target.classList.add('shown');
         target.classList.remove('showing');
