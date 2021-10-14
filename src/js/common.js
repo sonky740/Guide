@@ -467,10 +467,10 @@ UI_Control.tab = {
 
             setTimeout(function () {
               target.classList.add('fade');
-            }, 0);
+              UI_Control.tab.transition(target);
+              el.removeEventListener('transitionend', transitionend);
+            }, 50);
 
-            UI_Control.tab.transition(target);
-            el.removeEventListener('transitionend', transitionend);
           })
         }
       })
