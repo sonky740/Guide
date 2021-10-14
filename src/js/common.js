@@ -182,20 +182,22 @@ UI_Control.modal = {
     })
 
     // dim 클릭 닫기
-    document.addEventListener('click', function (e) {
-      if (e.target.classList.contains('ly-modal') && e.target.getAttribute('data-backdrop') === null) {
-        e.stopPropagation();
-        
-        if (UI_Control.modal.isTransitioning) {
+    this.modalTarget.forEach(function (modal) {
+      modal.addEventListener('click', function (e) {
+        if (e.target.getAttribute('data-backdrop') === null) {
+          e.stopPropagation();
+
+          if (UI_Control.modal.isTransitioning) {
+            return false;
+          }
+
+          e.target.classList.add('hiding');
+          e.target.classList.remove('shown');
+          e.target.classList.remove('fade');
+        } else {
           return false;
         }
-
-        e.target.classList.add('hiding');
-        e.target.classList.remove('shown');
-        e.target.classList.remove('fade');
-      } else {
-        return false;
-      }
+      })
     })
   },
   transition: function () {
