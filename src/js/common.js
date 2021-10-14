@@ -152,6 +152,7 @@ UI_Control.modal = {
         }
 
         UI_Control.modal.setTransitioning(true);
+        document.body.style.overflow = 'hidden';
 
         const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
         target.classList.add('showing');
@@ -225,6 +226,7 @@ UI_Control.modal = {
           this.dispatchEvent(shown);
         } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
           el.classList.remove('hiding');
+          document.body.style.overflow = 'auto';
 
           const hidden = new CustomEvent('modal.hidden');
           this.dispatchEvent(hidden);
