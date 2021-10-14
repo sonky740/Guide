@@ -158,8 +158,8 @@ UI_Control.modal = {
 
         setTimeout(function () {
           target.classList.add('fade');
-          target.setAttribute('tabindex', '0');
-          target.focus();
+          // target.setAttribute('tabindex', '0');
+          // target.focus();
         }, 50)
       })
     })
