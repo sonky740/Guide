@@ -33,6 +33,16 @@ function throttle(fn, ms) {
   }
 }
 
+// ios version check
+function checkVersion() {
+  var agent = window.navigator.userAgent,
+    start = agent.indexOf('OS');
+  if ((agent.indexOf('iPhone') > -1 || agent.indexOf('iPad') > -1) && start > -1) {
+    return window.Number(agent.substr(start + 3, 3).replace('_', '.'));
+  }
+  return 0;
+}
+
 UI_Control.layout = {
   init: function () {
     const url = window.location.href.split('/');
@@ -137,7 +147,7 @@ UI_Control.modal = {
   },
   constructor: function () {
     this.modalTrigger = document.querySelectorAll('[data-modal-trigger]');
-    this.modalTarget = document.querySelectorAll('.ly-modal');
+    this.modalTarget = document.querySelectorAll('[data-modal]');
     this.modalClose = document.querySelectorAll('[data-modal-close]');
     this.isTransitioning = false;
   },
@@ -168,7 +178,7 @@ UI_Control.modal = {
   hide: function () {
     // 닫기 버튼
     this.modalClose.forEach(function (el) {
-      const modal = el.closest('.ly-modal');
+      const modal = el.closest('[data-modal]');
       el.addEventListener('click', function (e) {
         e.preventDefault();
 
@@ -420,14 +430,18 @@ UI_Control.tab = {
       const group = document.querySelectorAll('[data-tab-group="' + tabNav.getAttribute('data-tab') + '"]');
       const target = document.querySelector('[data-tab-target="' + trigger.getAttribute('data-tab-trigger') + '"]')
 
-      UI_Control.tab.click(trigger, item, group, target)
-
       if (trigger.parentNode.classList.contains('on')) {
         ['fade', 'shown'].forEach(function (classNames) {
           target.classList.add(classNames);
         })
       } else {
         target.classList.add('hidden');
+      }
+
+      if (checkVersion() === 12) {
+        UI_Control.tab.clickNoAni(trigger, item, group, target);
+      } else {
+        UI_Control.tab.click(trigger, item, group, target);
       }
     })
   },
@@ -474,6 +488,39 @@ UI_Control.tab = {
             }, 50);
 
           })
+        }
+      })
+    })
+  },
+  clickNoAni: function (trigger, item, group, target) {
+    trigger.addEventListener('click', function click(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (UI_Control.tab.isTransitioning) {
+        return false;
+      }
+
+      // nav-tab
+      if (!trigger.parentNode.classList.contains('on')) {
+        item.forEach(function (el) {
+          el.classList.remove('on');
+        })
+        e.target.parentNode.classList.add('on');
+      } else {
+        return false;
+      }
+
+      // tab-target
+      group.forEach(function (el) {
+        if (el.classList.contains('shown')) {
+          el.classList.add('hidden');
+          el.classList.remove('shown');
+          el.classList.remove('fade');
+
+          target.classList.remove('hidden');
+          target.classList.add('shown');
+          target.classList.add('fade');
         }
       })
     })
@@ -1081,7 +1128,7 @@ window.addEventListener('DOMContentLoaded', function () {
   })();
 
   if (document.querySelectorAll('.guide-nav').length) UI_Control.layout.init();
-  if (document.querySelectorAll('.ly-modal').length) UI_Control.modal.init();
+  if (document.querySelectorAll('[data-modal]').length) UI_Control.modal.init();
   if (document.querySelectorAll('[data-accr]').length) UI_Control.accr.init();
   if (document.querySelectorAll('[data-tab]').length) UI_Control.tab.init();
   if (document.querySelectorAll('[data-tip-trigger]').length) UI_Control.tip.init();
