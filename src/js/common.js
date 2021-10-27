@@ -163,6 +163,7 @@ UI_Control.modal = {
 
         UI_Control.modal.setTransitioning(true);
         document.body.style.overflow = 'hidden';
+        UI_Control.bodyFixed.init("off"); // body scroll 제거
 
         const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
         target.classList.add('showing');
@@ -237,6 +238,7 @@ UI_Control.modal = {
         } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
           el.classList.remove('hiding');
           document.body.style.overflow = 'auto';
+          UI_Control.bodyFixed.init("on"); // body scroll 제거 해제
 
           const hidden = new CustomEvent('modal.hidden');
           this.dispatchEvent(hidden);
@@ -247,6 +249,26 @@ UI_Control.modal = {
   },
   setTransitioning: function (isTransitioning) {
     this.isTransitioning = isTransitioning;
+  }
+}
+
+// 바디 스크롤 제어
+let scrollTop = 0;
+UI_Control.bodyFixed = {
+  init: function (mode) {
+    this.$wrap = document.body.children[0];
+
+    if (mode == "off") { //body scroll 제거
+      scrollTop = window.scrollY || document.documentElement.scrollTop;
+      this.$wrap.style.position = "fixed";
+      this.$wrap.style.top = -scrollTop + 'px';
+      this.$wrap.style.left = 0;
+      this.$wrap.style.width = 100 + '%';
+      return scrollTop;
+    }else if (mode == "on") { //body scroll 제거 해제
+      this.$wrap.removeAttribute('style');
+      window.scrollTo({top:scrollTop});
+    }
   }
 }
 
