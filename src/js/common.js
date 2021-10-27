@@ -140,7 +140,9 @@ UI_Control.modal = {
   init: function () {
     this.constructor();
 
-    this.show();
+    this.modalTrigger.forEach(function (el) {
+      el.addEventListener('click', UI_Control.modal.show);
+    })
     this.hide();
 
     this.transition();
@@ -151,30 +153,33 @@ UI_Control.modal = {
     this.modalClose = document.querySelectorAll('[data-modal-close]');
     this.isTransitioning = false;
   },
-  show: function () {
-    this.modalTrigger.forEach(function (el) {
-      el.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+  show: function (node) {
+    if (UI_Control.modal.isTransitioning) {
+      return false;
+    }
 
-        if (UI_Control.modal.isTransitioning) {
-          return false;
-        }
-
-        UI_Control.modal.setTransitioning(true);
-        document.body.style.overflow = 'hidden';
-        UI_Control.bodyFixed.init("off"); // body scroll 제거
-
-        const target = document.querySelector('#' + el.getAttribute('data-modal-trigger'))
-        target.classList.add('showing');
-
-        setTimeout(function () {
-          target.classList.add('fade');
-          target.setAttribute('tabindex', '0');
-          target.focus();
-        }, 50)
-      })
+    setTimeout(function () {
+      UI_Control.modal.setTransitioning(true);
     })
+
+    document.body.style.overflow = 'hidden';
+    UI_Control.bodyFixed.init("off"); // body scroll 제거
+
+    let textTarget = '';
+    if (typeof node === 'object') {
+      textTarget = document.querySelector('#' + this.getAttribute('data-modal-trigger'))
+    } else {
+      textTarget = document.querySelector(node);
+    }
+
+    const target = textTarget;
+    target.classList.add('showing');
+
+    setTimeout(function () {
+      target.classList.add('fade');
+      target.setAttribute('tabindex', '0');
+      target.focus();
+    }, 50)
   },
   hide: function () {
     // 닫기 버튼
@@ -197,7 +202,7 @@ UI_Control.modal = {
     document.addEventListener('click', function (e) {
       if (e.target.classList.contains('ly-modal') && e.target.getAttribute('data-backdrop') === null) {
         e.stopPropagation();
-        
+
         if (UI_Control.modal.isTransitioning) {
           return false;
         }
@@ -265,9 +270,11 @@ UI_Control.bodyFixed = {
       this.$wrap.style.left = 0;
       this.$wrap.style.width = 100 + '%';
       return scrollTop;
-    }else if (mode == "on") { //body scroll 제거 해제
+    } else if (mode == "on") { //body scroll 제거 해제
       this.$wrap.removeAttribute('style');
-      window.scrollTo({top:scrollTop});
+      window.scrollTo({
+        top: scrollTop
+      });
     }
   }
 }
