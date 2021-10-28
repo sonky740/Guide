@@ -268,7 +268,7 @@ UI_Control.modal = {
 let scrollTop = 0;
 UI_Control.bodyFixed = {
   init: function (mode) {
-    this.$wrap = document.body.children[0];
+    this.$wrap = document.body;
 
     if (mode == "off") { //body scroll 제거
       scrollTop = window.scrollY || document.documentElement.scrollTop;
