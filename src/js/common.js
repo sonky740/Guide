@@ -143,7 +143,8 @@ UI_Control.modal = {
     this.modalTrigger.forEach(function (el) {
       el.addEventListener('click', UI_Control.modal.show);
     })
-    this.hide();
+    
+    document.addEventListener('click', UI_Control.modal.hide);
 
     this.transition();
   },
@@ -181,12 +182,18 @@ UI_Control.modal = {
       target.focus();
     }, 50)
   },
-  hide: function () {
+  hide: function (e) {
     // 닫기 버튼
-    this.modalClose.forEach(function (el) {
-      const modal = el.closest('[data-modal]');
-      el.addEventListener('click', function (e) {
-        e.preventDefault();
+    UI_Control.modal.modalClose.forEach(function (el) {
+      let textTarget = '';
+      if(typeof e === 'object') {
+        textTarget = el.closest('[data-modal]');
+      } else {
+        textTarget = document.querySelector(e);
+      }
+      const modal = textTarget;
+      if (e.target === el || typeof e === 'string' && modal.classList.contains('shown')) {
+        // e.preventDefault();
 
         if (UI_Control.modal.isTransitioning) {
           return false;
@@ -195,25 +202,25 @@ UI_Control.modal = {
         modal.classList.add('hiding');
         modal.classList.remove('shown');
         modal.classList.remove('fade');
-      })
+      }
     })
 
     // dim 클릭 닫기
-    document.addEventListener('click', function (e) {
+    if (typeof e !== 'string') {
       if (e.target.classList.contains('ly-modal') && e.target.getAttribute('data-backdrop') === null) {
         e.stopPropagation();
-
+  
         if (UI_Control.modal.isTransitioning) {
           return false;
         }
-
+  
         e.target.classList.add('hiding');
         e.target.classList.remove('shown');
         e.target.classList.remove('fade');
       } else {
         return false;
       }
-    })
+    }
   },
   transition: function () {
     this.modalTarget.forEach(function (el) {
