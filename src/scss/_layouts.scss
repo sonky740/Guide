@@ -243,16 +243,15 @@
 
         &.on {
           display: block;
-          opacity: 1;
           animation: nav .3s;
 
           @keyframes nav {
             0% {
-              left: -100%;
+              transform: translateX(-100%);
             }
 
             100% {
-              left: 0;
+              transform: translateX(0);
             }
           }
         }

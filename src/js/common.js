@@ -118,8 +118,7 @@ UI_Control.layout = {
     menuClose.addEventListener('click', function () {
       document.body.removeAttribute('style');
       if (this.classList.contains('trigger')) {
-        menuTarget.style.left = '-100%';
-        menuTarget.style.opacity = 0;
+        menuTarget.style.transform = 'translateX(-100%)';
         menuTrigger.classList.remove('on');
       }
     })
