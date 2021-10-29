@@ -118,13 +118,14 @@ UI_Control.layout = {
     menuClose.addEventListener('click', function () {
       document.body.removeAttribute('style');
       if (this.classList.contains('trigger')) {
-        menuTrigger.classList.remove('on');
         menuTarget.style.left = '-100%';
+        menuTrigger.classList.remove('on');
       }
     })
 
     menuTarget.addEventListener('transitionend', function (e) {
       if (e.target === menuTarget) {
+        alert('a')
         menuTarget.removeAttribute('style');
         menuTarget.classList.remove('on');
         menuTrigger.classList.add('trigger');
