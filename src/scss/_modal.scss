@@ -38,14 +38,14 @@
         display: flex;
         flex-direction: column;
         position: fixed;
-        top: calc(50% + 2rem);
+        top: 50%;
         left: 50%;
         width: 100%;
         max-width: 76.8rem;
         min-height: 30rem;
         background: #fff;
         opacity: 0;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, calc(-50% + 2rem));
         transition: all .3s;
     }
 
@@ -118,7 +118,7 @@
         }
 
         .ly-modal-wrap {
-            top: 50%;
+            transform: translate(-50%, -50%);
             opacity: 1;
         }
     }
