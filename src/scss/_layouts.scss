@@ -118,7 +118,7 @@
       flex: none;
       width: 22rem;
       margin-right: 1.6rem;
-      transition: left .3s;
+      transition: all .3s;
 
       &-title {
         display: block;
@@ -243,6 +243,7 @@
 
         &.on {
           display: block;
+          opacity: 1;
           animation: nav .3s;
 
           @keyframes nav {

@@ -119,13 +119,13 @@ UI_Control.layout = {
       document.body.removeAttribute('style');
       if (this.classList.contains('trigger')) {
         menuTarget.style.left = '-100%';
+        menuTarget.style.opacity = 0;
         menuTrigger.classList.remove('on');
       }
     })
 
     menuTarget.addEventListener('transitionend', function (e) {
       if (e.target === menuTarget) {
-        alert('a')
         menuTarget.removeAttribute('style');
         menuTarget.classList.remove('on');
         menuTrigger.classList.add('trigger');
