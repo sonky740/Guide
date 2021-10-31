@@ -124,7 +124,7 @@ UI_Control.layout = {
     })
 
     menuTarget.addEventListener('transitionend', function (e) {
-      if (e.target === menuTarget) {
+      if (e.target === menuTarget && menuClose.classList.contains('trigger')) {
         menuTarget.removeAttribute('style');
         menuTarget.classList.remove('on');
         menuTrigger.classList.add('trigger');

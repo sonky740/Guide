@@ -228,13 +228,14 @@
 
     @media screen and (max-width: 640px) {
       .guide-nav {
-        display: none;
+        visibility: hidden;
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
         background: #3e3e3e;
+        transform: translateX(-100%);
         z-index: 10;
 
         &-title {
@@ -242,18 +243,19 @@
         }
 
         &.on {
-          display: block;
-          animation: nav .3s;
+          visibility: visible;
+          transform: translateX(0);
+          // animation: nav .3s;
 
-          @keyframes nav {
-            0% {
-              transform: translateX(-100%);
-            }
+          // @keyframes nav {
+          //   0% {
+          //     transform: translateX(-100%);
+          //   }
 
-            100% {
-              transform: translateX(0);
-            }
-          }
+          //   100% {
+          //     transform: translateX(0);
+          //   }
+          // }
         }
       }
     }
