@@ -101,36 +101,28 @@ UI_Control.layout = {
     menuTrigger.classList.add('trigger');
 
     menuTrigger.addEventListener('click', function () {
-      document.body.style.overflow = 'hidden';
       if (this.classList.contains('trigger')) {
+        document.body.style.overflow = 'hidden';
+        this.classList.remove('trigger');
         this.classList.add('on');
         menuTarget.classList.add('on');
-      }
-      this.classList.remove('trigger');
-    })
-
-    menuTrigger.addEventListener('transitionend', function () {
-      if (menuTarget.classList.contains('on')) {
-        menuClose.classList.add('trigger');
       }
     })
 
     menuClose.addEventListener('click', function () {
-      document.body.removeAttribute('style');
       if (this.classList.contains('trigger')) {
-        menuTarget.style.transform = 'translateX(-100%)';
+        this.classList.remove('trigger');
+        menuTarget.classList.remove('on');
+        menuTrigger.classList.add('trigger');
         menuTrigger.classList.remove('on');
       }
     })
 
     menuTarget.addEventListener('transitionend', function (e) {
-      if (e.target === menuTarget) {
-        menuTarget.removeAttribute('style');
-        menuTarget.classList.remove('on');
-        menuTrigger.classList.add('trigger');
-        menuClose.classList.remove('trigger');
-      } else {
-        return false;
+      if (e.propertyName === 'transform' && !menuTrigger.classList.contains('trigger')) {
+        menuClose.classList.add('trigger');
+      } else if (e.propertyName === 'transform' && menuTrigger.classList.contains('trigger')) {
+        document.body.removeAttribute('style');
       }
     })
   }
@@ -186,7 +178,7 @@ UI_Control.modal = {
     // 닫기 버튼
     UI_Control.modal.modalClose.forEach(function (el) {
       let textTarget = '';
-      if(typeof e === 'object') {
+      if (typeof e === 'object') {
         textTarget = el.closest('[data-modal]');
       } else {
         textTarget = document.querySelector(e);
@@ -209,11 +201,11 @@ UI_Control.modal = {
     if (typeof e !== 'string') {
       if (e.target.classList.contains('ly-modal') && e.target.getAttribute('data-backdrop') === null) {
         e.stopPropagation();
-  
+
         if (UI_Control.modal.isTransitioning) {
           return false;
         }
-  
+
         e.target.classList.add('hiding');
         e.target.classList.remove('shown');
         e.target.classList.remove('fade');
