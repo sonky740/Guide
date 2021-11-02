@@ -26,11 +26,11 @@ function throttle(fn, ms) {
   return function () {
     if (!throttled) {
       throttled = setTimeout(function () {
-        throttled = null
-        fn.apply(this, arguments)
-      }, ms)
+        throttled = null;
+        fn.apply(this, arguments);
+      }, ms);
     }
-  }
+  };
 }
 
 // ios version check
@@ -50,22 +50,22 @@ UI_Control.layout = {
 
     // lnb
     const lnbParent = document.querySelector('.guide-nav');
-    let lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>'
-    lnb += '<ul>'
-    lnb += '  <li><a href="/Guide/src/html/guide/modal.html">modal</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/tooltip.html">tooltip</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/scroll.html">scroll</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/swiper.html">swiper</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/form.html">form</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>'
-    lnb += '  <li><a href="/Guide/src/html/guide/tab_jquery.html">tab_jquery</a></li>'
-    lnb += '</ul>'
+    let lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>';
+    lnb += '<ul>';
+    lnb += '  <li><a href="/Guide/src/html/guide/modal.html">modal</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/accordion.html">accordion</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/tab.html">tab</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/tooltip.html">tooltip</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/scroll.html">scroll</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/swiper.html">swiper</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/form.html">form</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/accordion_jquery.html">accordion_jquery</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/tooltip_jquery.html">tooltip_jquery</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/tab_jquery.html">tab_jquery</a></li>';
+    lnb += '</ul>';
     lnbParent.innerHTML = lnb;
 
     // lnb === url ? active : null
@@ -75,22 +75,22 @@ UI_Control.layout = {
       const targetLast = target[target.length - 1].split('.html')[0];
 
       if (urlLast === targetLast) el.classList.add('active');
-    })
+    });
 
     // header 
     const headerParent = document.querySelector('.header');
-    let header = '<div class="header-wrap">'
-    header += '<h1>'
-    header += '  <a href="/Guide/src/html/" title="홈으로">'
-    header += '    <svg width="100" height="40" viewBox="0 0 100 45">'
-    header += '      <text x="0" y="85%">SONKY</text>'
-    header += '    </svg>'
-    header += '  </a>'
-    header += '</h1>'
-    header += '<button type="button" class="header-bar trigger" title="Guide Menu">'
-    header += '  <i aria-hidden="true"></i>'
-    header += '</button>'
-    header += '</div>'
+    let header = '<div class="header-wrap">';
+    header += '<h1>';
+    header += '  <a href="/Guide/src/html/" title="홈으로">';
+    header += '    <svg width="100" height="40" viewBox="0 0 100 45">';
+    header += '      <text x="0" y="85%">SONKY</text>';
+    header += '    </svg>';
+    header += '  </a>';
+    header += '</h1>';
+    header += '<button type="button" class="header-bar trigger" title="Guide Menu">';
+    header += '  <i aria-hidden="true"></i>';
+    header += '</button>';
+    header += '</div>';
     headerParent.innerHTML = header;
 
     // header button
@@ -107,7 +107,7 @@ UI_Control.layout = {
         this.classList.add('on');
         menuTarget.classList.add('on');
       }
-    })
+    });
 
     menuClose.addEventListener('click', function () {
       if (this.classList.contains('trigger')) {
@@ -116,7 +116,7 @@ UI_Control.layout = {
         menuTrigger.classList.add('trigger');
         menuTrigger.classList.remove('on');
       }
-    })
+    });
 
     menuTarget.addEventListener('transitionend', function (e) {
       if (e.propertyName === 'transform' && !menuTrigger.classList.contains('trigger')) {
@@ -124,9 +124,9 @@ UI_Control.layout = {
       } else if (e.propertyName === 'transform' && menuTrigger.classList.contains('trigger')) {
         document.body.removeAttribute('style');
       }
-    })
+    });
   }
-}
+};
 
 UI_Control.modal = {
   init: function () {
@@ -134,8 +134,8 @@ UI_Control.modal = {
 
     this.modalTrigger.forEach(function (el) {
       el.addEventListener('click', UI_Control.modal.show);
-    })
-    
+    });
+
     document.addEventListener('click', UI_Control.modal.hide);
 
     this.transition();
@@ -153,14 +153,14 @@ UI_Control.modal = {
 
     setTimeout(function () {
       UI_Control.modal.setTransitioning(true);
-    })
+    });
 
     document.body.style.overflow = 'hidden';
-    UI_Control.bodyFixed.init("off"); // body scroll 제거
+    UI_Control.bodyFixed.init('off'); // body scroll 제거
 
     let textTarget = '';
     if (typeof node === 'object') {
-      textTarget = document.querySelector('#' + this.getAttribute('data-modal-trigger'))
+      textTarget = document.querySelector('#' + this.getAttribute('data-modal-trigger'));
     } else {
       textTarget = document.querySelector(node);
     }
@@ -172,7 +172,7 @@ UI_Control.modal = {
       target.classList.add('fade');
       target.setAttribute('tabindex', '0');
       target.focus();
-    }, 50)
+    }, 50);
   },
   hide: function (e) {
     // 닫기 버튼
@@ -195,7 +195,7 @@ UI_Control.modal = {
         modal.classList.remove('shown');
         modal.classList.remove('fade');
       }
-    })
+    });
 
     // dim 클릭 닫기
     if (typeof e !== 'string') {
@@ -228,7 +228,7 @@ UI_Control.modal = {
           this.dispatchEvent(hiding);
         }
         return false;
-      })
+      });
       // 이벤트 끝날 시
       el.addEventListener('transitionend', function (e) {
         UI_Control.modal.setTransitioning(false);
@@ -242,19 +242,19 @@ UI_Control.modal = {
         } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
           el.classList.remove('hiding');
           document.body.style.overflow = 'auto';
-          UI_Control.bodyFixed.init("on"); // body scroll 제거 해제
+          UI_Control.bodyFixed.init('on'); // body scroll 제거 해제
 
           const hidden = new CustomEvent('modal.hidden');
           this.dispatchEvent(hidden);
         }
         return false;
-      })
-    })
+      });
+    });
   },
   setTransitioning: function (isTransitioning) {
     this.isTransitioning = isTransitioning;
   }
-}
+};
 
 // 바디 스크롤 제어
 let scrollTop = 0;
@@ -262,21 +262,21 @@ UI_Control.bodyFixed = {
   init: function (mode) {
     this.$wrap = document.body;
 
-    if (mode == "off") { //body scroll 제거
+    if (mode == 'off') { //body scroll 제거
       scrollTop = window.scrollY || document.documentElement.scrollTop;
-      this.$wrap.style.position = "fixed";
+      this.$wrap.style.position = 'fixed';
       this.$wrap.style.top = -scrollTop + 'px';
       this.$wrap.style.left = 0;
       this.$wrap.style.width = 100 + '%';
       return scrollTop;
-    } else if (mode == "on") { //body scroll 제거 해제
+    } else if (mode == 'on') { //body scroll 제거 해제
       this.$wrap.removeAttribute('style');
       window.scrollTo({
         top: scrollTop
       });
     }
   }
-}
+};
 
 UI_Control.accr = {
   init: function () {
@@ -303,7 +303,7 @@ UI_Control.accr = {
       } else {
         UI_Control.accr.clickNoAni(trigger, accr, item, target, ir);
       }
-    })
+    });
   },
   constructor: function () {
     this.accrTrigger = document.querySelectorAll('[data-accr-trigger]');
@@ -349,20 +349,20 @@ UI_Control.accr = {
               targetAll.classList.add('hiding');
               targetAll.classList.remove('shown');
 
-              targetAll.removeAttribute('style')
+              targetAll.removeAttribute('style');
               targetAll.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
               targetAll.closest('[data-accr-item]').querySelector('[data-accr-trigger]').querySelector('.blind').innerHTML = '펼치기';
 
               UI_Control.accr.transition(targetAll);
-            }, 0)
+            }, 0);
           }
-        })
+        });
       }
 
       trigger.classList.toggle('on');
 
       UI_Control.accr.transition(target);
-    })
+    });
   },
   clickNoAni: function (trigger, accr, item, target, ir) {
     trigger.addEventListener('click', function click(e) {
@@ -372,7 +372,7 @@ UI_Control.accr = {
       if (target.classList.contains('shown')) {
         target.classList.remove('shown');
         target.classList.add('hidden');
-        ir.innerHTML = '펼치기'
+        ir.innerHTML = '펼치기';
 
         const hidden = new CustomEvent('accr.hidden');
         target.dispatchEvent(hidden);
@@ -388,24 +388,24 @@ UI_Control.accr = {
               const hidden = new CustomEvent('accr.hidden');
               targetAll.dispatchEvent(hidden);
             }
-          })
+          });
           accr.querySelectorAll('[data-accr-item]').forEach(function (items) {
             items.classList.remove('on');
             items.querySelector('[data-accr-trigger]').classList.remove('on');
             items.querySelector('.blind').innerHTML = '펼치기';
-          })
+          });
         }
         // 각각 펼쳐질 때
         target.classList.remove('hidden');
         target.classList.add('shown');
-        ir.innerHTML = '접기'
+        ir.innerHTML = '접기';
 
         const shown = new CustomEvent('accr.shown');
         target.dispatchEvent(shown);
       }
       item.classList.toggle('on');
       trigger.classList.toggle('on');
-    })
+    });
   },
   transition: function (target) {
     // transition start
@@ -419,7 +419,7 @@ UI_Control.accr = {
       }
 
       target.removeEventListener('transitionstart', transitionstart);
-    })
+    });
     // transition end
     target.addEventListener('transitionend', function transitionend() {
       UI_Control.accr.setTransitioning(false);
@@ -441,12 +441,12 @@ UI_Control.accr = {
       }
 
       target.removeEventListener('transitionend', transitionend);
-    })
+    });
   },
   setTransitioning: function (isTransitioning) {
     this.isTransitioning = isTransitioning;
   }
-}
+};
 
 UI_Control.tab = {
   init: function () {
@@ -456,12 +456,12 @@ UI_Control.tab = {
       const tabNav = trigger.closest('[data-tab]');
       const item = tabNav.querySelectorAll('[data-tab-item]');
       const group = document.querySelectorAll('[data-tab-group="' + tabNav.getAttribute('data-tab') + '"]');
-      const target = document.querySelector('[data-tab-target="' + trigger.getAttribute('data-tab-trigger') + '"]')
+      const target = document.querySelector('[data-tab-target="' + trigger.getAttribute('data-tab-trigger') + '"]');
 
       if (trigger.parentNode.classList.contains('on')) {
         ['fade', 'shown'].forEach(function (classNames) {
           target.classList.add(classNames);
-        })
+        });
       } else {
         target.classList.add('hidden');
       }
@@ -471,7 +471,7 @@ UI_Control.tab = {
       } else {
         UI_Control.tab.click(trigger, item, group, target);
       }
-    })
+    });
   },
   constructor: function () {
     this.tabTrigger = document.querySelectorAll('[data-tab-trigger]');
@@ -490,7 +490,7 @@ UI_Control.tab = {
       if (!trigger.parentNode.classList.contains('on')) {
         item.forEach(function (el) {
           el.classList.remove('on');
-        })
+        });
         e.target.parentNode.classList.add('on');
       } else {
         return false;
@@ -515,10 +515,10 @@ UI_Control.tab = {
               el.removeEventListener('transitionend', transitionend);
             }, 50);
 
-          })
+          });
         }
-      })
-    })
+      });
+    });
   },
   clickNoAni: function (trigger, item, group, target) {
     trigger.addEventListener('click', function click(e) {
@@ -533,7 +533,7 @@ UI_Control.tab = {
       if (!trigger.parentNode.classList.contains('on')) {
         item.forEach(function (el) {
           el.classList.remove('on');
-        })
+        });
         e.target.parentNode.classList.add('on');
       } else {
         return false;
@@ -550,8 +550,8 @@ UI_Control.tab = {
           target.classList.add('shown');
           target.classList.add('fade');
         }
-      })
-    })
+      });
+    });
   },
   transition: function (target) {
     // transition start
@@ -566,7 +566,7 @@ UI_Control.tab = {
         this.dispatchEvent(hiding);
       }
       target.removeEventListener('transitionstart', transitionstart);
-    })
+    });
     // transition end
     target.addEventListener('transitionend', function transitionend() {
       UI_Control.tab.setTransitioning(false);
@@ -585,12 +585,12 @@ UI_Control.tab = {
         this.dispatchEvent(hidden);
       }
       target.removeEventListener('transitionend', transitionend);
-    })
+    });
   },
   setTransitioning: function (isTransitioning) {
     this.isTransitioning = isTransitioning;
   }
-}
+};
 
 UI_Control.tip = {
   init: function () {
@@ -605,7 +605,7 @@ UI_Control.tip = {
 
       UI_Control.tip.show(trigger, target);
       UI_Control.tip.hide(trigger, target, close);
-    })
+    });
   },
   constructor: function () {
     this.tipTrigger = document.querySelectorAll('[data-tip-trigger]');
@@ -625,17 +625,17 @@ UI_Control.tip = {
 
         setTimeout(function () {
           target.classList.add('fade');
-        }, 50)
+        }, 50);
       } else {
         return false;
       }
 
       UI_Control.tip.transition(target);
-    })
+    });
   },
   hide: function (trigger, target, close) {
     document.addEventListener('click', function (e) {
-      const cTarget = close.closest('[data-tip-target]')
+      const cTarget = close.closest('[data-tip-target]');
 
       if (target.classList.contains('shown')) {
 
@@ -651,7 +651,7 @@ UI_Control.tip = {
           return false;
         }
 
-        if (target.closest('[data-tip]').getAttribute('data-tip') === "backdrop" && e.target !== target && e.target !== trigger) {
+        if (target.closest('[data-tip]').getAttribute('data-tip') === 'backdrop' && e.target !== target && e.target !== trigger) {
           target.classList.add('hiding');
           target.classList.remove('shown');
           target.classList.remove('fade');
@@ -659,7 +659,7 @@ UI_Control.tip = {
           return false;
         }
       }
-    })
+    });
   },
   transition: function (target) {
     target.addEventListener('transitionstart', function transitionstart() {
@@ -672,7 +672,7 @@ UI_Control.tip = {
         target.dispatchEvent(hiding);
       }
       target.removeEventListener('transitionstart', transitionstart);
-    })
+    });
     target.addEventListener('transitionend', function transitionend() {
       UI_Control.tip.setTransitioning(false);
       if (target.classList.contains('showing')) {
@@ -689,12 +689,12 @@ UI_Control.tip = {
         target.dispatchEvent(hidden);
       }
       target.removeEventListener('transitionend', transitionend);
-    })
+    });
   },
   setTransitioning: function (isTransitioning) {
     this.isTransitioning = isTransitioning;
   }
-}
+};
 
 UI_Control.counter = {
   init: function () {
@@ -725,12 +725,12 @@ UI_Control.counter = {
       };
 
       window.requestAnimationFrame(step);
-    })
+    });
   },
   constructor: function () {
     this.counter = document.querySelectorAll('[data-counter]');
   }
-}
+};
 
 UI_Control.range = {
   init: function () {
@@ -758,17 +758,17 @@ UI_Control.range = {
       // input event
       rangeTarget.addEventListener('input', function () {
         UI_Control.range.input(rangeThis, rangeTarget, rangeLabel, rangeFill);
-      })
+      });
 
       // IE 얼럿
-      if ((navigator.appName == 'Netscape' && navigator.userAgent.toLowerCase().indexOf('trident') != -1) || (navigator.userAgent.toLowerCase().indexOf("msie") != -1)) {
-        alert('IE에서는 작동하지 않습니다. ')
+      if ((navigator.appName == 'Netscape' && navigator.userAgent.toLowerCase().indexOf('trident') != -1) || (navigator.userAgent.toLowerCase().indexOf('msie') != -1)) {
+        alert('IE에서는 작동하지 않습니다. ');
         return false;
       }
       // else {
       //   UI_Control.range.polyfill(rangeTarget);
       // }
-    })
+    });
   },
   constructor: function () {
     this.range = document.querySelectorAll('[data-range]');
@@ -869,7 +869,7 @@ UI_Control.range = {
   //     });
   //   }
   // }
-}
+};
 
 UI_Control.checkAll = {
   init: function () {
@@ -892,8 +892,8 @@ UI_Control.checkAll = {
         }
 
         UI_Control.checkAll.click(elem, master, bullet, child, i);
-      })
-    })
+      });
+    });
   },
   constructor: function () {
     this.all = document.querySelectorAll('input[data-checkbox]');
@@ -915,7 +915,7 @@ UI_Control.checkAll = {
           master.dispatchEvent(checkC);
         }
       }
-    })
+    });
 
     // 요소 클릭, 해제
     child.addEventListener('click', function () {
@@ -927,9 +927,9 @@ UI_Control.checkAll = {
         master.checked = false;
         master.dispatchEvent(checkC);
       }
-    })
+    });
   }
-}
+};
 
 UI_Control.scrollView = {
   init: function () {
@@ -945,7 +945,7 @@ UI_Control.scrollView = {
       }
 
       UI_Control.scrollView.scroll(item, multiple);
-    })
+    });
   },
   constructor: function () {
     this.scrollItem = document.querySelectorAll('[data-scroll-item]');
@@ -956,7 +956,7 @@ UI_Control.scrollView = {
       let viewH = document.documentElement.offsetHeight;
 
       if (itemTop < viewH * multiple && !item.classList.contains('focus-in')) {
-        item.classList.add('focus-in')
+        item.classList.add('focus-in');
 
         const show = new CustomEvent('scroll.show');
         item.dispatchEvent(show);
@@ -966,9 +966,9 @@ UI_Control.scrollView = {
         const hide = new CustomEvent('scroll.hide');
         item.dispatchEvent(hide);
       }
-    }, 100))
+    }, 100));
   }
-}
+};
 
 UI_Control.touchCheck = {
   init: function () {
@@ -1106,7 +1106,7 @@ UI_Control.touchCheck = {
       return defaultValue;
     }
   }
-}
+};
 
 window.addEventListener('DOMContentLoaded', function () {
   // 구글 애널리틱스
@@ -1114,7 +1114,7 @@ window.addEventListener('DOMContentLoaded', function () {
   script.setAttribute('async', '');
   script.src = 'https://www.googletagmanager.com/gtag/js?id=G-C8DGM3YSKG';
   const scriptSource = document.createElement('script');
-  scriptSource.innerText = "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-C8DGM3YSKG');"
+  scriptSource.innerText = 'window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "G-C8DGM3YSKG");';
   document.head.appendChild(script);
   document.head.appendChild(scriptSource);
 
@@ -1139,7 +1139,7 @@ window.addEventListener('DOMContentLoaded', function () {
   }
   // IE CustomEvent 대응
   (function () {
-    if (typeof window.CustomEvent === "function") return false;
+    if (typeof window.CustomEvent === 'function') return false;
 
     function CustomEvent(event, params) {
       params = params || {
@@ -1164,8 +1164,8 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
   if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
-})
+});
 
 window.addEventListener('resize', function () {
   if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
-})
+});
