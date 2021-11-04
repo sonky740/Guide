@@ -734,6 +734,17 @@ UI_Control.counter = {
 
 UI_Control.range = {
   init: function () {
+
+    // IE 얼럿
+    if (window.navigator.userAgent.match(/MSIE|Internet Explorer|Trident/i)) {
+      alert('IE에서는 작동하지 않습니다.');
+      setTimeout(function () {
+        history.back();
+      });
+      location.href = 'microsoft-edge:https://sonky740.github.io/Guide/src/html/guide/range.html';
+      return false;
+    }
+
     this.constructor();
 
     this.range.forEach(function (rangeThis) {
@@ -760,11 +771,6 @@ UI_Control.range = {
         UI_Control.range.input(rangeThis, rangeTarget, rangeLabel, rangeFill);
       });
 
-      // IE 얼럿
-      if ((navigator.appName == 'Netscape' && navigator.userAgent.toLowerCase().indexOf('trident') != -1) || (navigator.userAgent.toLowerCase().indexOf('msie') != -1)) {
-        alert('IE에서는 작동하지 않습니다. ');
-        return false;
-      }
       // else {
       //   UI_Control.range.polyfill(rangeTarget);
       // }
