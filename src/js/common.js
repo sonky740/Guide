@@ -59,6 +59,7 @@ UI_Control.layout = {
     lnb += '  <li><a href="/Guide/src/html/guide/range.html">range</a></li>';
     lnb += '  <li><a href="/Guide/src/html/guide/counter.html">counter</a></li>';
     lnb += '  <li><a href="/Guide/src/html/guide/scroll.html">scroll</a></li>';
+    lnb += '  <li><a href="/Guide/src/html/guide/parallax.html">parallax</a></li>';
     lnb += '  <li><a href="/Guide/src/html/guide/swiper.html">swiper</a></li>';
     lnb += '  <li><a href="/Guide/src/html/guide/form.html">form</a></li>';
     lnb += '  <li><a href="/Guide/src/html/guide/pagination.html">pagination</a></li>';
@@ -976,6 +977,30 @@ UI_Control.scrollView = {
   }
 };
 
+UI_Control.parallax = {
+  init: function () {
+    const parallaxItem = document.querySelectorAll('[data-parallax]');
+
+    Array.prototype.forEach.call(parallaxItem, (el) => {
+      const speed = el.dataset.parallaxSpeed;
+      
+      document.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        // 전체 문서의 높이
+        const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        // 현재 보이는 브라우저의 높이
+        const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        // 눈에 보이지 않는 남은 높이
+        const contentHeight = scrollHeight - clientHeight;
+
+        const percent = (scrollTop / contentHeight) * 100;
+        
+        el.style.transform = 'translateY(-' + speed * percent * 0.25 + 'px)';
+      });
+    });
+  }
+};
+
 UI_Control.touchCheck = {
   init: function () {
 
@@ -1170,6 +1195,7 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
   if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
+  if (document.querySelectorAll('[data-parallax]').length) UI_Control.parallax.init();
 });
 
 window.addEventListener('resize', function () {
