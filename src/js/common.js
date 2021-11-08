@@ -979,24 +979,30 @@ UI_Control.scrollView = {
 
 UI_Control.parallax = {
   init: function () {
-    const parallaxItem = document.querySelectorAll('[data-parallax]');
+    this.constructor();
 
-    Array.prototype.forEach.call(parallaxItem, (el) => {
+    this.parallaxItem.forEach(function (el) {
       const speed = el.dataset.parallaxSpeed;
-      
-      document.addEventListener('scroll', () => {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        // 전체 문서의 높이
-        const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-        // 현재 보이는 브라우저의 높이
-        const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
-        // 눈에 보이지 않는 남은 높이
-        const contentHeight = scrollHeight - clientHeight;
 
-        const percent = (scrollTop / contentHeight) * 100;
-        
-        el.style.transform = 'translateY(-' + speed * percent * 0.25 + 'px)';
-      });
+      UI_Control.parallax.scroll(el, speed);
+    });
+  },
+  constructor: function () {
+    this.parallaxItem = document.querySelectorAll('[data-parallax]');
+  },
+  scroll: function (el, speed) {
+    document.addEventListener('scroll', function () {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      // 전체 문서의 높이
+      const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      // 현재 보이는 브라우저의 높이
+      const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      // 눈에 보이지 않는 남은 높이
+      const contentHeight = scrollHeight - clientHeight;
+
+      const percent = (scrollTop / contentHeight) * 100;
+
+      el.style.transform = 'translateY(-' + speed * percent * 0.25 + 'px)';
     });
   }
 };
