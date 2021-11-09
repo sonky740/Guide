@@ -50,22 +50,23 @@ UI_Control.layout = {
 
     // lnb
     const lnbParent = document.querySelector('.guide-nav');
+    const root = urlLast === '' ? 'guide/' : '';
     let lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>';
     lnb += '<ul>';
-    lnb += '  <li><a href="modal.html">modal</a></li>';
-    lnb += '  <li><a href="accordion.html">accordion</a></li>';
-    lnb += '  <li><a href="tab.html">tab</a></li>';
-    lnb += '  <li><a href="tooltip.html">tooltip</a></li>';
-    lnb += '  <li><a href="range.html">range</a></li>';
-    lnb += '  <li><a href="counter.html">counter</a></li>';
-    lnb += '  <li><a href="scroll.html">scroll</a></li>';
-    lnb += '  <li><a href="parallax.html">parallax</a></li>';
-    lnb += '  <li><a href="swiper.html">swiper</a></li>';
-    lnb += '  <li><a href="form.html">form</a></li>';
-    lnb += '  <li><a href="pagination.html">pagination</a></li>';
-    lnb += '  <li><a href="accordion_jquery.html">accordion_jquery</a></li>';
-    lnb += '  <li><a href="tooltip_jquery.html">tooltip_jquery</a></li>';
-    lnb += '  <li><a href="tab_jquery.html">tab_jquery</a></li>';
+    lnb += '  <li><a href="' + root +  'modal.html">modal</a></li>';
+    lnb += '  <li><a href="' + root +  'accordion.html">accordion</a></li>';
+    lnb += '  <li><a href="' + root +  'tab.html">tab</a></li>';
+    lnb += '  <li><a href="' + root +  'tooltip.html">tooltip</a></li>';
+    lnb += '  <li><a href="' + root +  'range.html">range</a></li>';
+    lnb += '  <li><a href="' + root +  'counter.html">counter</a></li>';
+    lnb += '  <li><a href="' + root +  'scroll.html">scroll</a></li>';
+    lnb += '  <li><a href="' + root +  'parallax.html">parallax</a></li>';
+    lnb += '  <li><a href="' + root +  'swiper.html">swiper</a></li>';
+    lnb += '  <li><a href="' + root +  'form.html">form</a></li>';
+    lnb += '  <li><a href="' + root +  'pagination.html">pagination</a></li>';
+    lnb += '  <li><a href="' + root +  'accordion_jquery.html">accordion_jquery</a></li>';
+    lnb += '  <li><a href="' + root +  'tooltip_jquery.html">tooltip_jquery</a></li>';
+    lnb += '  <li><a href="' + root +  'tab_jquery.html">tab_jquery</a></li>';
     lnb += '</ul>';
     lnbParent.innerHTML = lnb;
 
@@ -82,7 +83,7 @@ UI_Control.layout = {
     const headerParent = document.querySelector('.header');
     let header = '<div class="header-wrap">';
     header += '<h1>';
-    header += '  <a href="/Guide/src/html/" title="홈으로">';
+    header += '  <a href="/Guide/" title="홈으로">';
     header += '    <svg width="100" height="40" viewBox="0 0 100 45">';
     header += '      <text x="0" y="85%">SONKY</text>';
     header += '    </svg>';
