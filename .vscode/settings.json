@@ -1,15 +1,12 @@
 {
-  "liveSassCompile.settings.excludeList": [
-    "**/node_modules/**",
-    ".vscode/**",
-    "**/proposal/**"
-  ],
   "liveSassCompile.settings.formats": [
-      {
-          "format": "expanded",
-          "extensionName": ".css",
-          "savePath": "~/../css"
-      }
+    {
+      "format": "compressed",
+      "extensionName": ".min.css",
+      "savePath": "~/../css"
+    }
   ],
-  "liveServer.settings.port": 5501,
+  "htmlhint.options": {
+    "spec-char-escape": false // html 내 for문 ">" 이거때문에 false 처리
+  }
 }

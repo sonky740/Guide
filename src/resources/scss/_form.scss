@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // 라디오
 .label-btn1 {
   position: relative;
@@ -143,7 +145,7 @@
           @for $ii from 2 to 5 {
             @if $ii<=$i {
               ~input:nth-of-type(#{$ii}) {
-                left: #{100 + 100 / $i * ($ii - $i - 1%)};
+                left: #{100 + math.div(100, $i) * ($ii - $i - 1%)};
               }
             }
           }

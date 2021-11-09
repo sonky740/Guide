@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>손기연 | 레인지</title>
+    <link rel="stylesheet" href="../../resources/css/common.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- ### 헤더 ### -->
+        <header class="header"></header>
+
+        <!-- ### 메인 ### -->
+        <main class="container">
+            <!-- 가이드 -->
+            <nav class="guide-nav"></nav>
+            <!-- 포폴 -->
+            <section class="main-section">
+                <h3 class="tit-main" data-text="Range">Range</h3>
+
+                <div class="range min-no" data-range>
+                    <div class="range-area">
+                        <!-- 자동입력 -->
+                        <div class="range-label" title="현재 선택한 예상 주행거리"></div>
+                        <div class="range-wrap">
+                            <!-- value, min, max, step, data-unit만 설정해두면 됩니다. -->
+                            <input type="range" value="20000" min="0" max="80000" step="10000" data-unit=" km">
+                        </div>
+                        <div class="range-bar" aria-hidden="true">
+                            <div class="range-fill"></div>
+                        </div>
+                    </div>
+                    <div class="range-bottom" aria-hidden="true">
+                        <span>0만</span>
+                        <span>2만</span>
+                        <span>4만</span>
+                        <span>6만</span>
+                        <span>8만</span>
+                    </div>
+                </div>
+
+                <div class="range type1" data-range>
+                    <!-- 급속/완속 -->
+                    <ul class="text-pipe">
+                        <li>
+                            <span class="sub-text">급속</span>
+                            <!-- 자동입력 -->
+                            <strong class="main-text" data-left>50%</strong>
+                        </li>
+                        <li>
+                            <span class="sub-text">완속</span>
+                            <!-- 자동입력 -->
+                            <strong class="main-text" data-right>50%</strong>
+                        </li>
+                    </ul>
+                    <!-- 급속/완속 충전 비율 선택 -->
+                    <div class="range-area">
+                        <div class="range-wrap">
+                            <!-- value, min, max, step, data-unit만 설정해두면 됩니다. -->
+                            <input type="range" value="50" min="0" max="100" step="10" data-unit="%">
+                        </div>
+                        <div class="range-bar" aria-hidden="true">
+                            <div class="range-fill"></div>
+                            <!-- 간격 표시를 위함 -->
+                            <ul class="range-fill-spacing"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="codepen" data-height="300" data-default-tab="html,result" data-slug-hash="JjJjvmP" data-editable="true" data-user="Sonky" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                    <span>See the Pen <a href="https://codepen.io/Sonky/pen/JjJjvmP">
+                            range</a> by Sonky (<a href="https://codepen.io/Sonky">@Sonky</a>)
+                        on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+            </section>
+        </main>
+        <!-- ### // ### -->
+    </div>
+
+    <script src="../../resources/js/common.js"></script>
+    <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>
