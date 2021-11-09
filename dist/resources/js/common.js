@@ -82,8 +82,7 @@ UI_Control.layout = {
     // header 
     const headerParent = document.querySelector('.header');
     const serverURL = window.location.href.split('/');
-    const serverURLFirst = serverURL[3] === 'html' ? '/html/' : '/Guide/';
-    console.log(serverURLFirst);
+    const serverURLFirst = serverURL[3] === 'html' ? '/html/' : '/Guide/dist/html/';
     let header = '<div class="header-wrap">';
     header += '<h1>';
     header += '  <a href="' + serverURLFirst + '" title="홈으로">';
