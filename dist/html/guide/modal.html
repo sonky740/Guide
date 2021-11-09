@@ -2,97 +2,97 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>손기연 | 모달</title>
-    <link rel="stylesheet" href="../../resources/css/common.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../resources/css/common.min.css">
+  <title>손기연 | 모달</title>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- ### 헤더 ### -->
-        <header class="header"></header>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
 
-        <!-- ### 메인 ### -->
-        <main class="container">
-            <!-- 가이드 -->
-            <nav class="guide-nav"></nav>
-            <!-- 포폴 -->
-            <section class="main-section">
-                <h3 class="tit-main" data-text="Modal">Modal</h3>
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section">
+        <h3 class="tit-main" data-text="Modal">Modal</h3>
 
-                <button type="button" data-modal-trigger="modal1" style="color: #fff;">모달 트리거1 (full)</button>
-                <br>
-                <button type="button" data-modal-trigger="modal3" style="color: #fff;">모달 트리거3 (bottom)</button>
+        <button type="button" data-modal-trigger="modal1" style="color: #fff;">모달 트리거1 (full)</button>
+        <br>
+        <button type="button" data-modal-trigger="modal3" style="color: #fff;">모달 트리거3 (bottom)</button>
 
-                <p class="codepen" data-height="800" data-default-tab="html,result" data-slug-hash="yLXPGgW" data-editable="true" data-user="Sonky" style="height: 800px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-                    <span>See the Pen <a href="https://codepen.io/Sonky/pen/yLXPGgW">
-                        </a> by Sonky (<a href="https://codepen.io/Sonky">@Sonky</a>)
-                        on <a href="https://codepen.io">CodePen</a>.</span>
-                </p>
-            </section>
-        </main>
-        <!-- ### // ### -->
+        <p class="codepen" data-height="800" data-default-tab="html,result" data-slug-hash="yLXPGgW" data-editable="true" data-user="Sonky" style="height: 800px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+          <span>See the Pen <a href="https://codepen.io/Sonky/pen/yLXPGgW">
+            </a> by Sonky (<a href="https://codepen.io/Sonky">@Sonky</a>)
+            on <a href="https://codepen.io">CodePen</a>.</span>
+        </p>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
+
+  <div id="modal1" class="ly-modal full" data-modal>
+    <div class="ly-modal-wrap">
+      <header class="ly-modal-header">
+        <h1 class="ly-modal-title">모달 타이틀</h1>
+        <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
+      </header>
+      <div class="ly-modal-content">
+        <button type="button" data-modal-trigger="modal2">모달 트리거2</button>
+        내용
+      </div>
     </div>
+  </div>
 
-    <div id="modal1" class="ly-modal full" data-modal>
-        <div class="ly-modal-wrap">
-            <header class="ly-modal-header">
-                <h1 class="ly-modal-title">모달 타이틀</h1>
-                <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
-            </header>
-            <div class="ly-modal-content">
-                <button type="button" data-modal-trigger="modal2">모달 트리거2</button>
-                내용
-            </div>
-        </div>
+  <div id="modal2" class="ly-modal" data-modal data-backdrop="false">
+    <div class="ly-modal-wrap">
+      <header class="ly-modal-header">
+        <h1 class="ly-modal-title">모달 타이틀</h1>
+        <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
+      </header>
+      <div class="ly-modal-content">
+        dim 클릭해도 안닫힘
+      </div>
     </div>
+  </div>
 
-    <div id="modal2" class="ly-modal" data-modal data-backdrop="false">
-        <div class="ly-modal-wrap">
-            <header class="ly-modal-header">
-                <h1 class="ly-modal-title">모달 타이틀</h1>
-                <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
-            </header>
-            <div class="ly-modal-content">
-                dim 클릭해도 안닫힘
-            </div>
-        </div>
+  <div id="modal3" class="ly-modal btm" data-modal>
+    <div class="ly-modal-wrap">
+      <header class="ly-modal-header">
+        <h1 class="ly-modal-title">모달 타이틀</h1>
+        <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
+      </header>
+      <div class="ly-modal-content">
+        바닥 내용
+      </div>
     </div>
+  </div>
 
-    <div id="modal3" class="ly-modal btm" data-modal>
-        <div class="ly-modal-wrap">
-            <header class="ly-modal-header">
-                <h1 class="ly-modal-title">모달 타이틀</h1>
-                <button type="button" class="ly-modal-close" data-modal-close><span class="blind">닫기</span></button>
-            </header>
-            <div class="ly-modal-content">
-                바닥 내용
-            </div>
-        </div>
-    </div>
-
-    <script src="../../resources/js/common.js"></script>
-    <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
-    <script>
-        const modal = document.querySelector('#modal1');
-        modal.addEventListener('modal.showing', function(e) {
-            console.log(e.target, 'showing')
-        })
-        modal.addEventListener('modal.hiding', function(e) {
-            console.log(e.target, 'hiding')
-        })
-        modal.addEventListener('modal.shown', function(e) {
-            console.log(e.target, 'shown')
-        })
-        modal.addEventListener('modal.hidden', function(e) {
-            console.log(e.target, 'hidden')
-        })
-        // UI_Control.modal.show('#modal1');
-        // setTimeout(function() {
-        //   UI_Control.modal.hide('#modal1');
-        // }, 2000)
-    </script>
+  <script src="../../resources/js/common.js"></script>
+  <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+  <script>
+    const modal = document.querySelector('#modal1');
+    modal.addEventListener('modal.showing', function (e) {
+      console.log(e.target, 'showing')
+    })
+    modal.addEventListener('modal.hiding', function (e) {
+      console.log(e.target, 'hiding')
+    })
+    modal.addEventListener('modal.shown', function (e) {
+      console.log(e.target, 'shown')
+    })
+    modal.addEventListener('modal.hidden', function (e) {
+      console.log(e.target, 'hidden')
+    })
+    // UI_Control.modal.show('#modal1');
+    // setTimeout(function() {
+    //   UI_Control.modal.hide('#modal1');
+    // }, 2000)
+  </script>
 </body>
 
 </html>

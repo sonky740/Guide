@@ -2,79 +2,79 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>손기연 | 툴팁_제이쿼리</title>
-    <link rel="stylesheet" href="../../resources/css/common.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../resources/css/common.min.css">
+  <title>손기연 | 툴팁_제이쿼리</title>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- ### 헤더 ### -->
-        <header class="header"></header>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
 
-        <!-- ### 메인 ### -->
-        <main class="container">
-            <!-- 가이드 -->
-            <nav class="guide-nav"></nav>
-            <!-- 포폴 -->
-            <section class="main-section">
-                <h3 class="tit-main" data-text="Tooltip_jQuery">Tooltip_jQuery</h3>
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section">
+        <h3 class="tit-main" data-text="Tooltip_jQuery">Tooltip_jQuery</h3>
 
-                <div class="tooltip backdrop" data-tooltip>
-                    <button type="button" data-tooltip-trigger>Tooltip</button>
-                    <div class="tooltip-content" data-tooltip-target>
-                        tooltip content
-                        <button type="button" class="tooltip-close" data-tooltip-close><span class="blind">툴팁 닫기</span></button>
-                    </div>
-                </div>
-                <div class="tooltip backdrop" data-tooltip>
-                    <button type="button" data-tooltip-trigger>Tooltip</button>
-                    <div class="tooltip-content" data-tooltip-target>
-                        tooltip content
-                        <button type="button" class="tooltip-close" data-tooltip-close><span class="blind">툴팁 닫기</span></button>
-                    </div>
-                </div>
-                <div class="tooltip" data-tooltip>
-                    <button type="button" data-tooltip-trigger>Tooltip</button>
-                    <div class="tooltip-content" data-tooltip-target>
-                        tooltip content
-                        <button type="button" class="tooltip-close" data-tooltip-close><span class="blind">툴팁 닫기</span></button>
-                    </div>
-                </div>
-                <div class="tooltip" data-tooltip>
-                    <button type="button" data-tooltip-trigger>Tooltip</button>
-                    <div class="tooltip-content" data-tooltip-target>
-                        tooltip content
-                        <button type="button" class="tooltip-close" data-tooltip-close><span class="blind">툴팁 닫기</span></button>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <!-- ### // ### -->
-    </div>
+        <div class="tooltip backdrop" data-tooltip>
+          <button type="button" data-tooltip-trigger>Tooltip</button>
+          <div class="tooltip-content" data-tooltip-target>
+            tooltip content
+            <button type="button" class="tooltip-close" data-tooltip-close><span class="blind">툴팁 닫기</span></button>
+          </div>
+        </div>
+        <div class="tooltip backdrop" data-tooltip>
+          <button type="button" data-tooltip-trigger>Tooltip</button>
+          <div class="tooltip-content" data-tooltip-target>
+            tooltip content
+            <button type="button" class="tooltip-close" data-tooltip-close><span class="blind">툴팁 닫기</span></button>
+          </div>
+        </div>
+        <div class="tooltip" data-tooltip>
+          <button type="button" data-tooltip-trigger>Tooltip</button>
+          <div class="tooltip-content" data-tooltip-target>
+            tooltip content
+            <button type="button" class="tooltip-close" data-tooltip-close><span class="blind">툴팁 닫기</span></button>
+          </div>
+        </div>
+        <div class="tooltip" data-tooltip>
+          <button type="button" data-tooltip-trigger>Tooltip</button>
+          <div class="tooltip-content" data-tooltip-target>
+            tooltip content
+            <button type="button" class="tooltip-close" data-tooltip-close><span class="blind">툴팁 닫기</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
 
-    <script src="../../js/library/jquery-1.12.4.min.js"></script>
-    <script src="../../resources/js/common.js"></script>
-    <script src="../../js/common_jquery.js"></script>
-    <script>
-        const target = $('[data-tooltip-target]');
-        target.on('tooltip.showing', function(e) {
-            console.log(e.target, 'showing');
-        })
+  <script src="../../resources/js/library/jquery-1.12.4.min.js"></script>
+  <script src="../../resources/js/common.js"></script>
+  <script src="../../resources/js/common_jquery.js"></script>
+  <script>
+    const target = $('[data-tooltip-target]');
+    target.on('tooltip.showing', function (e) {
+      console.log(e.target, 'showing');
+    })
 
-        target.on('tooltip.shown', function(e) {
-            console.log(e.target, 'shown');
-        })
+    target.on('tooltip.shown', function (e) {
+      console.log(e.target, 'shown');
+    })
 
-        target.on('tooltip.hiding', function(e) {
-            console.log(e.target, 'hiding');
-        })
+    target.on('tooltip.hiding', function (e) {
+      console.log(e.target, 'hiding');
+    })
 
-        target.on('tooltip.hidden', function(e) {
-            console.log(e.target, 'hidden');
-        })
-    </script>
+    target.on('tooltip.hidden', function (e) {
+      console.log(e.target, 'hidden');
+    })
+  </script>
 </body>
 
 </html>

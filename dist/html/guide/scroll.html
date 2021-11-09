@@ -2,60 +2,59 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>손기연 | 스크롤</title>
-    <link rel="stylesheet" href="../../resources/css/common.min.css">
-    <link rel="stylesheet" href="../../css/swiper.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../resources/css/common.min.css">
+  <title>손기연 | 스크롤</title>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- ### 헤더 ### -->
-        <header class="header"></header>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
 
-        <!-- ### 메인 ### -->
-        <main class="container">
-            <!-- 가이드 -->
-            <nav class="guide-nav"></nav>
-            <!-- 포폴 -->
-            <section class="main-section">
-                <h3 class="tit-main" data-text="Scroll">Scroll</h3>
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section">
+        <h3 class="tit-main" data-text="Scroll">Scroll</h3>
 
-                <div class="scroll-wrap">
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade">scroll test</div>
-                    <div class="scroll-item" data-scroll-item="fade" data-scroll-multiple="0.8">scroll test</div>
-                </div>
-            </section>
-        </main>
-        <!-- ### // ### -->
-    </div>
+        <div class="scroll-wrap">
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade">scroll test</div>
+          <div class="scroll-item" data-scroll-item="fade" data-scroll-multiple="0.8">scroll test</div>
+        </div>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
 
-    <script src="../../resources/js/common.js"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', function() {
-            const scrollItem = document.querySelectorAll('[data-scroll-item]');
-            scrollItem.forEach(function(el) {
-                el.addEventListener('scroll.show', function() {
-                    console.log(this, 'show');
-                })
-                el.addEventListener('scroll.hide', function() {
-                    console.log(this, 'hide');
-                })
-            })
+  <script src="../../resources/js/common.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      const scrollItem = document.querySelectorAll('[data-scroll-item]');
+      scrollItem.forEach(function (el) {
+        el.addEventListener('scroll.show', function () {
+          console.log(this, 'show');
         })
-    </script>
+        el.addEventListener('scroll.hide', function () {
+          console.log(this, 'hide');
+        })
+      })
+    })
+  </script>
 </body>
 
 </html>

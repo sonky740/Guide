@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>손기연 | 툴팁_제이쿼리</title>
-  <link rel="stylesheet" href="../../resources/css/common.min.css">
-</head>
+@@include('./src/_includes/head.md', {
+title: '툴팁_제이쿼리'
+})
 
 <body>
   <div class="wrapper">
@@ -54,9 +51,9 @@
     <!-- ### // ### -->
   </div>
 
-  <script src="../../js/library/jquery-1.12.4.min.js"></script>
+  <script src="../../resources/js/library/jquery-1.12.4.min.js"></script>
   <script src="../../resources/js/common.js"></script>
-  <script src="../../js/common_jquery.js"></script>
+  <script src="../../resources/js/common_jquery.js"></script>
   <script>
     const target = $('[data-tooltip-target]');
     target.on('tooltip.showing', function (e) {

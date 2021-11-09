@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>손기연 | 스크롤</title>
-  <link rel="stylesheet" href="../../resources/css/common.min.css">
-  <link rel="stylesheet" href="../../css/swiper.css">
-</head>
+@@include('./src/_includes/head.md', {
+title: '스크롤'
+})
 
 <body>
   <div class="wrapper">
@@ -21,7 +17,7 @@
       <!-- 포폴 -->
       <section class="main-section">
         <h3 class="tit-main" data-text="Scroll">Scroll</h3>
-        
+
         <div class="scroll-wrap">
           <div class="scroll-item" data-scroll-item="fade">scroll test</div>
           <div class="scroll-item" data-scroll-item="fade">scroll test</div>
@@ -44,13 +40,13 @@
 
   <script src="../../resources/js/common.js"></script>
   <script>
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function () {
       const scrollItem = document.querySelectorAll('[data-scroll-item]');
-      scrollItem.forEach(function(el) {
-        el.addEventListener('scroll.show', function() {
+      scrollItem.forEach(function (el) {
+        el.addEventListener('scroll.show', function () {
           console.log(this, 'show');
         })
-        el.addEventListener('scroll.hide', function() {
+        el.addEventListener('scroll.hide', function () {
           console.log(this, 'hide');
         })
       })

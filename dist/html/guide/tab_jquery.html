@@ -2,76 +2,76 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>손기연 | 탭_제이쿼리</title>
-    <link rel="stylesheet" href="../../resources/css/common.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../resources/css/common.min.css">
+  <title>손기연 | 탭_제이쿼리</title>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- ### 헤더 ### -->
-        <header class="header"></header>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
 
-        <!-- ### 메인 ### -->
-        <main class="container">
-            <!-- 가이드 -->
-            <nav class="guide-nav"></nav>
-            <!-- 포폴 -->
-            <section class="main-section">
-                <h3 class="tit-main" data-text="Tab_jQuery">Tab_jQuery</h3>
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section">
+        <h3 class="tit-main" data-text="Tab_jQuery">Tab_jQuery</h3>
 
-                <div class="tabs" data-tabs>
-                    <ul class="tabs-title">
-                        <li class="on"><button type="button" data-tabs-trigger="tab1">탭1</button></li>
-                        <li><button type="button" data-tabs-trigger="tab2">탭2</button></li>
-                        <li><button type="button" data-tabs-trigger="tab3">탭3</button></li>
-                        <li><button type="button" data-tabs-trigger="tab4">탭4</button></li>
-                    </ul>
+        <div class="tabs" data-tabs>
+          <ul class="tabs-title">
+            <li class="on"><button type="button" data-tabs-trigger="tab1">탭1</button></li>
+            <li><button type="button" data-tabs-trigger="tab2">탭2</button></li>
+            <li><button type="button" data-tabs-trigger="tab3">탭3</button></li>
+            <li><button type="button" data-tabs-trigger="tab4">탭4</button></li>
+          </ul>
 
-                    <div class="tabs-content" data-tabs-target="tab1">
-                        <h4 class="blind">탭1</h4>
-                        탭1 내용
-                    </div>
-                    <div class="tabs-content" data-tabs-target="tab2">
-                        <h4 class="blind">탭2</h4>
-                        탭2 내용
-                    </div>
-                    <div class="tabs-content" data-tabs-target="tab3">
-                        <h4 class="blind">탭3</h4>
-                        탭3 내용
-                    </div>
-                    <div class="tabs-content" data-tabs-target="tab4">
-                        <h4 class="blind">탭4</h4>
-                        탭4 내용
-                    </div>
-                </div>
-            </section>
-        </main>
-        <!-- ### // ### -->
-    </div>
+          <div class="tabs-content" data-tabs-target="tab1">
+            <h4 class="blind">탭1</h4>
+            탭1 내용
+          </div>
+          <div class="tabs-content" data-tabs-target="tab2">
+            <h4 class="blind">탭2</h4>
+            탭2 내용
+          </div>
+          <div class="tabs-content" data-tabs-target="tab3">
+            <h4 class="blind">탭3</h4>
+            탭3 내용
+          </div>
+          <div class="tabs-content" data-tabs-target="tab4">
+            <h4 class="blind">탭4</h4>
+            탭4 내용
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
 
-    <script src="../../js/library/jquery-1.12.4.min.js"></script>
-    <script src="../../resources/js/common.js"></script>
-    <script src="../../js/common_jquery.js"></script>
-    <script>
-        const target = $('[data-tabs-target]');
-        target.on('tabs.showing', function(e) {
-            console.log(e.target, 'showing');
-        })
+  <script src="../../resources/js/library/jquery-1.12.4.min.js"></script>
+  <script src="../../resources/js/common.js"></script>
+  <script src="../../resources/js/common_jquery.js"></script>
+  <script>
+    const target = $('[data-tabs-target]');
+    target.on('tabs.showing', function (e) {
+      console.log(e.target, 'showing');
+    })
 
-        target.on('tabs.shown', function(e) {
-            console.log(e.target, 'shown');
-        })
+    target.on('tabs.shown', function (e) {
+      console.log(e.target, 'shown');
+    })
 
-        target.on('tabs.hiding', function(e) {
-            console.log(e.target, 'hiding');
-        })
+    target.on('tabs.hiding', function (e) {
+      console.log(e.target, 'hiding');
+    })
 
-        target.on('tabs.hidden', function(e) {
-            console.log(e.target, 'hidden');
-        })
-    </script>
+    target.on('tabs.hidden', function (e) {
+      console.log(e.target, 'hidden');
+    })
+  </script>
 </body>
 
 </html>

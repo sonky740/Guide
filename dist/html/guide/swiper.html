@@ -2,116 +2,116 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>손기연 | 스와이퍼</title>
-    <link rel="stylesheet" href="../../resources/css/common.min.css">
-    <link rel="stylesheet" href="../../css/swiper.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>손기연 | 스와이퍼</title>
+  <link rel="stylesheet" href="../../resources/css/common.min.css">
+  <link rel="stylesheet" href="../../resources/css/swiper.min.css">
 
-    <style>
-        .swiper3 {
-            height: 400px;
-            background: #fff;
-            color: #222;
-        }
-    </style>
+  <style>
+    .swiper3 {
+      height: 400px;
+      background: #fff;
+      color: #222;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- ### 헤더 ### -->
-        <header class="header"></header>
+  <div class="wrapper">
+    <!-- ### 헤더 ### -->
+    <header class="header"></header>
 
-        <!-- ### 메인 ### -->
-        <main class="container">
-            <!-- 가이드 -->
-            <nav class="guide-nav"></nav>
-            <!-- 포폴 -->
-            <section class="main-section">
-                <h3 class="tit-main" data-text="Swiper">Swiper</h3>
+    <!-- ### 메인 ### -->
+    <main class="container">
+      <!-- 가이드 -->
+      <nav class="guide-nav"></nav>
+      <!-- 포폴 -->
+      <section class="main-section">
+        <h3 class="tit-main" data-text="Swiper">Swiper</h3>
 
-                <div class="swiper-container swiper1">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide swiper-slide-content">
-                            Content slide
-                        </div>
-                        <div class="swiper-slide swiper-slide-menu">Menu slide</div>
-                    </div>
-                </div>
+        <div class="swiper-container swiper1">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide swiper-slide-content">
+              Content slide
+            </div>
+            <div class="swiper-slide swiper-slide-menu">Menu slide</div>
+          </div>
+        </div>
 
-                <div class="swiper-container swiper2">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">Slide 10</div>
-                        <div class="swiper-slide">Slide 20</div>
-                        <div class="swiper-slide">Slide 30</div>
-                        <div class="swiper-slide">Slide 40</div>
-                        <div class="swiper-slide">Slide 50</div>
-                        <div class="swiper-slide">Slide 60</div>
-                        <div class="swiper-slide">Slide 70</div>
-                        <div class="swiper-slide">Slide 80</div>
-                        <div class="swiper-slide">Slide 90</div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                </div>
+        <div class="swiper-container swiper2">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 10</div>
+            <div class="swiper-slide">Slide 20</div>
+            <div class="swiper-slide">Slide 30</div>
+            <div class="swiper-slide">Slide 40</div>
+            <div class="swiper-slide">Slide 50</div>
+            <div class="swiper-slide">Slide 60</div>
+            <div class="swiper-slide">Slide 70</div>
+            <div class="swiper-slide">Slide 80</div>
+            <div class="swiper-slide">Slide 90</div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
 
-                <div class="swiper-container swiper3">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">Slide 10</div>
-                        <div class="swiper-slide">Slide 20</div>
-                        <div class="swiper-slide">Slide 30</div>
-                        <div class="swiper-slide">Slide 40</div>
-                        <div class="swiper-slide">Slide 50</div>
-                        <div class="swiper-slide">Slide 60</div>
-                        <div class="swiper-slide">Slide 70</div>
-                        <div class="swiper-slide">Slide 80</div>
-                        <div class="swiper-slide">Slide 90</div>
-                    </div>
-                    <div class="swiper-scrollbar"></div>
-                </div>
-            </section>
-        </main>
-        <!-- ### // ### -->
-    </div>
+        <div class="swiper-container swiper3">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 10</div>
+            <div class="swiper-slide">Slide 20</div>
+            <div class="swiper-slide">Slide 30</div>
+            <div class="swiper-slide">Slide 40</div>
+            <div class="swiper-slide">Slide 50</div>
+            <div class="swiper-slide">Slide 60</div>
+            <div class="swiper-slide">Slide 70</div>
+            <div class="swiper-slide">Slide 80</div>
+            <div class="swiper-slide">Slide 90</div>
+          </div>
+          <div class="swiper-scrollbar"></div>
+        </div>
+      </section>
+    </main>
+    <!-- ### // ### -->
+  </div>
 
-    <script src="../../resources/js/common.js"></script>
-    <script src="../../js/library/swiper-4.5.1.min.js"></script>
-    <script>
-        window.addEventListener('load', function() {
-            const swiper1 = new Swiper(".swiper1", {
-                slidesPerView: "auto",
-                initialSlide: 0,
-                resistanceRatio: 0
-            });
+  <script src="../../resources/js/common.js"></script>
+  <script src="../../resources/js/library/swiper-4.5.1.min.js"></script>
+  <script>
+    window.addEventListener('load', function () {
+      const swiper1 = new Swiper(".swiper1", {
+        slidesPerView: "auto",
+        initialSlide: 0,
+        resistanceRatio: 0
+      });
 
-            const swiper2 = new Swiper(".swiper2", {
-                keyboard: true,
-                slidesPerView: "auto",
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                    dynamicBullets: true,
-                }
-            });
+      const swiper2 = new Swiper(".swiper2", {
+        keyboard: true,
+        slidesPerView: "auto",
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+          dynamicBullets: true,
+        }
+      });
 
-            const swiper3 = new Swiper(".swiper3", {
-                keyboard: true,
-                slidesPerView: "auto",
-                scrollbar: {
-                    el: ".swiper-scrollbar",
-                    draggable: true
-                },
-                on: {
-                    slideChange: function() {
-                        console.log(this)
-                    }
-                }
-            });
-        })
-    </script>
+      const swiper3 = new Swiper(".swiper3", {
+        keyboard: true,
+        slidesPerView: "auto",
+        scrollbar: {
+          el: ".swiper-scrollbar",
+          draggable: true
+        },
+        on: {
+          slideChange: function () {
+            console.log(this)
+          }
+        }
+      });
+    })
+  </script>
 </body>
 
 </html>

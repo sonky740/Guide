@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>손기연 | 페이지네이션</title>
-  <link rel="stylesheet" href="../../resources/css/common.min.css">
-</head>
+@@include('./src/_includes/head.md', {
+title: '페이지네이션'
+})
 
 <body>
   <div class="wrapper">
@@ -261,7 +258,7 @@
                 '<div class="createdAt">' +
                 comment.createdAt +
                 '</div><div class="content">' +
-                comment.content +'</div><hr /> </div>'
+                comment.content + '</div><hr /> </div>'
               );
             }, "");
           };
@@ -309,15 +306,15 @@
 
         <p class="codepen" data-height="400" data-theme-id="dark" data-default-tab="js,result" data-editable="true" data-user="Sonky" data-slug-hash="wvomBOa" style="height: 400px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Pagination">
           <span>See the Pen <a href="https://codepen.io/Sonky/pen/wvomBOa">
-          Pagination</a> by Sonky (<a href="https://codepen.io/Sonky">@Sonky</a>)
-          on <a href="https://codepen.io">CodePen</a>.</span>
+              Pagination</a> by Sonky (<a href="https://codepen.io/Sonky">@Sonky</a>)
+            on <a href="https://codepen.io">CodePen</a>.</span>
         </p>
-        
+
       </section>
     </main>
     <!-- ### // ### -->
   </div>
-  
+
   <script src="../../resources/js/common.js"></script>
   <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 </body>
