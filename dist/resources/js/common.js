@@ -81,9 +81,12 @@ UI_Control.layout = {
 
     // header 
     const headerParent = document.querySelector('.header');
+    const serverURL = window.location.href.split('/');
+    const serverURLFirst = serverURL[3] === 'html' ? '/html/' : '/Guide/';
+    console.log(serverURLFirst);
     let header = '<div class="header-wrap">';
     header += '<h1>';
-    header += '  <a href="/Guide/" title="홈으로">';
+    header += '  <a href="' + serverURLFirst + '" title="홈으로">';
     header += '    <svg width="100" height="40" viewBox="0 0 100 45">';
     header += '      <text x="0" y="85%">SONKY</text>';
     header += '    </svg>';
