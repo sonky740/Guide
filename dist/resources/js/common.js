@@ -745,7 +745,7 @@ UI_Control.range = {
       setTimeout(function () {
         history.back();
       });
-      location.href = 'microsoft-edge:https://sonky740.github.io/Guide/src/html/guide/range.html';
+      location.href = 'microsoft-edge:https://sonky740.github.io/Guide/dist/html/guide/range.html';
       return false;
     }
 
