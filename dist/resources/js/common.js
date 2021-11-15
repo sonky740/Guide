@@ -21,14 +21,15 @@ function siblings(node) {
 }
 
 // 쓰로틀 - 일정 시간 간격으로 func 실행
-function throttle(fn, ms) {
-  let throttled = false;
+function throttle(callback, limit = 100) {
+  let waiting = false;
   return function () {
-    if (!throttled) {
-      throttled = setTimeout(function () {
-        throttled = null;
-        fn.apply(this, arguments);
-      }, ms);
+    if (!waiting) {
+      callback.apply(this, arguments);
+      waiting = true;
+      setTimeout(function () {
+        waiting = false;
+      }, limit);
     }
   };
 }
@@ -53,20 +54,20 @@ UI_Control.layout = {
     const root = urlLast === '' ? 'guide/' : '';
     let lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>';
     lnb += '<ul>';
-    lnb += '  <li><a href="' + root +  'modal.html">modal</a></li>';
-    lnb += '  <li><a href="' + root +  'accordion.html">accordion</a></li>';
-    lnb += '  <li><a href="' + root +  'tab.html">tab</a></li>';
-    lnb += '  <li><a href="' + root +  'tooltip.html">tooltip</a></li>';
-    lnb += '  <li><a href="' + root +  'range.html">range</a></li>';
-    lnb += '  <li><a href="' + root +  'counter.html">counter</a></li>';
-    lnb += '  <li><a href="' + root +  'scroll.html">scroll</a></li>';
-    lnb += '  <li><a href="' + root +  'parallax.html">parallax</a></li>';
-    lnb += '  <li><a href="' + root +  'swiper.html">swiper</a></li>';
-    lnb += '  <li><a href="' + root +  'form.html">form</a></li>';
-    lnb += '  <li><a href="' + root +  'pagination.html">pagination</a></li>';
-    lnb += '  <li><a href="' + root +  'accordion_jquery.html">accordion_jquery</a></li>';
-    lnb += '  <li><a href="' + root +  'tooltip_jquery.html">tooltip_jquery</a></li>';
-    lnb += '  <li><a href="' + root +  'tab_jquery.html">tab_jquery</a></li>';
+    lnb += '  <li><a href="' + root + 'modal.html">modal</a></li>';
+    lnb += '  <li><a href="' + root + 'accordion.html">accordion</a></li>';
+    lnb += '  <li><a href="' + root + 'tab.html">tab</a></li>';
+    lnb += '  <li><a href="' + root + 'tooltip.html">tooltip</a></li>';
+    lnb += '  <li><a href="' + root + 'range.html">range</a></li>';
+    lnb += '  <li><a href="' + root + 'counter.html">counter</a></li>';
+    lnb += '  <li><a href="' + root + 'scroll.html">scroll</a></li>';
+    lnb += '  <li><a href="' + root + 'parallax.html">parallax</a></li>';
+    lnb += '  <li><a href="' + root + 'swiper.html">swiper</a></li>';
+    lnb += '  <li><a href="' + root + 'form.html">form</a></li>';
+    lnb += '  <li><a href="' + root + 'pagination.html">pagination</a></li>';
+    lnb += '  <li><a href="' + root + 'accordion_jquery.html">accordion_jquery</a></li>';
+    lnb += '  <li><a href="' + root + 'tooltip_jquery.html">tooltip_jquery</a></li>';
+    lnb += '  <li><a href="' + root + 'tab_jquery.html">tab_jquery</a></li>';
     lnb += '</ul>';
     lnbParent.innerHTML = lnb;
 
