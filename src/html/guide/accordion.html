@@ -18,6 +18,11 @@ title: '아코디언'
       <section class="main-section">
         <h3 class="tit-main" data-text="Accordion">Accordion</h3>
 
+        <div style="margin-bottom: 10px;">
+          <button type="button" style="border: 1px solid #fff; border-radius: 4px; padding: 4px; color: #fff;" onclick="UI_Control.accr.showAll('.accordion')">전체 열기</button>
+          <button type="button" style="border: 1px solid #fff; border-radius: 4px; padding: 4px; color: #fff;" onclick="UI_Control.accr.hideAll('.accordion')">전체 닫기</button>
+        </div>
+
         <ul class="accordion" data-accr>
           <li class="accordion-item on" data-accr-item>
             <div class="accordion-title">

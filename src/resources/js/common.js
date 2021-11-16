@@ -1,12 +1,27 @@
+/**
+ * 엄격 모드
+ */
 'use strict';
+
+/**
+ * @author 손기연
+ * @memberof UI_Control
+ * @namespace UI_Control
+ */
 const UI_Control = {};
 
-// 세자릿수 콤마 정규식
+/**
+ * 세자리마다 , 표시
+ * @param {number} x
+ */
 function numberComma(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-// 형제 요소
+/**
+ * 형제요소
+ * @param {Element} node
+ */
 function siblings(node) {
   var children = node.parentElement.children;
   var tempArr = [];
@@ -20,7 +35,12 @@ function siblings(node) {
   });
 }
 
-// 쓰로틀 - 일정 시간 간격으로 func 실행
+/**
+ * 쓰로틀 - 일정 시간 간격으로 func 실행
+ * @param {Function} callback 
+ * @param {number} limit 
+ * @returns 
+ */
 function throttle(callback, limit = 100) {
   let waiting = false;
   return function () {
@@ -34,7 +54,10 @@ function throttle(callback, limit = 100) {
   };
 }
 
-// ios version check
+/**
+ * ios version check
+ * @returns {number}
+ */
 function checkVersion() {
   var agent = window.navigator.userAgent,
     start = agent.indexOf('OS');
@@ -44,6 +67,9 @@ function checkVersion() {
   return 0;
 }
 
+/**
+ * 기본 레이아웃
+ */
 UI_Control.layout = {
   init: function () {
     const url = window.location.href.split('/');
@@ -133,6 +159,9 @@ UI_Control.layout = {
   }
 };
 
+/**
+ * 모달
+ */
 UI_Control.modal = {
   init: function () {
     this.constructor();
@@ -151,6 +180,10 @@ UI_Control.modal = {
     this.modalClose = document.querySelectorAll('[data-modal-close]');
     this.isTransitioning = false;
   },
+  /**
+   * 모달 열림
+   * @param {string} node id: '#example' || class: '.example' 
+   */
   show: function (node) {
     if (UI_Control.modal.isTransitioning) {
       return false;
@@ -179,6 +212,10 @@ UI_Control.modal = {
       target.focus();
     }, 50);
   },
+  /**
+   * 모달 닫힘
+   * @param {string} e id: '#example' || class: '.example' 
+   */
   hide: function (e) {
     // 닫기 버튼
     UI_Control.modal.modalClose.forEach(function (el) {
@@ -261,7 +298,9 @@ UI_Control.modal = {
   }
 };
 
-// 바디 스크롤 제어
+/**
+ * 바디 fixed 제어 (feat. 모달)
+ */
 let scrollTop = 0;
 UI_Control.bodyFixed = {
   init: function (mode) {
@@ -283,6 +322,9 @@ UI_Control.bodyFixed = {
   }
 };
 
+/**
+ * 아코디언
+ */
 UI_Control.accr = {
   init: function () {
     this.constructor();
@@ -295,7 +337,7 @@ UI_Control.accr = {
       const ir = trigger.querySelector('.blind');
 
       if (!item.classList.contains('on')) {
-        target.classList.add('hidden');
+        // target.classList.add('hidden');
         ir.innerHTML = '펼치기';
       } else {
         trigger.classList.add('on');
@@ -334,7 +376,7 @@ UI_Control.accr = {
         target.classList.add('hiding');
         target.classList.remove('shown');
         target.removeAttribute('style');
-      } else if (target.classList.contains('hidden')) {
+      } else {
         // show
         item.classList.add('on');
         ir.innerHTML = '접기';
@@ -448,11 +490,74 @@ UI_Control.accr = {
       target.removeEventListener('transitionend', transitionend);
     });
   },
+  /**
+   * 아코디언 전체 열기
+   * @param {string} node id: '#example' || class: '.example'
+   * @returns 
+   */
+  showAll: function (node) {
+    const target = document.querySelectorAll(node);
+    target.forEach(function (targetAll) {
+      if (targetAll.dataset.accr === 'only') return false;
+      const acBtn = targetAll.querySelectorAll('.accordion-button');
+      const acTarget = targetAll.querySelectorAll('.accordion-content');
+
+      acBtn.forEach(function (el) {
+        el.classList.add('on');
+        el.querySelector('.blind').innerText = '접기';
+      });
+      acTarget.forEach(function (el) {
+        if (el.classList.contains('shown')) return false;
+        el.classList.remove('hidden');
+        el.classList.add('showing');
+        el.style.height = el.children[0].clientHeight + 'px';
+
+        UI_Control.accr.transition(el);
+        el.addEventListener('transitionend', function () {
+          el.parentNode.classList.add('on');
+        });
+      });
+    });
+  },
+  /**
+   * 아코디언 전체 닫기
+   * @param {string} node id: '#example' || class: '.example'
+   * @returns 
+   */
+  hideAll: function (node) {
+    const target = document.querySelectorAll(node);
+    target.forEach(function (targetAll) {
+      if (targetAll.dataset.accr === 'only') return false;
+      const acBtn = targetAll.querySelectorAll('.accordion-button');
+      const acTarget = targetAll.querySelectorAll('.accordion-content');
+
+      acBtn.forEach(function (el) {
+        el.classList.remove('on');
+        el.querySelector('.blind').innerText = '펼치기';
+      });
+      acTarget.forEach(function (el) {
+        if (!el.classList.contains('shown')) return false;
+        el.style.height = el.children[0].clientHeight + 'px';
+        el.style.height = el.children[0].clientHeight + 'px';
+        el.classList.add('hiding');
+        el.classList.remove('shown');
+        el.removeAttribute('style');
+
+        UI_Control.accr.transition(el);
+        el.addEventListener('transitionend', function () {
+          el.parentNode.classList.remove('on');
+        });
+      });
+    });
+  },
   setTransitioning: function (isTransitioning) {
     this.isTransitioning = isTransitioning;
   }
 };
 
+/**
+ * 탭
+ */
 UI_Control.tab = {
   init: function () {
     this.constructor();
@@ -597,6 +702,9 @@ UI_Control.tab = {
   }
 };
 
+/**
+ * 툴팁
+ */
 UI_Control.tip = {
   init: function () {
     this.constructor();
@@ -701,6 +809,9 @@ UI_Control.tip = {
   }
 };
 
+/**
+ * 카운터
+ */
 UI_Control.counter = {
   init: function () {
     this.constructor();
@@ -737,6 +848,9 @@ UI_Control.counter = {
   }
 };
 
+/**
+ * input range
+ */
 UI_Control.range = {
   init: function () {
 
@@ -882,6 +996,9 @@ UI_Control.range = {
   // }
 };
 
+/**
+ * 전체 체크
+ */
 UI_Control.checkAll = {
   init: function () {
     this.constructor();
@@ -942,6 +1059,9 @@ UI_Control.checkAll = {
   }
 };
 
+/**
+ * 스크롤에 따른 view
+ */
 UI_Control.scrollView = {
   init: function () {
     this.constructor();
@@ -981,6 +1101,9 @@ UI_Control.scrollView = {
   }
 };
 
+/**
+ * 패럴랙스
+ */
 UI_Control.parallax = {
   init: function () {
     this.constructor();
@@ -1011,6 +1134,9 @@ UI_Control.parallax = {
   }
 };
 
+/**
+ * 터치 방향 체크
+ */
 UI_Control.touchCheck = {
   init: function () {
 
