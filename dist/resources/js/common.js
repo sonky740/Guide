@@ -859,8 +859,8 @@ UI_Control.range = {
       const rangeTarget = rangeThis.querySelectorAll('input[type="range"]');
       const rangeLabel = rangeThis.querySelector('.range-label');
       const rangeFill = rangeThis.querySelector('.range-fill');
-      const rangeStart = rangeThis.querySelector('input[type="range"][data-range="start"]');
-      const rangeEnd = rangeThis.querySelector('input[type="range"][data-range="end"]');
+      const rangeStart = rangeThis.querySelector('input[type="range"][data-range-multi="start"]');
+      const rangeEnd = rangeThis.querySelector('input[type="range"][data-range-multi="end"]');
 
       rangeTarget.forEach(function (rangeTargets) {
         // 간격 표시
@@ -931,19 +931,19 @@ UI_Control.range = {
       }
 
       if (per <= 12.5) {
-        rangeLabel.style.transform = 'translateX(-44%)';
+        rangeLabel.style.transform = 'translateX(-40%)';
       } else if (per <= 25) {
-        rangeLabel.style.transform = 'translateX(-46%)';
+        rangeLabel.style.transform = 'translateX(-42%)';
       } else if (per <= 37.5) {
-        rangeLabel.style.transform = 'translateX(-48%)';
+        rangeLabel.style.transform = 'translateX(-46%)';
       } else if (per <= 50) {
-        rangeLabel.style.transform = 'translateX(-50%)';
+        rangeLabel.style.transform = 'translateX(-48%)';
       } else if (per <= 62.5) {
-        rangeLabel.style.transform = 'translateX(-51%)';
+        rangeLabel.style.transform = 'translateX(-52%)';
       } else if (per <= 75) {
-        rangeLabel.style.transform = 'translateX(-53%)';
-      } else if (per <= 87.5) {
         rangeLabel.style.transform = 'translateX(-55%)';
+      } else if (per <= 87.5) {
+        rangeLabel.style.transform = 'translateX(-58%)';
       } else {
         rangeLabel.style.left = per + '%';
       }
@@ -970,7 +970,7 @@ UI_Control.range = {
     rangeFill.style.left = perStart + '%';
     rangeFill.style.right = 100 - perEnd + '%';
 
-    rangeStart.value = Math.min(parseInt(rangeStart.value), parseInt(rangeEnd.value) - parseInt(rangeStart.step));
+    rangeStart.value = Math.min(parseInt(rangeStart.value), parseInt(rangeEnd.value) - 10);
 
     if (rangeStart.value >= rangeEnd.value - 5) {
       rangeStart.style.zIndex = '2';
@@ -990,7 +990,7 @@ UI_Control.range = {
     rangeFill.style.left = perStart + '%';
     rangeFill.style.right = 100 - perEnd + '%';
 
-    rangeEnd.value = Math.max(parseInt(rangeEnd.value), parseInt(rangeStart.value) + parseInt(rangeEnd.step));
+    rangeEnd.value = Math.max(parseInt(rangeEnd.value), parseInt(rangeStart.value) + 10);
   }
 };
 

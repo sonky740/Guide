@@ -33,7 +33,7 @@
                 cursor: grab;
             }
 
-            &[data-range] {
+            &[data-range-multi] {
                 pointer-events: none;
             }
         }

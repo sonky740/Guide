@@ -47,8 +47,8 @@
             <!-- 자동입력 -->
             <div class="range-wrap">
               <!-- value, min, max, step, data-unit만 설정해두면 됩니다. -->
-              <input type="range" data-range="start" value="20" min="0" max="100" step="1" data-unit="개">
-              <input type="range" data-range="end" value="40" min="0" max="100" step="1" data-unit="개">
+              <input type="range" data-range-multi="start" value="20" min="0" max="100" step="1" data-unit="개">
+              <input type="range" data-range-multi="end" value="40" min="0" max="100" step="1" data-unit="개">
             </div>
             <div class="range-bar" aria-hidden="true">
               <div class="range-fill"></div>
@@ -57,34 +57,6 @@
           <div class="range-bottom" aria-hidden="true">
             <span>0</span>
             <span>+100</span>
-          </div>
-        </div>
-
-        <div class="range type1" data-range>
-          <!-- 급속/완속 -->
-          <ul class="text-pipe">
-            <li>
-              <span class="sub-text">급속</span>
-              <!-- 자동입력 -->
-              <strong class="main-text" data-left>50%</strong>
-            </li>
-            <li>
-              <span class="sub-text">완속</span>
-              <!-- 자동입력 -->
-              <strong class="main-text" data-right>50%</strong>
-            </li>
-          </ul>
-          <!-- 급속/완속 충전 비율 선택 -->
-          <div class="range-area">
-            <div class="range-wrap">
-              <!-- value, min, max, step, data-unit만 설정해두면 됩니다. -->
-              <input type="range" value="50" min="0" max="100" step="10" data-unit="%">
-            </div>
-            <div class="range-bar" aria-hidden="true">
-              <div class="range-fill"></div>
-              <!-- 간격 표시를 위함 -->
-              <ul class="range-fill-spacing"></ul>
-            </div>
           </div>
         </div>
 
