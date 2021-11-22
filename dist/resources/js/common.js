@@ -849,97 +849,102 @@ UI_Control.counter = {
 };
 
 /**
- * input range
+ * input[type="range"]
  */
 UI_Control.range = {
   init: function () {
-
-    // IE 얼럿
-    if (window.navigator.userAgent.match(/MSIE|Internet Explorer|Trident/i)) {
-      alert('IE에서는 작동하지 않습니다.');
-      setTimeout(function () {
-        history.back();
-      });
-      location.href = 'microsoft-edge:https://sonky740.github.io/Guide/dist/html/guide/range.html';
-      return false;
-    }
-
     this.constructor();
 
     this.range.forEach(function (rangeThis) {
-      const rangeTarget = rangeThis.querySelector('input[type="range"]');
+      const rangeTarget = rangeThis.querySelectorAll('input[type="range"]');
       const rangeLabel = rangeThis.querySelector('.range-label');
       const rangeFill = rangeThis.querySelector('.range-fill');
+      const rangeStart = rangeThis.querySelector('input[type="range"][data-range="start"]');
+      const rangeEnd = rangeThis.querySelector('input[type="range"][data-range="end"]');
 
-      // init
-      UI_Control.range.input(rangeThis, rangeTarget, rangeLabel, rangeFill);
+      rangeTarget.forEach(function (rangeTargets) {
+        // 간격 표시
+        const spacingBody = rangeThis.querySelector('.range-fill-spacing');
+        if (spacingBody) {
+          const spacing = rangeTargets.max / rangeTargets.step;
 
-      // 간격 표시
-      const spacingBody = rangeThis.querySelector('.range-fill-spacing');
-      if (spacingBody) {
-        const spacing = rangeTarget.max / rangeTarget.step;
-
-        for (let i = 0; i < spacing; i++) {
-          const spacing_li = document.createElement('li');
-          spacingBody.appendChild(spacing_li);
+          for (let i = 0; i < spacing; i++) {
+            const spacing_li = document.createElement('li');
+            spacingBody.appendChild(spacing_li);
+          }
         }
-      }
 
-      // input event
-      rangeTarget.addEventListener('input', function () {
-        UI_Control.range.input(rangeThis, rangeTarget, rangeLabel, rangeFill);
+        // single, multi check
+        if (!rangeStart && !rangeEnd) {
+          // single init
+          UI_Control.range.input(rangeThis, rangeTargets, rangeLabel, rangeFill);
+
+          rangeTargets.addEventListener('input', function () {
+            UI_Control.range.input(rangeThis, rangeTargets, rangeLabel, rangeFill);
+          });
+        } else {
+          // multi init
+          UI_Control.range.inputStart(rangeFill, rangeStart, rangeEnd);
+          UI_Control.range.inputEnd(rangeFill, rangeStart, rangeEnd);
+
+          rangeStart.addEventListener('input', function () {
+            UI_Control.range.inputStart(rangeFill, rangeStart, rangeEnd);
+          });
+          rangeEnd.addEventListener('input', function () {
+            UI_Control.range.inputEnd(rangeFill, rangeStart, rangeEnd);
+          });
+        }
       });
-
-      // else {
-      //   UI_Control.range.polyfill(rangeTarget);
-      // }
     });
   },
   constructor: function () {
     this.range = document.querySelectorAll('[data-range]');
   },
-  input: function (rangeThis, rangeTarget, rangeLabel, rangeFill) {
+  /**
+   * 단일 range
+   * @param {HTMLElement} rangeThis [data-range]
+   * @param {HTMLElement} rangeTargets input[type="range"]
+   * @param {HTMLElement} rangeLabel 말풍선
+   * @param {HTMLElement} rangeFill range 막대
+   */
+  input: function (rangeThis, rangeTargets, rangeLabel, rangeFill) {
     // percent
-    const per = (rangeTarget.value - rangeTarget.min) / (rangeTarget.max - rangeTarget.min) * 100;
+    const per = (rangeTargets.value - rangeTargets.min) / (rangeTargets.max - rangeTargets.min) * 100;
 
     // bar
-    rangeFill.style.width = per + '%';
+    rangeFill.style.right = 100 - per + '%';
 
     // 말풍선
     if (rangeLabel) {
       rangeLabel.style.left = per + '%';
-      rangeLabel.innerHTML = numberComma(rangeTarget.value) + rangeTarget.getAttribute('data-unit');
+      rangeLabel.innerHTML = numberComma(rangeTargets.value) + rangeTargets.getAttribute('data-unit');
 
       if (per < 12.5) {
         rangeLabel.classList.add('left');
         rangeLabel.classList.remove('right');
-      } else if (per <= 12.5) {
-        rangeLabel.classList.remove('right');
-        rangeLabel.style.transform = 'translateX(-44%)';
-      } else if (per <= 25) {
-        rangeLabel.classList.remove('right');
-        rangeLabel.style.transform = 'translateX(-46%)';
-      } else if (per <= 37.5) {
-        rangeLabel.classList.remove('right');
-        rangeLabel.style.transform = 'translateX(-48%)';
-      } else if (per <= 50) {
-        rangeLabel.classList.remove('right');
-        rangeLabel.style.transform = 'translateX(-50%)';
-      } else if (per <= 62.5) {
-        rangeLabel.classList.remove('right');
-        rangeLabel.style.transform = 'translateX(-51%)';
-      } else if (per <= 75) {
-        rangeLabel.classList.remove('right');
-        rangeLabel.style.transform = 'translateX(-53%)';
-      } else if (per <= 87.5) {
-        rangeLabel.classList.remove('right');
-        rangeLabel.style.transform = 'translateX(-55%)';
       } else if (per > 87.5) {
         rangeLabel.classList.add('right');
         rangeLabel.classList.remove('left');
       } else {
-        rangeLabel.classList.remove('right');
         rangeLabel.classList.remove('left');
+        rangeLabel.classList.remove('right');
+      }
+
+      if (per <= 12.5) {
+        rangeLabel.style.transform = 'translateX(-44%)';
+      } else if (per <= 25) {
+        rangeLabel.style.transform = 'translateX(-46%)';
+      } else if (per <= 37.5) {
+        rangeLabel.style.transform = 'translateX(-48%)';
+      } else if (per <= 50) {
+        rangeLabel.style.transform = 'translateX(-50%)';
+      } else if (per <= 62.5) {
+        rangeLabel.style.transform = 'translateX(-51%)';
+      } else if (per <= 75) {
+        rangeLabel.style.transform = 'translateX(-53%)';
+      } else if (per <= 87.5) {
+        rangeLabel.style.transform = 'translateX(-55%)';
+      } else {
         rangeLabel.style.left = per + '%';
       }
     }
@@ -947,53 +952,46 @@ UI_Control.range = {
     // min값 선택 안되게
     if (per === 0 && rangeThis.classList.contains('min-no')) {
       rangeLabel.classList.remove('left');
-      rangeTarget.value = rangeTarget.step;
-      rangeLabel.innerHTML = numberComma(rangeTarget.step) + rangeTarget.getAttribute('data-unit');
-      rangeLabel.style.left = (rangeTarget.step / rangeTarget.max) * 100 + '%';
-      rangeFill.style.width = (rangeTarget.step / rangeTarget.max) * 100 + '%';
-    }
-
-    // 타입1 = 급속, 완속 충전
-    if (rangeThis.classList.contains('type1')) {
-      const dataLeft = rangeThis.querySelector('[data-left]');
-      const dataRight = rangeThis.querySelector('[data-right]');
-
-      dataLeft.innerHTML = rangeTarget.value + rangeTarget.getAttribute('data-unit');
-      dataRight.innerHTML = Number(rangeTarget.max - rangeTarget.value) + rangeTarget.getAttribute('data-unit');
+      rangeTargets.value = rangeTargets.step;
+      rangeLabel.innerHTML = numberComma(rangeTargets.step) + rangeTargets.getAttribute('data-unit');
+      rangeLabel.style.left = (rangeTargets.step / rangeTargets.max) * 100 + '%';
+      rangeFill.style.right = 100 - (rangeTargets.step / rangeTargets.max) * 100 + '%';
     }
   },
-  // polyfill: function (rangeTarget) {
-  //   // ios range 터치되게
-  //   function iosPolyfill(e) {
-  //     let val = (e.pageX - rangeTarget.getBoundingClientRect().left) /
-  //       (rangeTarget.getBoundingClientRect().right - rangeTarget.getBoundingClientRect().left),
-  //       max = rangeTarget.getAttribute("max"),
-  //       segment = 1 / (max - 1),
-  //       segmentArr = [];
+  /**
+   * 멀티 range - 왼쪽 range
+   * @param {HTMLElement} rangeFill range multi 막대
+   * @param {HTMLElement} rangeStart range start element
+   * @param {HTMLElement} rangeEnd range end element
+   */
+  inputStart: function (rangeFill, rangeStart, rangeEnd) {
+    const perStart = (rangeStart.value - rangeStart.min) / (rangeStart.max - rangeStart.min) * 100;
+    const perEnd = (rangeEnd.value - rangeEnd.min) / (rangeEnd.max - rangeEnd.min) * 100;
+    rangeFill.style.left = perStart + '%';
+    rangeFill.style.right = 100 - perEnd + '%';
 
-  //     max++;
+    rangeStart.value = Math.min(parseInt(rangeStart.value), parseInt(rangeEnd.value) - parseInt(rangeStart.step));
 
-  //     for (let i = 0; i < max; i++) {
-  //       segmentArr.push(segment * i);
-  //     }
+    if (rangeStart.value >= rangeEnd.value - 5) {
+      rangeStart.style.zIndex = '2';
+    } else {
+      rangeStart.removeAttribute('style');
+    }
+  },
+  /**
+   * 멀티 range - 오른쪽 range
+   * @param {HTMLElement} rangeFill range multi 막대
+   * @param {HTMLElement} rangeStart range start element
+   * @param {HTMLElement} rangeEnd range end element
+   */
+  inputEnd: function (rangeFill, rangeStart, rangeEnd) {
+    const perStart = (rangeStart.value - rangeStart.min) / (rangeStart.max - rangeStart.min) * 100;
+    const perEnd = (rangeEnd.value - rangeEnd.min) / (rangeEnd.max - rangeEnd.min) * 100;
+    rangeFill.style.left = perStart + '%';
+    rangeFill.style.right = 100 - perEnd + '%';
 
-  //     var segCopy = segmentArr.slice(),
-  //     // arrow 함수로 변경해야함. IE에서 자꾸 에러 띄워서 function으로 냅둠.
-  //     ind = segmentArr.sort(function (a, b) {
-  //       Math.abs(val - a) - Math.abs(val - b)
-  //     })[0];
-  //     // ind = segmentArr.sort((a, b) => Math.abs(val - a) - Math.abs(val - b))[0];
-
-  //     rangeTarget.value = segCopy.indexOf(ind) + 1;
-
-  //     init(e.target);
-  //   }
-  //   if (!!navigator.platform.match(/iPhone|iPod|iPad/)) {
-  //     rangeTarget.addEventListener("touchend", iosPolyfill, {
-  //       passive: true
-  //     });
-  //   }
-  // }
+    rangeEnd.value = Math.max(parseInt(rangeEnd.value), parseInt(rangeStart.value) + parseInt(rangeEnd.step));
+  }
 };
 
 /**

@@ -42,6 +42,24 @@
           </div>
         </div>
 
+        <div class="range" data-range>
+          <div class="range-area">
+            <!-- 자동입력 -->
+            <div class="range-wrap">
+              <!-- value, min, max, step, data-unit만 설정해두면 됩니다. -->
+              <input type="range" data-range="start" value="20" min="0" max="100" step="1" data-unit="개">
+              <input type="range" data-range="end" value="40" min="0" max="100" step="1" data-unit="개">
+            </div>
+            <div class="range-bar" aria-hidden="true">
+              <div class="range-fill"></div>
+            </div>
+          </div>
+          <div class="range-bottom" aria-hidden="true">
+            <span>0</span>
+            <span>+100</span>
+          </div>
+        </div>
+
         <div class="range type1" data-range>
           <!-- 급속/완속 -->
           <ul class="text-pipe">
