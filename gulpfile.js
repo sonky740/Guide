@@ -80,6 +80,22 @@ const toHTML = () => {
 };
 
 /**
+ * include의 파일이 변경됐을 때 작업영역의 html 전부 리로드
+ */
+const toHTMLAll = () => {
+  return gulp
+    .src(paths.src('html/*.html'))
+    .pipe(
+      fileinclude({
+        prefix: '@@',
+        basepath: '@root',
+      })
+    )
+    .pipe(gulp.dest(paths.srcDist('html')))
+    .pipe(devServer.stream());
+};
+
+/**
  * HTML 코드 프리티어 적용
  */
 const prettyHTML = () => {
@@ -133,9 +149,13 @@ const compileScss = () => {
   return gulp
     .src(paths.src('resources/scss/**/*.scss'))
     .pipe(sourcemaps.init())
-    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(sass({
+      outputStyle: 'compressed'
+    }).on('error', sass.logError))
     .pipe(autoPrefixer())
-    .pipe(rename({extname: '.min.css'}))
+    .pipe(rename({
+      extname: '.min.css'
+    }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(paths.srcDist('resources/css')))
     .pipe(devServer.stream());
@@ -152,16 +172,19 @@ exports.build = series(cleanDir, toHTML, prettyHTML, compileScss, copyAssets);
 /**
  * 개발서버 시작
  */
-exports.dev = async function() {
+exports.dev = async function () {
   devServer.init({
     server: {
       baseDir: paths.srcDist()
     },
-    port: 4001
+    port: 4001,
+    notify: false
   });
 
   devStartFunctions();
 
+  // _includes 변경 감시
+  watch(paths.src('_includes/*.md'), series(toHTMLAll, prettyHTML));
   // html 변경 감시
   watch(paths.src('**/*.html'), series(toHTML, prettyHTML));
   // scss 파일 변경 감시
