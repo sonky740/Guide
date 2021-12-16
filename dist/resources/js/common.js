@@ -41,7 +41,8 @@ function siblings(node) {
  * @param {number} limit 
  * @returns 
  */
-function throttle(callback, limit = 100) {
+function throttle(callback, limit) {
+  limit = 100;
   let waiting = false;
   return function () {
     if (!waiting) {
