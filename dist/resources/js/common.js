@@ -52,19 +52,19 @@ function siblings(node) {
  * @param {number} limit 
  * @returns 
  */
-function throttle(callback, limit) {
-  limit = 100;
-  let waiting = false;
-  return function () {
-    if (!waiting) {
-      callback.apply(this, arguments);
-      waiting = true;
-      setTimeout(function () {
-        waiting = false;
-      }, limit);
-    }
-  };
-}
+// function throttle(callback, limit) {
+//   limit = 100;
+//   let waiting = false;
+//   return function () {
+//     if (!waiting) {
+//       callback.apply(this, arguments);
+//       waiting = true;
+//       setTimeout(function () {
+//         waiting = false;
+//       }, limit);
+//     }
+//   };
+// }
 
 /**
  * ios version check
@@ -1091,7 +1091,7 @@ UI_Control.scrollView = {
     this.scrollItem = document.querySelectorAll('[data-scroll-item]');
   },
   scroll: function (item, multiple) {
-    document.addEventListener('scroll', throttle(function () {
+    document.addEventListener('scroll', function () {
       let itemTop = item.getBoundingClientRect().top;
       let viewH = document.documentElement.offsetHeight;
 
@@ -1106,7 +1106,7 @@ UI_Control.scrollView = {
         const hide = new CustomEvent('scroll.hide');
         item.dispatchEvent(hide);
       }
-    }, 100));
+    });
   }
 };
 
