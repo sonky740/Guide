@@ -7,6 +7,17 @@
  * @author 손기연
  * @memberof UI_Control
  * @namespace UI_Control
+ * 
+ * 목차
+ * @see UI_Control.modal 모달
+ * @see UI_Control.accr 아코디언
+ * @see UI_Control.tab 탭
+ * @see UI_Control.tip 툴팁
+ * @see UI_Control.counter 숫자 카운터
+ * @see UI_Control.range 범위 설정 range
+ * @see UI_Control.checkAll 전체 체크박스
+ * @see UI_Control.scrollView 스크롤에 따른 view
+ * @see UI_Control.parallax 패럴랙스
  */
 const UI_Control = {};
 
@@ -625,7 +636,6 @@ UI_Control.tab = {
               UI_Control.tab.transition(target);
               el.removeEventListener('transitionend', transitionend);
             }, 50);
-
           });
         }
       });
