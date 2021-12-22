@@ -3,6 +3,7 @@
   font-size: 4.8rem;
   margin-bottom: 2.4rem;
   text-align: center;
+  word-break: break-all;
 
   &:before {
     content: attr(data-text);
