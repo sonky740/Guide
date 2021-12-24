@@ -1,0 +1,39 @@
+.scroll-section {
+    position: relative;
+    padding-top: 45vh;
+
+    &-title {
+        position: relative;
+        z-index: 5;
+        font-size: 4rem;
+        text-align: center;
+    }
+
+    &-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        top: 45%;
+        font-size: 4rem;
+        text-align: center;
+    }
+}
+
+.sticky-elem {
+    display: none;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+
+    @for $i from 0 to 3 {
+        #show-scene-#{$i} #scroll-section-#{$i} & {
+            display: flex;
+        }
+    }
+
+    .scroll-effect-end & {
+        display: none !important;
+    }
+}

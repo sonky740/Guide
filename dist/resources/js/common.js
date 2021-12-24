@@ -18,6 +18,7 @@
  * @see UI_Control.checkAll 전체 체크박스
  * @see UI_Control.scrollView 스크롤에 따른 view
  * @see UI_Control.parallax 패럴랙스
+ * @see UI_Control.scrollDeatil 디테일한 스크롤 설정
  */
 const UI_Control = {};
 
@@ -89,25 +90,27 @@ UI_Control.layout = {
 
     // lnb
     const lnbParent = document.querySelector('.guide-nav');
-    const root = urlLast === '' ? 'guide/' : '';
-    let lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>';
-    lnb += '<ul>';
-    lnb += '  <li><a href="' + root + 'modal.html">modal</a></li>';
-    lnb += '  <li><a href="' + root + 'accordion.html">accordion</a></li>';
-    lnb += '  <li><a href="' + root + 'tab.html">tab</a></li>';
-    lnb += '  <li><a href="' + root + 'tooltip.html">tooltip</a></li>';
-    lnb += '  <li><a href="' + root + 'range.html">range</a></li>';
-    lnb += '  <li><a href="' + root + 'counter.html">counter</a></li>';
-    lnb += '  <li><a href="' + root + 'scroll.html">scroll</a></li>';
-    lnb += '  <li><a href="' + root + 'parallax.html">parallax</a></li>';
-    lnb += '  <li><a href="' + root + 'swiper.html">swiper</a></li>';
-    lnb += '  <li><a href="' + root + 'form.html">form</a></li>';
-    lnb += '  <li><a href="' + root + 'pagination.html">pagination</a></li>';
-    lnb += '  <li><a href="' + root + 'accordion_jquery.html">accordion_jquery</a></li>';
-    lnb += '  <li><a href="' + root + 'tooltip_jquery.html">tooltip_jquery</a></li>';
-    lnb += '  <li><a href="' + root + 'tab_jquery.html">tab_jquery</a></li>';
-    lnb += '</ul>';
-    lnbParent.innerHTML = lnb;
+    if (lnbParent) {
+      const root = urlLast === '' ? 'guide/' : '';
+      let lnb = '<h2 class="guide-nav-title">Guide<button type="button" class="guide-nav-close" title="Guide Close"></button></h2>';
+      lnb += '<ul>';
+      lnb += '  <li><a href="' + root + 'modal.html">modal</a></li>';
+      lnb += '  <li><a href="' + root + 'accordion.html">accordion</a></li>';
+      lnb += '  <li><a href="' + root + 'tab.html">tab</a></li>';
+      lnb += '  <li><a href="' + root + 'tooltip.html">tooltip</a></li>';
+      lnb += '  <li><a href="' + root + 'range.html">range</a></li>';
+      lnb += '  <li><a href="' + root + 'counter.html">counter</a></li>';
+      lnb += '  <li><a href="' + root + 'scroll.html">scroll</a></li>';
+      lnb += '  <li><a href="' + root + 'parallax.html">parallax</a></li>';
+      lnb += '  <li><a href="' + root + 'swiper.html">swiper</a></li>';
+      lnb += '  <li><a href="' + root + 'form.html">form</a></li>';
+      lnb += '  <li><a href="' + root + 'pagination.html">pagination</a></li>';
+      lnb += '  <li><a href="' + root + 'accordion_jquery.html">accordion_jquery</a></li>';
+      lnb += '  <li><a href="' + root + 'tooltip_jquery.html">tooltip_jquery</a></li>';
+      lnb += '  <li><a href="' + root + 'tab_jquery.html">tab_jquery</a></li>';
+      lnb += '</ul>';
+      lnbParent.innerHTML = lnb;
+    }
 
     // lnb === url ? active : null
     const lnbTrigger = document.querySelectorAll('.guide-nav ul li a');
@@ -1117,16 +1120,16 @@ UI_Control.parallax = {
   init: function () {
     this.constructor();
 
-    this.parallaxItem.forEach(function (el) {
-      const speed = el.dataset.parallaxSpeed;
+    this.parallaxItem.forEach(function (item) {
+      const speed = item.dataset.parallaxSpeed;
 
-      UI_Control.parallax.scroll(el, speed);
+      UI_Control.parallax.scroll(item, speed);
     });
   },
   constructor: function () {
     this.parallaxItem = document.querySelectorAll('[data-parallax]');
   },
-  scroll: function (el, speed) {
+  scroll: function (item, speed) {
     document.addEventListener('scroll', function () {
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       // 전체 문서의 높이
@@ -1138,7 +1141,7 @@ UI_Control.parallax = {
 
       const percent = (scrollTop / contentHeight) * 100;
 
-      el.style.transform = 'translateY(-' + speed * percent * 0.25 + 'px)';
+      item.style.transform = 'translateY(-' + speed * percent * 0.25 + 'px)';
     });
   }
 };
@@ -1284,6 +1287,260 @@ UI_Control.touchCheck = {
   }
 };
 
+/**
+ * 스크롤 디테일
+ */
+UI_Control.scrollDetail = {
+  init: function () {
+    let yOffset = 0; // window.pageYOffset
+    let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
+    let currentScene = 0; // 현재 활성화된(눈 앞에 보고있는) scene(scroll-section)
+    let enterNewScene = false; // 새로운 scene이 시작된 순간 true
+
+    const sceneInfo = [{
+        // 0
+        type: 'sticky',
+        heightNum: 5,
+        scrollHeight: 0,
+        objs: {
+          container: document.querySelector('#scroll-section-0'),
+          messageA: document.querySelector('#scroll-section-0 .scroll-section-message.a'),
+          messageB: document.querySelector('#scroll-section-0 .scroll-section-message.b'),
+          messageC: document.querySelector('#scroll-section-0 .scroll-section-message.c'),
+          messageD: document.querySelector('#scroll-section-0 .scroll-section-message.d')
+        },
+        values: {
+          messageA_opacity_in: [0, 1, {
+            start: 0.1,
+            end: 0.2
+          }],
+          messageB_opacity_in: [0, 1, {
+            start: 0.3,
+            end: 0.4
+          }],
+          messageC_opacity_in: [0, 1, {
+            start: 0.5,
+            end: 0.6
+          }],
+          messageD_opacity_in: [0, 1, {
+            start: 0.7,
+            end: 0.8
+          }],
+          messageA_translateY_in: [40, 0, {
+            start: 0.1,
+            end: 0.2
+          }],
+          messageB_translateY_in: [40, 0, {
+            start: 0.3,
+            end: 0.4
+          }],
+          messageC_translateY_in: [40, 0, {
+            start: 0.5,
+            end: 0.6
+          }],
+          messageD_translateY_in: [40, 0, {
+            start: 0.7,
+            end: 0.8
+          }],
+          messageA_opacity_out: [1, 0, {
+            start: 0.25,
+            end: 0.35
+          }],
+          messageB_opacity_out: [1, 0, {
+            start: 0.45,
+            end: 0.55
+          }],
+          messageC_opacity_out: [1, 0, {
+            start: 0.65,
+            end: 0.75
+          }],
+          messageD_opacity_out: [1, 0, {
+            start: 0.85,
+            end: 0.95
+          }],
+          messageA_translateY_out: [0, -40, {
+            start: 0.25,
+            end: 0.35
+          }],
+          messageB_translateY_out: [0, -40, {
+            start: 0.45,
+            end: 0.55
+          }],
+          messageC_translateY_out: [0, -40, {
+            start: 0.65,
+            end: 0.75
+          }],
+          messageD_translateY_out: [0, -40, {
+            start: 0.85,
+            end: 0.95
+          }]
+        }
+      },
+      {
+        // 1
+        type: 'normal',
+        heightNum: 5,
+        scrollHeight: 0,
+        objs: {
+          container: document.querySelector('#scroll-section-1')
+        }
+      },
+      {
+        // 2
+        type: 'normal',
+        heightNum: 5,
+        scrollHeight: 0,
+        objs: {
+          container: document.querySelector('#scroll-section-2'),
+        }
+      }
+    ];
+
+    function setLayout() {
+      // 각 스크롤 섹션의 높이 세팅
+      for (let i = 0; i < sceneInfo.length; i++) {
+        if (sceneInfo[i].type === 'sticky') {
+          sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+        } else if (sceneInfo[i].type === 'normal') {
+          sceneInfo[i].scrollHeight = sceneInfo[i].objs.container.offsetHeight + window.innerHeight * 0.5;
+        }
+        sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
+      }
+
+      yOffset = window.pageYOffset;
+
+      let totalScrollHeight = 0;
+      for (let i = 0; i < sceneInfo.length; i++) {
+        totalScrollHeight += sceneInfo[i].scrollHeight;
+        if (totalScrollHeight >= yOffset) {
+          currentScene = i;
+          break;
+        }
+      }
+
+      document.body.setAttribute('id', `show-scene-${currentScene}`);
+    }
+
+    function calcValues(values, currentYOffset) {
+      let rv;
+      // 현재 scene에서 스크롤된 범위를 비율로 구하기
+      const scrollHeight = sceneInfo[currentScene].scrollHeight;
+      const scrollRatio = currentYOffset / scrollHeight;
+
+      if (values.length === 3) {
+        const partScrollStart = values[2].start * scrollHeight;
+        const partScrollEnd = values[2].end * scrollHeight;
+        const partScrollHeight = partScrollEnd - partScrollStart;
+
+        if (currentYOffset >= partScrollStart && currentYOffset <= partScrollEnd) {
+          rv = (currentYOffset - partScrollStart) / partScrollHeight * (values[1] - values[0]) + values[0];
+        } else if (currentYOffset < partScrollStart) {
+          rv = values[0];
+        } else if (currentYOffset > partScrollEnd) {
+          rv = values[1];
+        }
+      } else {
+        rv = scrollRatio * (values[1] - values[0]) + values[0];
+      }
+
+      return rv;
+    }
+
+    function playAnimation() {
+      const objs = sceneInfo[currentScene].objs;
+      const values = sceneInfo[currentScene].values;
+      const currentYOffset = yOffset - prevScrollHeight;
+      const scrollHeight = sceneInfo[currentScene].scrollHeight;
+      const scrollRatio = currentYOffset / scrollHeight;
+
+      switch (currentScene) {
+        case 0:
+
+          if (scrollRatio <= 0.22) {
+            // in
+            objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
+            objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
+          } else {
+            // out
+            objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
+            objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
+          }
+
+          if (scrollRatio <= 0.42) {
+            // in
+            objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
+            objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
+          } else {
+            // out
+            objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
+            objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
+          }
+
+          if (scrollRatio <= 0.62) {
+            // in
+            objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
+            objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
+          } else {
+            // out
+            objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
+            objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
+          }
+
+          if (scrollRatio <= 0.82) {
+            // in
+            objs.messageD.style.opacity = calcValues(values.messageD_opacity_in, currentYOffset);
+            objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_in, currentYOffset)}%, 0)`;
+          } else {
+            // out
+            objs.messageD.style.opacity = calcValues(values.messageD_opacity_out, currentYOffset);
+            objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_out, currentYOffset)}%, 0)`;
+          }
+
+          break;
+      }
+    }
+
+    function scrollCurrent() {
+      enterNewScene = false;
+      prevScrollHeight = 0; // 초기화
+      for (let i = 0; i < currentScene; i++) {
+        prevScrollHeight += sceneInfo[i].scrollHeight;
+      }
+
+      if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+        enterNewScene = true;
+        currentScene++;
+        document.body.setAttribute('id', 'show-scene-' + currentScene);
+      }
+
+      if (yOffset < prevScrollHeight) {
+        enterNewScene = true;
+        currentScene === 0 ? false : null;
+        currentScene--;
+        document.body.setAttribute('id', 'show-scene-' + currentScene);
+      }
+
+      if (enterNewScene) {
+        return false;
+      }
+
+      playAnimation();
+    }
+
+    setLayout();
+    window.addEventListener('scroll', function () {
+      yOffset = window.pageYOffset;
+      scrollCurrent();
+    });
+
+    ['resize', 'orientationchange'].forEach(function (events) {
+      window.addEventListener(events, function () {
+        window.location.reload();
+      });
+    });
+  }
+};
+
 window.addEventListener('DOMContentLoaded', function () {
   // 구글 애널리틱스
   const script = document.createElement('script');
@@ -1341,6 +1598,10 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
   if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
   if (document.querySelectorAll('[data-parallax]').length) UI_Control.parallax.init();
+});
+
+window.addEventListener('load', function () {
+  if (document.querySelectorAll('.scroll-section').length) UI_Control.scrollDetail.init();
 });
 
 window.addEventListener('resize', function () {

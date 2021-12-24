@@ -113,6 +113,10 @@
     display: flex;
     padding: 0 2.4rem 2.4rem;
 
+    &.scroll-detail {
+      padding: 0;
+    }
+
     .guide-nav {
       position: relative;
       flex: none;
