@@ -16,6 +16,8 @@
  * @see UI_Control.counter 숫자 카운터
  * @see UI_Control.range 범위 설정 range
  * @see UI_Control.checkAll 전체 체크박스
+ * @see UI_Control.inputDelete 인풋-삭제버튼
+ * @see UI_Control.ellipsis 말줄임
  * @see UI_Control.scrollView 스크롤에 따른 view
  * @see UI_Control.parallax 패럴랙스
  * @see UI_Control.scrollDeatil 디테일한 스크롤 설정
@@ -100,6 +102,7 @@ UI_Control.layout = {
       lnb += '  <li><a href="' + root + 'tooltip.html">tooltip</a></li>';
       lnb += '  <li><a href="' + root + 'range.html">range</a></li>';
       lnb += '  <li><a href="' + root + 'counter.html">counter</a></li>';
+      lnb += '  <li><a href="' + root + 'ellipsis.html">ellipsis</a></li>';
       lnb += '  <li><a href="' + root + 'scroll.html">scroll</a></li>';
       lnb += '  <li><a href="' + root + 'parallax.html">parallax</a></li>';
       lnb += '  <li><a href="' + root + 'swiper.html">swiper</a></li>';
@@ -1072,6 +1075,128 @@ UI_Control.checkAll = {
 };
 
 /**
+ * input delete 생성
+ */
+UI_Control.inputDelete = {
+  init: function () {
+    this.constructor();
+
+    this.trigger.forEach(function (el) {
+      const deleteBtn = document.createElement('button');
+      deleteBtn.setAttribute('type', 'button');
+      deleteBtn.classList.add('input-delete-btn');
+      deleteBtn.innerHTML = '<span class="blind">내용 지우기</span>';
+
+      function eventInit() {
+        el.after(deleteBtn);
+        el.classList.add('input-on');
+      }
+
+      function eventDelete() {
+        el.value = '';
+        deleteBtn.remove();
+        el.classList.remove('input-on');
+      }
+
+      if (el.value !== '') {
+        eventInit();
+      }
+
+      UI_Control.inputDelete.input(el, eventInit, eventDelete);
+      UI_Control.inputDelete.delete(el, deleteBtn, eventDelete);
+    });
+  },
+  constructor: function () {
+    this.trigger = document.querySelectorAll('[data-input-delete]');
+  },
+  input: function (el, eventInit, eventDelete) {
+    el.addEventListener('input', function () {
+      if (el.value !== '' && !el.classList.contains('input-on')) {
+        eventInit();
+      } else if (el.value == '' && el.classList.contains('input-on')) {
+        eventDelete();
+      }
+    });
+  },
+  delete: function (el, deleteBtn, eventDelete) {
+    deleteBtn.addEventListener('click', function () {
+      eventDelete();
+      el.focus();
+    });
+  }
+};
+
+/**
+ * 글자수 기준 말 줄임
+ */
+UI_Control.ellipsis = {
+  init: function () {
+    this.constructor();
+
+    this.target.forEach(function (el) {
+      const limit = el.getAttribute('data-ellipsis');
+      const text = el.innerText;
+      const trigger = document.createElement('button');
+      trigger.setAttribute('type', 'button');
+      trigger.setAttribute('data-ellipsis-trigger', '');
+      trigger.innerHTML = '더보기';
+
+      // 단순히 글자수로 자를 때
+      // if (text.length > limit) {
+      //   el.setAttribute('title', text);
+      //   const sliced = text.slice(0, limit);
+      //   el.innerHTML = sliced + '...';
+      //   el.insertAdjacentElement('afterend', trigger);
+      // }
+
+      // 바이트 체크
+      function getByteCheck(str) {
+        let len = 0;
+        for (let i = 0; i < str.length; i++) {
+          if (escape(str.charAt(i)).length === 6) {
+            len++;
+          }
+          len++;
+        }
+        return len;
+      }
+
+      // bytes 기준으로 자를 때
+      if (getByteCheck(text) > limit) {
+        let buffer = 0;
+        let idx = 0;
+        while (getByteCheck(text) > limit) {
+          const unicode = text.charCodeAt(idx);
+          buffer += unicode > 127 ? 2 : 1;
+
+          if (buffer > limit) break;
+          idx++;
+        }
+        let result = text.substring(0, idx);
+        result = result.replace(/\s*$/, '');
+
+        el.setAttribute('title', text);
+        el.innerHTML = result + '... ';
+        el.insertAdjacentElement('afterend', trigger);
+      }
+
+      if (trigger) {
+        UI_Control.ellipsis.show(trigger, el);
+      }
+    });
+  },
+  constructor: function () {
+    this.target = document.querySelectorAll('[data-ellipsis]');
+  },
+  show: function (trigger, el) {
+    trigger.addEventListener('click', function () {
+      el.innerHTML = el.getAttribute('title');
+      trigger.remove();
+    });
+  }
+};
+
+/**
  * 스크롤에 따른 view
  */
 UI_Control.scrollView = {
@@ -1587,6 +1712,14 @@ window.addEventListener('DOMContentLoaded', function () {
     CustomEvent.prototype = window.Event.prototype;
     window.CustomEvent = CustomEvent;
   })();
+  // IE remove 대응
+  if (!('remove' in Element.prototype)) {
+    Element.prototype.remove = function () {
+      if (this.parentNode) {
+        this.parentNode.removeChild(this);
+      }
+    };
+  }
 
   if (document.querySelectorAll('.guide-nav').length) UI_Control.layout.init();
   if (document.querySelectorAll('[data-modal]').length) UI_Control.modal.init();
@@ -1596,6 +1729,8 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-counter]').length) UI_Control.counter.init();
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
+  if (document.querySelectorAll('[data-input-delete]').length) UI_Control.inputDelete.init();
+  if (document.querySelectorAll('[data-ellipsis]').length) UI_Control.ellipsis.init();
   if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
   if (document.querySelectorAll('[data-parallax]').length) UI_Control.parallax.init();
 });
