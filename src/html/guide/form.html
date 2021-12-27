@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-  @@include('./src/_includes/head.md', {
-    title: '폼'
-    })
+@@include('./src/_includes/head.md', {
+title: '폼'
+})
 
 <body>
   <div class="wrapper">
@@ -176,20 +176,59 @@
             </label>
           </div>
         </section>
+
+        <section class="guide">
+          <h2 class="guide-title">input</h2>
+
+          <div class="input-mode" data-input-mode>
+            <label for="text0" class="input-mode-title">타이틀 <em class="required">필수항목</em></label>
+            <div class="input-mode-content">
+              <input id="text0" type="text" class="input" value="이미 채워져있음" data-input-delete>
+            </div>
+          </div>
+
+          <div class="input-mode-wrap">
+            <div class="input-mode" data-input-mode>
+              <label for="text1" class="input-mode-title">타이틀 <em class="required">필수항목</em></label>
+              <div class="input-mode-content">
+                <input id="text1" type="text" class="input" data-input-delete>
+              </div>
+            </div>
+            <div class="input-mode" data-input-mode>
+              <label for="text2" class="input-mode-title">타이틀 <em class="required">필수항목</em></label>
+              <div class="input-mode-content">
+                <input id="text2" type="text" class="input" data-input-delete>
+              </div>
+            </div>
+            <div class="input-mode" data-input-mode>
+              <label for="text3" class="input-mode-title">타이틀 <em class="required">필수항목</em></label>
+              <div class="input-mode-content">
+                <input id="text3" type="text" class="input" data-input-delete>
+              </div>
+            </div>
+          </div>
+        </section>
       </section>
     </main>
     <!-- ### // ### -->
   </div>
   <script src="../../resources/js/common.js"></script>
   <script>
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function () {
       const check = document.querySelectorAll('[data-checkbox]');
-      check.forEach(function(el) {
-        el.addEventListener('checked', function() {
+      check.forEach(function (el) {
+        el.addEventListener('checked', function () {
           console.log(this, 'checked')
         })
-        el.addEventListener('unchecked', function() {
+        el.addEventListener('unchecked', function () {
           console.log(this, 'unchecked')
+        })
+      })
+
+      const input = document.querySelectorAll('.input');
+      input.forEach(function (el) {
+        el.addEventListener('input.delete', function () {
+          console.log(this, 'delete');
         })
       })
     })

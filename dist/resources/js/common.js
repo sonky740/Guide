@@ -17,6 +17,7 @@
  * @see UI_Control.range 범위 설정 range
  * @see UI_Control.checkAll 전체 체크박스
  * @see UI_Control.inputDelete 인풋-삭제버튼
+ * @see UI_Control.inputMode 인풋-삭제버튼
  * @see UI_Control.ellipsis 말줄임
  * @see UI_Control.scrollView 스크롤에 따른 view
  * @see UI_Control.parallax 패럴랙스
@@ -105,7 +106,7 @@ UI_Control.layout = {
       lnb += '  <li><a href="' + root + 'ellipsis.html">ellipsis</a></li>';
       lnb += '  <li><a href="' + root + 'scroll.html">scroll</a></li>';
       lnb += '  <li><a href="' + root + 'parallax.html">parallax</a></li>';
-      lnb += '  <li><a href="' + root + 'swiper.html">swiper</a></li>';
+      // lnb += '  <li><a href="' + root + 'swiper.html">swiper</a></li>';
       lnb += '  <li><a href="' + root + 'form.html">form</a></li>';
       lnb += '  <li><a href="' + root + 'pagination.html">pagination</a></li>';
       // lnb += '  <li><a href="' + root + 'accordion_jquery.html">accordion_jquery</a></li>';
@@ -1088,7 +1089,7 @@ UI_Control.inputDelete = {
       deleteBtn.innerHTML = '<span class="blind">내용 지우기</span>';
 
       function eventInit() {
-        el.after(deleteBtn);
+        el.insertAdjacentElement('afterend', deleteBtn);
         el.classList.add('input-on');
       }
 
@@ -1121,9 +1122,47 @@ UI_Control.inputDelete = {
   delete: function (el, deleteBtn, eventDelete) {
     deleteBtn.addEventListener('click', function () {
       eventDelete();
+
+      const deleteInput = new CustomEvent('input.delete');
+      el.dispatchEvent(deleteInput);
+
       el.focus();
     });
   }
+};
+
+/**
+ * input mode
+ */
+UI_Control.inputMode = {
+  init: function () {
+    this.constructor();
+
+    this.input.forEach(function (el) {
+      const input = el.querySelector('.input');
+
+      if(input.value !== '') {
+        el.classList.add('valid-on');
+      }
+
+      input.addEventListener('focus', function () {
+        el.classList.add('focus-on');
+      });
+
+      input.addEventListener('blur', function () {
+        el.classList.remove('focus-on');
+
+        if (this.value === '') {
+          el.classList.remove('valid-on');
+        } else {
+          el.classList.add('valid-on');
+        }
+      });
+    });
+  },
+  constructor: function () {
+    this.input = document.querySelectorAll('[data-input-mode]');
+  },
 };
 
 /**
@@ -1730,6 +1769,7 @@ window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelectorAll('[data-range]').length) UI_Control.range.init();
   if (document.querySelectorAll('[data-checkbox]').length) UI_Control.checkAll.init();
   if (document.querySelectorAll('[data-input-delete]').length) UI_Control.inputDelete.init();
+  if (document.querySelectorAll('[data-input-mode]').length) UI_Control.inputMode.init();
   if (document.querySelectorAll('[data-ellipsis]').length) UI_Control.ellipsis.init();
   if (document.querySelectorAll('[data-scroll-item]').length) UI_Control.scrollView.init();
   if (document.querySelectorAll('[data-parallax]').length) UI_Control.parallax.init();
