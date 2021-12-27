@@ -1404,7 +1404,7 @@ UI_Control.scrollDetail = {
         } else if (sceneInfo[i].type === 'normal') {
           sceneInfo[i].scrollHeight = sceneInfo[i].objs.container.offsetHeight + window.innerHeight * 0.5;
         }
-        sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
+        sceneInfo[i].objs.container.style.height = sceneInfo[i].scrollHeight + 'px';
       }
 
       yOffset = window.pageYOffset;
@@ -1418,7 +1418,7 @@ UI_Control.scrollDetail = {
         }
       }
 
-      document.body.setAttribute('id', `show-scene-${currentScene}`);
+      document.body.setAttribute('id', 'show-scene-' + currentScene);
     }
 
     function calcValues(values, currentYOffset) {
@@ -1459,41 +1459,41 @@ UI_Control.scrollDetail = {
           if (scrollRatio <= 0.22) {
             // in
             objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
-            objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
+            objs.messageA.style.transform = 'translate3d(0,' + calcValues(values.messageA_translateY_in, currentYOffset) + '%, 0)';
           } else {
             // out
             objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
-            objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
+            objs.messageA.style.transform = 'translate3d(0,' + calcValues(values.messageA_translateY_out, currentYOffset) + '%, 0)';
           }
 
           if (scrollRatio <= 0.42) {
             // in
             objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
-            objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
+            objs.messageB.style.transform = 'translate3d(0,' + calcValues(values.messageB_translateY_in, currentYOffset) + '%, 0)';
           } else {
             // out
             objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
-            objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
+            objs.messageB.style.transform = 'translate3d(0,' + calcValues(values.messageB_translateY_out, currentYOffset) + '%, 0)';
           }
 
           if (scrollRatio <= 0.62) {
             // in
             objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
-            objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
+            objs.messageC.style.transform = 'translate3d(0,' + calcValues(values.messageC_translateY_in, currentYOffset) + '%, 0)';
           } else {
             // out
             objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
-            objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
+            objs.messageC.style.transform = 'translate3d(0,' + calcValues(values.messageC_translateY_out, currentYOffset) + '%, 0)';
           }
 
           if (scrollRatio <= 0.82) {
             // in
             objs.messageD.style.opacity = calcValues(values.messageD_opacity_in, currentYOffset);
-            objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_in, currentYOffset)}%, 0)`;
+            objs.messageD.style.transform = 'translate3d(0,' + calcValues(values.messageD_translateY_in, currentYOffset) + '%, 0)';
           } else {
             // out
             objs.messageD.style.opacity = calcValues(values.messageD_opacity_out, currentYOffset);
-            objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_out, currentYOffset)}%, 0)`;
+            objs.messageD.style.transform = 'translate3d(0,' + calcValues(values.messageD_translateY_out, currentYOffset) + '%, 0)';
           }
 
           break;
