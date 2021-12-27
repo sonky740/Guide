@@ -108,9 +108,9 @@ UI_Control.layout = {
       lnb += '  <li><a href="' + root + 'swiper.html">swiper</a></li>';
       lnb += '  <li><a href="' + root + 'form.html">form</a></li>';
       lnb += '  <li><a href="' + root + 'pagination.html">pagination</a></li>';
-      lnb += '  <li><a href="' + root + 'accordion_jquery.html">accordion_jquery</a></li>';
-      lnb += '  <li><a href="' + root + 'tooltip_jquery.html">tooltip_jquery</a></li>';
-      lnb += '  <li><a href="' + root + 'tab_jquery.html">tab_jquery</a></li>';
+      // lnb += '  <li><a href="' + root + 'accordion_jquery.html">accordion_jquery</a></li>';
+      // lnb += '  <li><a href="' + root + 'tooltip_jquery.html">tooltip_jquery</a></li>';
+      // lnb += '  <li><a href="' + root + 'tab_jquery.html">tab_jquery</a></li>';
       lnb += '</ul>';
       lnbParent.innerHTML = lnb;
     }
