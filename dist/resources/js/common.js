@@ -1706,15 +1706,6 @@ UI_Control.scrollDetail = {
 };
 
 window.addEventListener('DOMContentLoaded', function () {
-  // 구글 애널리틱스
-  const script = document.createElement('script');
-  script.setAttribute('async', '');
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-C8DGM3YSKG';
-  const scriptSource = document.createElement('script');
-  scriptSource.innerText = 'window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "G-C8DGM3YSKG");';
-  document.head.appendChild(script);
-  document.head.appendChild(scriptSource);
-
   // IE closest 대응
   if (!Element.prototype.matches) {
     Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
