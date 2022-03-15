@@ -21,7 +21,7 @@
  * @see UI_Control.ellipsis 말줄임
  * @see UI_Control.scrollView 스크롤에 따른 view
  * @see UI_Control.parallax 패럴랙스
- * @see UI_Control.scrollDeatil 디테일한 스크롤 설정
+ * @see UI_Control.scrollDetail 디테일한 스크롤 설정
  */
 const UI_Control = {};
 
