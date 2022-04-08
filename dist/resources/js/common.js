@@ -522,7 +522,7 @@ UI_Control.tab = {
         group.classList.add('hiding');
         group.classList.remove('shown');
 
-        const hiding = new CustomEvent('accr.hiding');
+        const hiding = new CustomEvent('tab.hiding');
         group.dispatchEvent(hiding);
 
         if(tab.dataset.tabAnimation === 'false') {
@@ -539,11 +539,11 @@ UI_Control.tab = {
         group.classList.remove('hiding');
         group.classList.add('hidden');
 
-        const hidden = new CustomEvent('accr.hidden');
+        const hidden = new CustomEvent('tab.hidden');
         group.dispatchEvent(hidden);
         target.classList.remove('hidden');
 
-        const showing = new CustomEvent('accr.showing');
+        const showing = new CustomEvent('tab.showing');
         target.dispatchEvent(showing);
         target.classList.add('showing');
         target.classList.add('shown');
@@ -554,7 +554,7 @@ UI_Control.tab = {
       target.classList.remove('showing');
       target.classList.add('shown');
 
-      const shown = new CustomEvent('accr.shown');
+      const shown = new CustomEvent('tab.shown');
       target.dispatchEvent(shown);
 
       UI_Control.tab.setTransitioning(false);
