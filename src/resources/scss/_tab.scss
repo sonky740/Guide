@@ -1,47 +1,54 @@
 .nav-tab {
     display: flex;
     margin: -0.8rem 0 0 -0.8rem;
+    overflow: auto;
 
-    &-item {
+    [data-tab-trigger] {
         margin: 0.8rem 0 0 0.8rem;
-        
-        [data-tab-trigger] {
-            padding: 0.8rem;
-            border: 0.1rem solid #0d6efd;
-            color: #0d6efd;
-            border-radius: 0.8rem;
-            transition: background .3s;
-        }
+        white-space: nowrap;
+        padding: 0.8rem;
+        border: 0.1rem solid #fff;
+        color: #fff;
+        transition: all .3s;
     }
 }
 
 [data-tab-trigger] {
-    .nav-tab-item.on & {
-        background: #0d6efd;
-        color: #fff;
+    &.on {
+        background: #fff;
+        color: #222;
     }
 }
 
 [data-tab-target] {
     display: none;
-    opacity: 0;
-    transition: all .1s;
 
-    &.showing,
-    &.hiding {
+    &.showing {
         display: block;
-        opacity: 0;
-    }
-
-    &.fade {
-        opacity: 1;
+        animation: tab-in .15s forwards;
     }
 
     &.shown {
         display: block;
     }
 
+    &.hiding {
+        display: block;
+        animation: tab-in .15s reverse;
+    }
+
     &.hidden {
         display: none;
+    }
+}
+
+// tab show & hide
+@keyframes tab-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }

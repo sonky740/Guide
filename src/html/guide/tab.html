@@ -18,63 +18,64 @@ title: '탭'
       <section class="main-section">
         <h3 class="tit-main" data-text="Tab">Tab</h3>
 
-        <ul class="nav-tab" data-tab="group1">
-          <li class="nav-tab-item on" data-tab-item><button type="button" data-tab-trigger="tab1">Tab1</button></li>
-          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab2">Tab2</button></li>
-          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab3">Tab3</button></li>
-          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab4">Tab4</button></li>
-        </ul>
-
-        <div data-tab-group="group1" data-tab-target="tab1">
-          tab1
-          <ul class="nav-tab" data-tab="group1_2">
-            <li class="nav-tab-item on" data-tab-item><button type="button" data-tab-trigger="tab1_1">Tab1_1</button></li>
-            <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab1_2">Tab1_2</button></li>
-            <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab1_3">Tab1_3</button></li>
-            <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab1_4">Tab1_4</button></li>
-          </ul>
-
-          <div data-tab-group="group1_2" data-tab-target="tab1_1">
-            tab1
+        <div>
+          <div class="nav-tab" data-tab="group1">
+            <button type="button" class="on" data-tab-trigger="#tab1">Tab1</button>
+            <button type="button" data-tab-trigger="#tab2">Tab2</button>
+            <button type="button" data-tab-trigger="#tab3">Tab3</button>
+            <button type="button" data-tab-trigger="#tab4">Tab4</button>
           </div>
-          <div data-tab-group="group1_2" data-tab-target="tab1_2">
+          <div id="tab1" data-tab-target="group1">
+            tab1
+            <div class="nav-tab" data-tab="group1_2">
+              <button type="button" class="on" data-tab-trigger="#tab1_1">Tab in Tab1_1</button>
+              <button type="button" data-tab-trigger="#tab1_2">Tab in Tab1_2</button>
+              <button type="button" data-tab-trigger="#tab1_3">Tab in Tab1_3</button>
+              <button type="button" data-tab-trigger="#tab1_4">Tab in Tab1_4</button>
+            </div>
+            <div id="tab1_1" data-tab-target="group1_2">
+              tab1
+            </div>
+            <div id="tab1_2" data-tab-target="group1_2">
+              tab2
+            </div>
+            <div id="tab1_3" data-tab-target="group1_2">
+              tab3
+            </div>
+            <div id="tab1_4" data-tab-target="group1_2">
+              tab4
+            </div>
+          </div>
+          <div id="tab2" data-tab-target="group1">
             tab2
           </div>
-          <div data-tab-group="group1_2" data-tab-target="tab1_3">
+          <div id="tab3" data-tab-target="group1">
             tab3
           </div>
-          <div data-tab-group="group1_2" data-tab-target="tab1_4">
+          <div id="tab4" data-tab-target="group1">
             tab4
           </div>
         </div>
-        <div data-tab-group="group1" data-tab-target="tab2">
-          tab2
-        </div>
-        <div data-tab-group="group1" data-tab-target="tab3">
-          tab3
-        </div>
-        <div data-tab-group="group1" data-tab-target="tab4">
-          tab4
-        </div>
 
-        <ul class="nav-tab" data-tab="group2">
-          <li class="nav-tab-item on" data-tab-item><button type="button" data-tab-trigger="tab5">Tab5</button></li>
-          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab6">Tab6</button></li>
-          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab7">Tab7</button></li>
-          <li class="nav-tab-item" data-tab-item><button type="button" data-tab-trigger="tab8">Tab8</button></li>
-        </ul>
-
-        <div data-tab-group="group2" data-tab-target="tab5">
-          tab5
-        </div>
-        <div data-tab-group="group2" data-tab-target="tab6">
-          tab6
-        </div>
-        <div data-tab-group="group2" data-tab-target="tab7">
-          tab7
-        </div>
-        <div data-tab-group="group2" data-tab-target="tab8">
-          tab8
+        <div>
+          <div class="nav-tab" data-tab="group2" data-tab-animation="false">
+            <button type="button" class="on" data-tab-trigger="#tab5">Tab5</button>
+            <button type="button" data-tab-trigger="#tab6">Tab6</button>
+            <button type="button" data-tab-trigger="#tab7">Tab7</button>
+            <button type="button" data-tab-trigger="#tab8">Tab8</button>
+          </div>
+          <div id="tab5" data-tab-target="group2">
+            tab5
+          </div>
+          <div id="tab6" data-tab-target="group2">
+            tab6
+          </div>
+          <div id="tab7" data-tab-target="group2">
+            tab7
+          </div>
+          <div id="tab8" data-tab-target="group2">
+            tab8
+          </div>
         </div>
 
         <p class="codepen" data-height="300" data-default-tab="html,result" data-slug-hash="WNONzMr" data-editable="true" data-user="Sonky" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">

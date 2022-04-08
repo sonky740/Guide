@@ -74,14 +74,14 @@ function siblings(node) {
  * ios version check
  * @returns {number}
  */
-function checkVersion() {
-  var agent = window.navigator.userAgent,
-    start = agent.indexOf('OS');
-  if ((agent.indexOf('iPhone') > -1 || agent.indexOf('iPad') > -1) && start > -1) {
-    return window.Number(agent.substr(start + 3, 3).replace('_', '.'));
-  }
-  return 0;
-}
+// function checkVersion() {
+//   var agent = window.navigator.userAgent,
+//     start = agent.indexOf('OS');
+//   if ((agent.indexOf('iPhone') > -1 || agent.indexOf('iPad') > -1) && start > -1) {
+//     return window.Number(agent.substr(start + 3, 3).replace('_', '.'));
+//   }
+//   return 0;
+// }
 
 /**
  * 기본 레이아웃
@@ -482,138 +482,92 @@ UI_Control.tab = {
     this.constructor();
 
     this.tabTrigger.forEach(function (trigger) {
-      const tabNav = trigger.closest('[data-tab]');
-      const item = tabNav.querySelectorAll('[data-tab-item]');
-      const group = document.querySelectorAll('[data-tab-group="' + tabNav.getAttribute('data-tab') + '"]');
-      const target = document.querySelector('[data-tab-target="' + trigger.getAttribute('data-tab-trigger') + '"]');
+      const target = document.querySelector(trigger.dataset.tabTrigger);
 
-      if (trigger.parentNode.classList.contains('on')) {
-        ['fade', 'shown'].forEach(function (classNames) {
-          target.classList.add(classNames);
-        });
+      if(trigger.classList.contains('on')) {
+        target.classList.add('shown');
       } else {
         target.classList.add('hidden');
       }
 
-      if (checkVersion() === 12) {
-        UI_Control.tab.clickNoAni(trigger, item, group, target);
-      } else {
-        UI_Control.tab.click(trigger, item, group, target);
-      }
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!trigger.classList.contains('on')) {
+          UI_Control.tab.show(target);
+        }
+      });
     });
   },
   constructor: function () {
     this.tabTrigger = document.querySelectorAll('[data-tab-trigger]');
     this.isTransitioning = false;
   },
-  click: function (trigger, item, group, target) {
-    trigger.addEventListener('click', function click(e) {
-      e.preventDefault();
-      e.stopPropagation();
+  show: function(target) {
+    const trigger = document.querySelector('[data-tab-trigger="#'+ target.getAttribute('id') +'"]');
+    const tab = trigger.closest('[data-tab]');
 
-      if (UI_Control.tab.isTransitioning) {
-        return false;
-      }
+    if (UI_Control.tab.isTransitioning) return false;
+    UI_Control.tab.setTransitioning(true);
 
-      // nav-tab
-      if (!trigger.parentNode.classList.contains('on')) {
-        item.forEach(function (el) {
-          el.classList.remove('on');
-        });
-        e.target.parentNode.classList.add('on');
-      } else {
-        return false;
-      }
+    siblings(trigger).forEach(function (trs) {
+      trs.classList.remove('on');
+    });
 
-      // tab-target
-      group.forEach(function (el) {
-        if (el.classList.contains('shown')) {
-          el.classList.add('hiding');
-          el.classList.remove('shown');
-          el.classList.remove('fade');
+    trigger.classList.add('on');
 
-          UI_Control.tab.transition(el);
+    siblings(target).forEach(function(group) {
+      if(group.classList.contains('shown')) {
+        group.classList.add('hiding');
+        group.classList.remove('shown');
 
-          el.addEventListener('transitionend', function transitionend() {
-            target.classList.add('showing');
-            target.classList.remove('hidden');
+        const hiding = new CustomEvent('accr.hiding');
+        group.dispatchEvent(hiding);
 
-            setTimeout(function () {
-              target.classList.add('fade');
-              UI_Control.tab.transition(target);
-              el.removeEventListener('transitionend', transitionend);
-            }, 50);
+        if(tab.dataset.tabAnimation === 'false') {
+          groupComplete();
+        } else {
+          group.addEventListener('animationend', function animationend() {
+            groupComplete();
+            group.removeEventListener('animationend', animationend);
           });
         }
-      });
-    });
-  },
-  clickNoAni: function (trigger, item, group, target) {
-    trigger.addEventListener('click', function click(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (UI_Control.tab.isTransitioning) {
-        return false;
       }
 
-      // nav-tab
-      if (!trigger.parentNode.classList.contains('on')) {
-        item.forEach(function (el) {
-          el.classList.remove('on');
-        });
-        e.target.parentNode.classList.add('on');
-      } else {
-        return false;
+      function groupComplete() {
+        group.classList.remove('hiding');
+        group.classList.add('hidden');
+
+        const hidden = new CustomEvent('accr.hidden');
+        group.dispatchEvent(hidden);
+        target.classList.remove('hidden');
+
+        const showing = new CustomEvent('accr.showing');
+        target.dispatchEvent(showing);
+        target.classList.add('showing');
+        target.classList.add('shown');
       }
-
-      // tab-target
-      group.forEach(function (el) {
-        if (el.classList.contains('shown')) {
-          el.classList.add('hidden');
-          el.classList.remove('shown');
-          el.classList.remove('fade');
-
-          target.classList.remove('hidden');
-          target.classList.add('shown');
-          target.classList.add('fade');
-        }
-      });
     });
-  },
-  transition: function (target) {
-    // transition start
-    target.addEventListener('transitionstart', function transitionstart() {
-      UI_Control.tab.setTransitioning(true);
 
-      if (this.classList.contains('showing')) {
-        const showing = new CustomEvent('tab.showing');
-        this.dispatchEvent(showing);
-      } else if (this.classList.contains('hiding')) {
-        const hiding = new CustomEvent('tab.hiding');
-        this.dispatchEvent(hiding);
-      }
-      target.removeEventListener('transitionstart', transitionstart);
-    });
-    // transition end
-    target.addEventListener('transitionend', function transitionend() {
+    function targetComplete() {
+      target.classList.remove('showing');
+      target.classList.add('shown');
+
+      const shown = new CustomEvent('accr.shown');
+      target.dispatchEvent(shown);
+
       UI_Control.tab.setTransitioning(false);
+    }
 
-      if (this.classList.contains('showing')) {
-        this.classList.remove('showing');
-        this.classList.add('shown');
-
-        const shown = new CustomEvent('tab.shown');
-        this.dispatchEvent(shown);
-      } else if (this.classList.contains('hiding')) {
-        this.classList.remove('hiding');
-        this.classList.add('hidden');
-
-        const hidden = new CustomEvent('tab.hidden');
-        this.dispatchEvent(hidden);
-      }
-      target.removeEventListener('transitionend', transitionend);
-    });
+    if(tab.dataset.tabAnimation === 'false') {
+      targetComplete();
+    } else {
+      target.addEventListener('animationend', function animationend() {
+        targetComplete();
+        target.removeEventListener('animationend', animationend);
+      });
+    }
   },
   setTransitioning: function (isTransitioning) {
     this.isTransitioning = isTransitioning;
