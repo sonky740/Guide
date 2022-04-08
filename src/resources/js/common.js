@@ -543,10 +543,11 @@ UI_Control.tab = {
         group.dispatchEvent(hidden);
         target.classList.remove('hidden');
 
-        const showing = new CustomEvent('tab.showing');
-        target.dispatchEvent(showing);
         target.classList.add('showing');
         target.classList.add('shown');
+        
+        const showing = new CustomEvent('tab.showing');
+        target.dispatchEvent(showing);
       }
     });
 
