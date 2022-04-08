@@ -348,225 +348,125 @@ UI_Control.accr = {
   init: function () {
     this.constructor();
 
-    this.accrTrigger.forEach(function (trigger) {
-      const accr = trigger.closest('[data-accr]');
-      const item = trigger.closest('[data-accr-item]');
-      const target = item.querySelector('[data-accr-target]');
-      const content = target.children[0];
-      const ir = trigger.querySelector('.blind');
+    this.accrItem.forEach(function(item) {
+        const target = item.querySelector('[data-accr-target]');
+        const trigger = item.querySelector('[data-accr-trigger]');
+        const ir = trigger.querySelector('.blind');
 
-      if (!item.classList.contains('on')) {
-        // target.classList.add('hidden');
-        ir.innerHTML = '펼치기';
-      } else {
-        trigger.classList.add('on');
-        target.classList.add('shown');
-        ir.innerHTML = '접기';
-      }
+        if(item.classList.contains('on')) {
+          target.classList.add('shown');
+          trigger.classList.add('on');
+          ir.innerText = '접기';
+        } else {
+          target.classList.add('hidden');
+          ir.innerText = '펼치기';
+        }
 
-      if (!accr.getAttribute('data-accr-animation')) {
-        UI_Control.accr.click(trigger, accr, item, target, content, ir);
-      } else {
-        UI_Control.accr.clickNoAni(trigger, accr, item, target, ir);
-      }
+        trigger.addEventListener('click', function() {
+          if (UI_Control.accr.isTransitioning) return false;
+          UI_Control.accr.setTransitioning(true);
+
+          if (!item.classList.contains('on')) {
+            UI_Control.accr.show(item);
+          } else {
+            UI_Control.accr.hide(item);
+          }
+        });
     });
   },
   constructor: function () {
-    this.accrTrigger = document.querySelectorAll('[data-accr-trigger]');
+    this.accrItem = document.querySelectorAll('[data-accr-item]');
     this.isTransitioning = false;
   },
-  click: function (trigger, accr, item, target, content, ir) {
-    trigger.addEventListener('click', function click(e) {
-      e.preventDefault();
-      e.stopPropagation();
+  show: function(item) {
+    const accr = item.closest('[data-accr]');
+    const target = item.querySelector('[data-accr-target]');
+    const trigger = item.querySelector('[data-accr-trigger]');
+    const ir = trigger.querySelector('.blind');
 
-      if (UI_Control.accr.isTransitioning) {
-        return false;
-      }
+    item.classList.add('on');
+    trigger.classList.add('on');
+    ir.innerText = '접기';
+    target.classList.remove('hidden');
+    target.classList.add('showing');
+    target.style.height = target.scrollHeight + 'px';
 
-      UI_Control.accr.setTransitioning(true);
+    const showing = new CustomEvent('accr.showing');
+    target.dispatchEvent(showing);
 
-      // 각각 열릴 때
-      if (target.classList.contains('shown')) {
-        // hide
-        ir.innerHTML = '펼치기';
-        target.style.height = content.clientHeight + 'px';
-        target.style.height = content.clientHeight + 'px';
-        target.classList.add('hiding');
-        target.classList.remove('shown');
-        target.removeAttribute('style');
-      } else {
-        // show
-        item.classList.add('on');
-        ir.innerHTML = '접기';
-        target.classList.add('showing');
-        target.classList.remove('hidden');
-        target.style.height = content.clientHeight + 'px';
-      }
-
-      // 하나만 열릴 때 [data-accr="only"]
-      if (accr.getAttribute('data-accr') === 'only') {
-        siblings(item).forEach(function (ta) {
-          const targetAll = ta.querySelector('[data-accr-target]');
-          if (targetAll.classList.contains('shown')) {
-            targetAll.style.height = targetAll.children[0].clientHeight + 'px';
-
-            setTimeout(function () {
-              targetAll.classList.add('hiding');
-              targetAll.classList.remove('shown');
-
-              targetAll.removeAttribute('style');
-              targetAll.closest('[data-accr-item]').querySelector('[data-accr-trigger]').classList.remove('on');
-              targetAll.closest('[data-accr-item]').querySelector('[data-accr-trigger]').querySelector('.blind').innerHTML = '펼치기';
-
-              UI_Control.accr.transition(targetAll);
-            }, 0);
-          }
-        });
-      }
-
-      trigger.classList.toggle('on');
-
-      UI_Control.accr.transition(target);
-    });
-  },
-  clickNoAni: function (trigger, accr, item, target, ir) {
-    trigger.addEventListener('click', function click(e) {
-      e.preventDefault();
-
-      // 숨길 때 - 공통
-      if (target.classList.contains('shown')) {
-        target.classList.remove('shown');
-        target.classList.add('hidden');
-        ir.innerHTML = '펼치기';
-
-        const hidden = new CustomEvent('accr.hidden');
-        target.dispatchEvent(hidden);
-      } else {
-        // 하나만 펼쳐질 때
-        if (accr.getAttribute('data-accr') === 'only') {
-          siblings(item).forEach(function (ta) {
-            const targetAll = ta.querySelector('[data-accr-target]');
-            if (targetAll.classList.contains('shown')) {
-              targetAll.classList.remove('shown');
-              targetAll.classList.add('hidden');
-
-              const hidden = new CustomEvent('accr.hidden');
-              targetAll.dispatchEvent(hidden);
-            }
-          });
-          accr.querySelectorAll('[data-accr-item]').forEach(function (items) {
-            items.classList.remove('on');
-            items.querySelector('[data-accr-trigger]').classList.remove('on');
-            items.querySelector('.blind').innerHTML = '펼치기';
-          });
-        }
-        // 각각 펼쳐질 때
-        target.classList.remove('hidden');
-        target.classList.add('shown');
-        ir.innerHTML = '접기';
-
-        const shown = new CustomEvent('accr.shown');
-        target.dispatchEvent(shown);
-      }
-      item.classList.toggle('on');
-      trigger.classList.toggle('on');
-    });
-  },
-  transition: function (target) {
-    // transition start
-    target.addEventListener('transitionstart', function transitionstart() {
-      if (this.classList.contains('showing')) {
-        const showing = new CustomEvent('accr.showing');
-        this.dispatchEvent(showing);
-      } else if (this.classList.contains('hiding')) {
-        const hiding = new CustomEvent('accr.hiding');
-        this.dispatchEvent(hiding);
-      }
-
-      target.removeEventListener('transitionstart', transitionstart);
-    });
-    // transition end
-    target.addEventListener('transitionend', function transitionend() {
+    function complete() {
+      target.classList.remove('showing');
+      target.classList.add('shown');
+      target.removeAttribute('style');
       UI_Control.accr.setTransitioning(false);
 
-      if (this.classList.contains('showing')) {
-        this.classList.remove('showing');
-        this.classList.add('shown');
-        this.removeAttribute('style');
+      const shown = new CustomEvent('accr.shown');
+      target.dispatchEvent(shown);
+    }
 
-        const shown = new CustomEvent('accr.shown');
-        this.dispatchEvent(shown);
-      } else if (this.classList.contains('hiding')) {
-        this.classList.remove('hiding');
-        this.classList.add('hidden');
-        this.closest('[data-accr-item]').classList.remove('on');
+    if(accr.dataset.accr === 'only') {
+      siblings(item).forEach(function(items) {
+        if (items.classList.contains('on')) UI_Control.accr.hide(items);
+      });
+    }
 
-        const hidden = new CustomEvent('accr.hidden');
-        this.dispatchEvent(hidden);
-      }
+    if(accr.dataset.accrAnimation === 'false') {
+      complete();
+    } else {
+      target.addEventListener('transitionend', function transitionend() {
+        complete();
+        target.removeEventListener('transitionend', transitionend);
+      });
+    }
+  },
+  hide: function(item) {
+    const accr = item.closest('[data-accr]');
+    const target = item.querySelector('[data-accr-target]');
+    const trigger = item.querySelector('[data-accr-trigger]');
+    const ir = trigger.querySelector('.blind');
 
-      target.removeEventListener('transitionend', transitionend);
+    trigger.classList.remove('on');
+    ir.innerText = '펼치기';
+    target.style.height = target.scrollHeight + 'px';
+    target.style.height = target.scrollHeight + 'px';
+    target.classList.remove('shown');
+    target.classList.add('hiding');
+    target.removeAttribute('style');
+
+    const hiding = new CustomEvent('accr.hiding');
+    target.dispatchEvent(hiding);
+
+    function complete() {
+      target.classList.remove('hiding');
+      target.classList.add('hidden');
+      item.classList.remove('on');
+      UI_Control.accr.setTransitioning(false);
+
+      const hidden = new CustomEvent('accr.hidden');
+      target.dispatchEvent(hidden);
+    }
+
+    if(accr.dataset.accrAnimation === 'false') {
+      complete();
+    } else {
+      target.addEventListener('transitionend', function transitionend() {
+        complete();
+        target.removeEventListener('transitionend', transitionend);
+      });
+    }
+  },
+  showAll: function() {
+    this.accrItem.forEach(function(item) {
+      const accr = item.closest('[data-accr]');
+
+      if(accr.dataset.accr === 'only' || item.classList.contains('on')) return false;
+      UI_Control.accr.show(item);
     });
   },
-  /**
-   * 아코디언 전체 열기
-   * @param {string} node id: '#example' || class: '.example'
-   * @returns 
-   */
-  showAll: function (node) {
-    const target = document.querySelectorAll(node);
-    target.forEach(function (targetAll) {
-      if (targetAll.dataset.accr === 'only') return false;
-      const acBtn = targetAll.querySelectorAll('.accordion-button');
-      const acTarget = targetAll.querySelectorAll('.accordion-content');
-
-      acBtn.forEach(function (el) {
-        el.classList.add('on');
-        el.querySelector('.blind').innerText = '접기';
-      });
-      acTarget.forEach(function (el) {
-        if (el.classList.contains('shown')) return false;
-        el.classList.remove('hidden');
-        el.classList.add('showing');
-        el.style.height = el.children[0].clientHeight + 'px';
-
-        UI_Control.accr.transition(el);
-        el.addEventListener('transitionend', function () {
-          el.parentNode.classList.add('on');
-        });
-      });
-    });
-  },
-  /**
-   * 아코디언 전체 닫기
-   * @param {string} node id: '#example' || class: '.example'
-   * @returns 
-   */
-  hideAll: function (node) {
-    const target = document.querySelectorAll(node);
-    target.forEach(function (targetAll) {
-      if (targetAll.dataset.accr === 'only') return false;
-      const acBtn = targetAll.querySelectorAll('.accordion-button');
-      const acTarget = targetAll.querySelectorAll('.accordion-content');
-
-      acBtn.forEach(function (el) {
-        el.classList.remove('on');
-        el.querySelector('.blind').innerText = '펼치기';
-      });
-      acTarget.forEach(function (el) {
-        if (!el.classList.contains('shown')) return false;
-        el.style.height = el.children[0].clientHeight + 'px';
-        el.style.height = el.children[0].clientHeight + 'px';
-        el.classList.add('hiding');
-        el.classList.remove('shown');
-        el.removeAttribute('style');
-
-        UI_Control.accr.transition(el);
-        el.addEventListener('transitionend', function () {
-          el.parentNode.classList.remove('on');
-        });
-      });
+  hideAll: function() {
+    this.accrItem.forEach(function(item) {
+      if(!item.classList.contains('on')) return false;
+      UI_Control.accr.hide(item);
     });
   },
   setTransitioning: function (isTransitioning) {
