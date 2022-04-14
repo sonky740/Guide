@@ -185,13 +185,22 @@ UI_Control.modal = {
   init: function () {
     this.constructor();
 
+    // 모달 트리거 클릭 시 모달 show
     this.modalTrigger.forEach(function (el) {
       el.addEventListener('click', UI_Control.modal.show);
     });
 
-    document.addEventListener('click', UI_Control.modal.hide);
+    // 모달 딤 클릭 시 hide
+    this.modalTarget.forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        if(e.target === el && el.dataset.modalBackdrop !== 'false') UI_Control.modal.hide(e);
+      });
+    });
 
-    this.transition();
+    // 모달 닫기 버튼 클릭 시 hide
+    this.modalClose.forEach(function(el) {
+      el.addEventListener('click', UI_Control.modal.hide);
+    });
   },
   constructor: function () {
     this.modalTrigger = document.querySelectorAll('[data-modal-trigger]');
@@ -201,116 +210,112 @@ UI_Control.modal = {
   },
   /**
    * 모달 열림
-   * @param {string} node id: '#example' || class: '.example' 
+   * @param {string} e id: '#example' || class: '.example' 
    */
-  show: function (node) {
-    if (UI_Control.modal.isTransitioning) {
-      return false;
+  show: function (e) {
+    if (UI_Control.modal.isTransitioning) return false;
+    UI_Control.modal.setTransitioning(true);
+
+    let target;
+    if(e.preventDefault) {
+      e.preventDefault();
+      target = document.getElementById(e.target.dataset.modalTrigger);
+    } else if (typeof e === 'string') {
+      target = document.querySelector(e);
     }
-
-    setTimeout(function () {
-      UI_Control.modal.setTransitioning(true);
-    });
-
-    document.body.style.overflow = 'hidden';
-    UI_Control.bodyFixed.init('off'); // body scroll 제거
-
-    let textTarget = '';
-    if (typeof node === 'object') {
-      textTarget = document.querySelector('#' + this.getAttribute('data-modal-trigger'));
-    } else {
-      textTarget = document.querySelector(node);
-    }
-
-    const target = textTarget;
+    
     target.classList.add('showing');
+    target.setAttribute('tabindex', '0');
 
-    setTimeout(function () {
-      target.classList.add('fade');
-      target.setAttribute('tabindex', '0');
+    // window scroll 방지
+    document.body.classList.add('modal-open');
+    const x = window.scrollX;
+    const y = window.scrollY;
+    window.onscroll = function () {
+      window.scrollTo(x, y);
+    };
+
+    const showing = new CustomEvent('modal.showing');
+    target.dispatchEvent(showing);
+
+    function complete() {
+      target.classList.remove('showing');
+      target.classList.add('shown');
       target.focus();
-    }, 50);
+      target.removeAttribute('tabindex');
+
+      const shown = new CustomEvent('modal.shown');
+      target.dispatchEvent(shown);
+
+      UI_Control.modal.setTransitioning(false);
+    }
+
+    if (target.dataset.modalAnimation === 'false') {
+      complete();
+    } else {
+      target.addEventListener('animationend', function animationend() {
+        complete();
+        target.removeEventListener('animationend', animationend);
+      });
+    }
   },
   /**
    * 모달 닫힘
    * @param {string} e id: '#example' || class: '.example' 
    */
   hide: function (e) {
-    // 닫기 버튼
-    UI_Control.modal.modalClose.forEach(function (el) {
-      let textTarget = '';
-      if (typeof e === 'object') {
-        textTarget = el.closest('[data-modal]');
-      } else {
-        textTarget = document.querySelector(e);
-      }
-      const modal = textTarget;
-      if (e.target === el || typeof e === 'string' && modal.classList.contains('shown')) {
-        // e.preventDefault();
-
-        if (UI_Control.modal.isTransitioning) {
-          return false;
-        }
-
-        modal.classList.add('hiding');
-        modal.classList.remove('shown');
-        modal.classList.remove('fade');
-      }
-    });
-
-    // dim 클릭 닫기
-    if (typeof e !== 'string') {
-      if (e.target.classList.contains('ly-modal') && e.target.getAttribute('data-backdrop') === null) {
-        e.stopPropagation();
-
-        if (UI_Control.modal.isTransitioning) {
-          return false;
-        }
-
-        e.target.classList.add('hiding');
-        e.target.classList.remove('shown');
-        e.target.classList.remove('fade');
-      } else {
-        return false;
-      }
+    if (UI_Control.modal.isTransitioning) return false;
+    UI_Control.modal.setTransitioning(true);
+    
+    let target;
+    if (typeof e === 'string') {
+      target = document.querySelector(e);
+    } else {
+      target = e.target.closest('[data-modal]');
     }
-  },
-  transition: function () {
-    this.modalTarget.forEach(function (el) {
-      // 이벤트 시작 시
-      el.addEventListener('transitionstart', function (e) {
-        if (el.classList.contains('showing') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
-          const showing = new CustomEvent('modal.showing');
-          this.dispatchEvent(showing);
-        } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
-          document.querySelector('[data-modal-trigger="' + el.getAttribute('id') + '"]').focus();
-          el.removeAttribute('tabindex');
-          const hiding = new CustomEvent('modal.hiding');
-          this.dispatchEvent(hiding);
-        }
-        return false;
+
+    target.classList.remove('shown');
+    target.classList.add('hiding');
+    
+    const hiding = new CustomEvent('modal.hiding');
+    target.dispatchEvent(hiding);
+
+    function complete() {
+      target.classList.remove('hiding');
+      document.querySelector('[data-modal-trigger="'+ target.getAttribute('id') +'"]').focus();
+      
+      // 마지막 모달을 닫을 때 window scroll 복구
+      const arr = [];
+      document.querySelectorAll('[data-modal]').forEach(function(modals) {
+        arr.push(modals.classList.contains('shown'));
       });
-      // 이벤트 끝날 시
-      el.addEventListener('transitionend', function (e) {
-        UI_Control.modal.setTransitioning(false);
-
-        if (el.classList.contains('showing') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
-          el.classList.remove('showing');
-          el.classList.add('shown');
-
-          const shown = new CustomEvent('modal.shown');
-          this.dispatchEvent(shown);
-        } else if (el.classList.contains('hiding') && e.target.classList.contains('ly-modal-wrap') && e.propertyName === 'opacity') {
-          el.classList.remove('hiding');
-          document.body.style.overflow = 'auto';
-          UI_Control.bodyFixed.init('on'); // body scroll 제거 해제
-
-          const hidden = new CustomEvent('modal.hidden');
-          this.dispatchEvent(hidden);
+      
+      arr.some(function(isOpen) {
+        if (!isOpen) {
+          document.body.classList.remove('modal-open');
+          window.onscroll = function () {
+            return true;
+          };
         }
-        return false;
+        return isOpen === true;
       });
-    });
+      
+      const hidden = new CustomEvent('modal.hidden');
+      target.dispatchEvent(hidden);
+      
+      UI_Control.modal.setTransitioning(false);
+    }
+
+    if (target.dataset.modalAnimation === 'false') {
+      complete();
+    } else {
+      target.addEventListener('animationend', function animationend(e) {
+        if(e.target.hasAttribute('data-modal')) {
+          complete();
+        }
+        target.removeEventListener('animationend', animationend);
+      });
+    }
   },
   setTransitioning: function (isTransitioning) {
     this.isTransitioning = isTransitioning;
