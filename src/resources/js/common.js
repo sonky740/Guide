@@ -460,16 +460,18 @@ UI_Control.accr = {
       });
     }
   },
-  showAll: function() {
-    this.accrItem.forEach(function(item) {
+  showAll: function(allItem) {
+    allItem = document.querySelectorAll(allItem + '>[data-accr-item]');
+    allItem.forEach(function(item) {
       const accr = item.closest('[data-accr]');
 
       if(accr.dataset.accr === 'only' || item.classList.contains('on')) return false;
       UI_Control.accr.show(item);
     });
   },
-  hideAll: function() {
-    this.accrItem.forEach(function(item) {
+  hideAll: function(allItem) {
+    allItem = document.querySelectorAll(allItem + '>[data-accr-item]');
+    allItem.forEach(function(item) {
       if(!item.classList.contains('on')) return false;
       UI_Control.accr.hide(item);
     });
